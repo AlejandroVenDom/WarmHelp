@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Comandos Básicos Git.md",
+                "file": "git-commands-v1.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Comandos Básicos Git"
+              "title": "git-commands-v1"
             }
           }
         ]
@@ -170,6 +170,7 @@
   },
   "active": "2f3d472bf9b44b9f",
   "lastOpenFiles": [
+    "git-commands-v1.md",
     "WarmHelp.md",
     "Comandos Básicos Git.md",
     "Git"
