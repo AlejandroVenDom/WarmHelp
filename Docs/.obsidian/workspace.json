@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "d2517fd8fbf70415",
+        "id": "b2b73c69ae6fc9d8",
         "type": "tabs",
         "children": [
           {
-            "id": "2f3d472bf9b44b9f",
+            "id": "8f9eb0a807d43a31",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "git-commands-v1.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "git-commands-v1"
+              "title": "Nueva pestaña"
             }
           }
         ]
@@ -168,7 +164,7 @@
       "command-palette:Abrir paleta de comandos": false
     }
   },
-  "active": "2f3d472bf9b44b9f",
+  "active": "8f9eb0a807d43a31",
   "lastOpenFiles": [
     "git-commands-v1.md",
     "WarmHelp.md",
