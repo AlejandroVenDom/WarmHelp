@@ -1,40 +1,41 @@
 package com.warmhelp.app.models;
+
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "users")
+@Table(name = "comments")
 @Getter
 @Setter
-public class User {
+public class Comments {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String username;
-
-    @Column(nullable = false)
-    private String password;
-
+    private String description;
 
     @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
-    private Role role;
+    @JoinColumn(name = "userInfo_id", nullable = false)
+    private UserInfo userInfo;
+
+    @ManyToOne
+    @JoinColumn(name = "post_id", nullable = false)
+    private Posts post;
 
     @CreationTimestamp
     @Column(nullable = false)
-    private LocalDateTime createdAt ;
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
     @Column(nullable = false)
-    private LocalDateTime updatedAt ;
+    private LocalDateTime updatedAt;
 
     @Column(nullable = true)
     private LocalDateTime deletedAt;
@@ -47,28 +48,28 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getDescription() {
+        return description;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getPassword() {
-        return password;
+    public Posts getPost() {
+        return post;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPost(Posts post) {
+        this.post = post;
     }
 
-    public Role getRole() {
-        return role;
+    public UserInfo getUserInfo() {
+        return userInfo;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
     }
 
     public LocalDateTime getCreatedAt() {
