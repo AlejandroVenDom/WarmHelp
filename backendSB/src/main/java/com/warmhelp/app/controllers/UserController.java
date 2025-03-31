@@ -63,4 +63,6 @@ public class UserController {
         userService.changeUsername(id, updateUsernameRequest.getNewUsername());
         return ResponseEntity.ok("Username actualizado correctamente");
     }
+
+
 }

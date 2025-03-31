@@ -42,6 +42,7 @@ public class PostsService {
         this.postsRepository.deletePostById(id);
     }
 
+
     @Transactional
     public Posts createPost(PostsRequest postFormFront){
         UserInfo userInfo = this.userInfoRepository.findByUser_Username(postFormFront.getUserName())

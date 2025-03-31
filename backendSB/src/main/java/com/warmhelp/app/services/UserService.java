@@ -8,9 +8,7 @@ import com.warmhelp.app.models.Comments;
 import com.warmhelp.app.models.Role;
 import com.warmhelp.app.models.User;
 import com.warmhelp.app.models.UserInfo;
-import com.warmhelp.app.repositories.RoleRepository;
-import com.warmhelp.app.repositories.UserInfoRepository;
-import com.warmhelp.app.repositories.UserRepository;
+import com.warmhelp.app.repositories.*;
 import com.warmhelp.app.security.JwtUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,19 +30,28 @@ public class UserService implements UserDetailsService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+    private final PostsRepository postsRepository;
+    private final CommentsRepository commentsRepository;
+    private final ResponseCommentsRespository responseCommentsRespository;
 
     public UserService(UserRepository userRepository,
                        UserInfoRepository userInfoRepository,
+                       PostsRepository postsRepository,
                        RoleRepository roleRepository,
                        AuthenticationManager authenticationManager,
                        PasswordEncoder passwordEncoder,
-                       JwtUtil jwtUtil) {
+                       JwtUtil jwtUtil,
+                       CommentsRepository commentsRepository,
+                       ResponseCommentsRespository responseCommentsRespository) {
         this.userRepository = userRepository;
+        this.responseCommentsRespository = responseCommentsRespository;
+        this.commentsRepository = commentsRepository;
         this.userInfoRepository = userInfoRepository;
         this.roleRepository = roleRepository;
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
+        this.postsRepository = postsRepository;
     }
 
 
@@ -83,9 +90,6 @@ public class UserService implements UserDetailsService {
         return this.userInfoRepository.findByUser(user);
     }
 
-    public void deleteUserById(Long id){
-        this.userRepository.deleteUserById(id);
-    }
 
     public void changeUsername(Long id, String newUsername) {
         userRepository.updateUsername(id, newUsername);

@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -31,4 +32,6 @@ public interface PostsRepository extends JpaRepository<Posts, Long> {
     @Transactional
     @Query("UPDATE Posts p SET p.deletedAt = CURRENT_TIMESTAMP WHERE p.id = ?1")
     void softDeletePost(Long id);
+
+
 }
