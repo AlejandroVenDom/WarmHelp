@@ -87,6 +87,10 @@ public class UserService implements UserDetailsService {
         this.userRepository.deleteUserById(id);
     }
 
+    public void changeUsername(Long id, String newUsername) {
+        userRepository.updateUsername(id, newUsername);
+    }
+
     @Transactional
     public User createUser(RegisterRequest userFromFront){
         if (this.userRepository.existsByUsername(userFromFront.getUsername())){

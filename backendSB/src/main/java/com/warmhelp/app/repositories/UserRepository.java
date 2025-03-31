@@ -12,23 +12,25 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    // Encontrar un usuario por username
+
     Optional<User> findByUsername(String username);
 
     Optional<User> findById(Long id);
 
-    // comprobar si existe un usuario por username
     boolean existsByUsername(String username);
 
-    // Eliminar físicamente un usuario
     @Modifying
     @Transactional
     @Query("DELETE FROM User u WHERE u.id = ?1")
     void deleteUserById(Long id);
 
-    // Soft delete (marcar como eliminado)
     @Modifying
     @Transactional
     @Query("UPDATE User u SET u.deletedAt = CURRENT_TIMESTAMP WHERE u.id = ?1")
     void softDeleteUser(Long id);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE User u SET u.username = :newUsername WHERE u.id = :id")
+    void updateUsername(Long id, String newUsername);
 }

@@ -1,9 +1,6 @@
 package com.warmhelp.app.controllers;
 
-import com.warmhelp.app.dtos.auth.CheckTokenRequest;
-import com.warmhelp.app.dtos.auth.LoginRequest;
-import com.warmhelp.app.dtos.auth.LoginResponse;
-import com.warmhelp.app.dtos.auth.RegisterRequest;
+import com.warmhelp.app.dtos.auth.*;
 import com.warmhelp.app.services.UserService;
 import com.warmhelp.app.models.User;
 import com.warmhelp.app.models.UserInfo;
@@ -59,5 +56,11 @@ public class UserController {
     @PostMapping("/check-token")
     public ResponseEntity<Boolean> checkToken(@RequestBody CheckTokenRequest checkTokenRequest) {
         return ResponseEntity.ok(this.userService.checkToken(checkTokenRequest));
+    }
+
+    @PutMapping("/{id}/username")
+    public ResponseEntity<String> updateUsername(@PathVariable Long id, @RequestBody UpdateUsernameRequest updateUsernameRequest){
+        userService.changeUsername(id, updateUsernameRequest.getNewUsername());
+        return ResponseEntity.ok("Username actualizado correctamente");
     }
 }
