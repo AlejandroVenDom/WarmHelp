@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.warmhelp.app.models.UserInfo;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -13,6 +14,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PostsRepository extends JpaRepository<Posts, Long> {
     // Encontrar todos los posts de un UserInfo
+    Optional<Posts> findByTitle(String title);
+
+    boolean existsByTitle (String title);
+
     List<Posts> findByUserInfo(UserInfo userInfo);
 
     // Eliminar post (físico)

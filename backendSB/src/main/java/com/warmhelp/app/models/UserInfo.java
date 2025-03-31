@@ -1,5 +1,7 @@
 package com.warmhelp.app.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -48,9 +50,11 @@ public class UserInfo {
     private User user;
 
     @OneToMany(mappedBy = "userInfo", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Comments> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "userInfo", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Posts> posts = new ArrayList<>();
 
     @CreationTimestamp

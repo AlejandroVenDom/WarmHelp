@@ -51,7 +51,11 @@ public class SecurityConfiguration {
                                 "/users",
                                 "/users/users-info",
                                 "/users/register",
-                                "/users/check-token"
+                                "/users/check-token",
+                                "/posts",
+                                "/posts/registerPost",
+                                "/comments",
+                                "/comments/registerComment"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

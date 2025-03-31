@@ -1,5 +1,6 @@
 package com.warmhelp.app.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -23,10 +24,12 @@ public class Comments {
 
     @ManyToOne
     @JoinColumn(name = "userInfo_id", nullable = false)
+    @JsonBackReference
     private UserInfo userInfo;
 
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
+    @JsonBackReference
     private Posts post;
 
     @CreationTimestamp

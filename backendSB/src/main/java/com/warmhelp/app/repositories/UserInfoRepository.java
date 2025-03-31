@@ -14,6 +14,8 @@ import java.util.Optional;
 public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
     Optional<UserInfo> findByUserId(Long userId);
 
+    Optional<UserInfo> findByUser_Username(String username);
+
     Optional<UserInfo> findByUser(User user);
 
     // Eliminar todos los comentarios de un usuario
