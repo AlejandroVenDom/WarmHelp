@@ -12,6 +12,7 @@ public class RegisterRequest {
     private String address;
     private String number;
     private String email;
+    private String mySelf_description;
 
     public RegisterRequest(
             String username,
@@ -21,7 +22,8 @@ public class RegisterRequest {
             String address,
             String number,
             String email,
-            RoleType roleType
+            RoleType roleType,
+            String mySelf_description
     ){
         this.username = username;
         this.address = address;
@@ -31,6 +33,15 @@ public class RegisterRequest {
         this.number = number;
         this.roleType = roleType;
         this.password = password;
+        this.mySelf_description = mySelf_description;
+    }
+
+    public String getMySelf_description() {
+        return mySelf_description;
+    }
+
+    public void setMySelf_description(String mySelf_description) {
+        this.mySelf_description = mySelf_description;
     }
 
     public String getUsername() {

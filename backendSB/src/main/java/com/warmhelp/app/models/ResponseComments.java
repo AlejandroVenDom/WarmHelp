@@ -1,28 +1,25 @@
 package com.warmhelp.app.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Table(name = "comments")
+@Table(name = "response_comments")
 @Getter
 @Setter
-public class Comments {
+public class ResponseComments {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String description;
 
     @ManyToOne
@@ -30,21 +27,17 @@ public class Comments {
     @JsonBackReference
     private UserInfo userInfo;
 
-    @OneToMany(mappedBy = "comments", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<ResponseComments> responseComments = new ArrayList<>();
-
     @ManyToOne
-    @JoinColumn(name = "post_id", nullable = false)
+    @JoinColumn(name = "comments_id", nullable = false)
     @JsonBackReference
-    private Posts post;
+    private Comments comments;
 
     @CreationTimestamp
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDateTime updatedAt;
 
     @Column(nullable = true)
@@ -66,20 +59,20 @@ public class Comments {
         this.description = description;
     }
 
-    public Posts getPost() {
-        return post;
-    }
-
-    public void setPost(Posts post) {
-        this.post = post;
-    }
-
     public UserInfo getUserInfo() {
         return userInfo;
     }
 
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
+    }
+
+    public Comments getComments() {
+        return comments;
+    }
+
+    public void setComments(Comments comments) {
+        this.comments = comments;
     }
 
     public LocalDateTime getCreatedAt() {

@@ -110,6 +110,7 @@ public class UserService implements UserDetailsService {
             userInfo.setLast_name(userFromFront.getLast_name());
             userInfo.setAddress(userFromFront.getAddress());
             userInfo.setNumber(userFromFront.getNumber());
+            userInfo.setMySelf_description(userFromFront.getMySelf_description());
             userInfo.setEmail(userFromFront.getEmail());
 
             this.userInfoRepository.save(userInfo);

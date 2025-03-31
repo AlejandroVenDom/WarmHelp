@@ -34,11 +34,38 @@ public class UserInfo {
     @Column(nullable = false)
     private String address;
 
+    @Column(nullable = true)
+    private String mySelf_description;
+
     @Column(nullable = false)
     private String number;
 
     public String getEmail() {
         return email;
+    }
+
+    public String getMySelf_description() {
+        return mySelf_description;
+    }
+
+    public void setMySelf_description(String mySelf_description) {
+        this.mySelf_description = mySelf_description;
+    }
+
+    public List<ResponseComments> getResponseComments() {
+        return responseComments;
+    }
+
+    public void setResponseComments(List<ResponseComments> responseComments) {
+        this.responseComments = responseComments;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
     }
 
     public void setEmail(String email) {
@@ -56,6 +83,10 @@ public class UserInfo {
     @OneToMany(mappedBy = "userInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Posts> posts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "userInfo", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<ResponseComments> responseComments = new ArrayList<>();
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)

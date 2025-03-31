@@ -55,7 +55,9 @@ public class SecurityConfiguration {
                                 "/posts",
                                 "/posts/registerPost",
                                 "/comments",
-                                "/comments/registerComment"
+                                "/comments/registerComment",
+                                "/responseComments",
+                                "/responseComments/registerResponseComment"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
