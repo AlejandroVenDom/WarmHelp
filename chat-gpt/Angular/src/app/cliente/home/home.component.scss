@@ -1,0 +1,256 @@
+.home-container {
+  background-color: #fbfaf4;
+  font-family: 'Segoe UI', sans-serif;
+  color: #3A7D44;
+  padding: 2rem;
+
+  section {
+    margin-bottom: 4rem;
+    text-align: center;
+  }
+
+  h1, h2, h3 {
+    color: #3A7D44;
+  }
+
+  // Hero Section
+  .hero {
+    padding: 3rem 1rem;
+    background: linear-gradient(135deg, #9DC08B 0%, #F8F5E9 100%);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    color: #3A7D44;
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+    }
+
+    .brand {
+      color: #DF6D14;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin: 1rem 0 2rem;
+    }
+
+    .btn-primary {
+      background: #DF6D14;
+      color: white;
+      font-weight: bold;
+      padding: 12px 24px;
+      border: none;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+
+      &:hover {
+        background: darken(#DF6D14, 10%);
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  // Categorías destacadas
+  .categories {
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .category-grid {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .category-card {
+      background: white;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      text-align: center;
+      transition: 0.3s;
+      cursor: pointer;
+      width: 15%;
+      height: 100%;
+
+      &:hover {
+        transform: scale(1.03);
+        box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      h3 {
+        margin: 1rem 0;
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  // Beneficios
+  .benefits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    text-align: center;
+
+    .benefit-card {
+      background: #9DC08B;
+      color: white;
+      padding: 2rem;
+      border-radius: 16px;
+      max-width: 300px;
+      flex: 1;
+      box-shadow: 0 8px 20px rgba(157, 192, 139, 0.3);
+      transition: 0.3s;
+
+      i {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      h3 {
+        font-size: 1.3rem;
+        font-weight: 700;
+      }
+
+      p {
+        font-size: 0.95rem;
+        margin-top: 0.5rem;
+      }
+
+      &:hover {
+        background: #3A7D44;
+        transform: translateY(-5px);
+      }
+    }
+  }
+
+  // Testimonios
+  .testimonials {
+    background: white;
+    padding: 3rem 1rem;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .testimonial-slider {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .testimonial-card {
+      background: #F8F5E9;
+      padding: 1.5rem;
+      border-radius: 12px;
+      max-width: 300px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      font-style: italic;
+      transition: 0.3s;
+
+      p {
+        margin-bottom: 1rem;
+        font-size: 1rem;
+      }
+
+      h4 {
+        font-weight: bold;
+        font-size: 1rem;
+        color: #DF6D14;
+      }
+
+      &:hover {
+        transform: scale(1.03);
+      }
+    }
+  }
+
+  // Call to Action (CTA)
+  .cta {
+    background: linear-gradient(135deg, #F8F5E9, #9DC08B);
+    padding: 3rem 2rem;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #3A7D44;
+    }
+
+    p {
+      margin: 1rem 0 2rem;
+      font-size: 1rem;
+    }
+
+    input {
+      padding: 12px;
+      width: 100%;
+      max-width: 350px;
+      border-radius: 8px;
+      border: 1.5px solid #9DC08B;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      outline: none;
+      transition: 0.3s;
+
+      &:focus {
+        border-color: #3A7D44;
+        box-shadow: 0 0 6px rgba(58, 125, 68, 0.3);
+      }
+    }
+
+    .btn-primary {
+      background: #DF6D14;
+      color: white;
+      font-weight: bold;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-left: 1%;
+      &:hover {
+        background: darken(#DF6D14, 10%);
+        transform: translateY(-2px);
+      }
+    }
+  }
+}
+
+// Responsivo
+@media (max-width: 768px) {
+  .category-grid,
+  .testimonial-slider,
+  .benefits {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+}

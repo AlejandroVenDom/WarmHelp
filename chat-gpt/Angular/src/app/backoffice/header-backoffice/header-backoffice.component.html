@@ -1,0 +1,52 @@
+<header class="row align-items-center bg-dark position-sticky top-0 px-4 m-auto">
+
+  <div class="col-6 d-flex flex-row align-items-center column-gap-3">
+    <!-- Contenedor de la imagen de perfil -->
+    <div class="icon-group">
+    <div class="imagen-perfil position-relative rounded-circle bg-white d-flex align-items-center justify-content-center icon-container"  (click)="toggleItem('isActiveMenu')" data-tooltip="Perfil">
+      <i class="bi bi-person-fill text-black fs-4"></i>
+      <span class="rounded-circle border border-2 position-absolute"></span>
+      <app-tab-menu *ngIf="isActiveItems.isActiveMenu"></app-tab-menu>
+    </div>
+
+    <!-- Notificaciones (campana) -->
+    <div class="position-relative icon-container" data-tooltip="Notificaciones" (click)="toggleItem('isActiveNotification')">
+      <i class="bi bi-bell-fill text-white fs-5" ></i>
+      <span class="position-absolute notify rounded-circle small d-flex align-items-center justify-content-center text-white">3</span>
+      <app-tab-notification *ngIf="isActiveItems.isActiveNotification"></app-tab-notification>
+    </div>
+
+    <!-- Menú cuadrado -->
+    <div class="icon-container" data-tooltip="Menú" (click)="toggleItem('isActiveGrid')">
+      <i class="bi bi-grid-3x3-gap-fill text-white fs-5" ></i>
+      <app-tab-grid *ngIf="isActiveItems.isActiveGrid"></app-tab-grid>
+    </div>
+
+    <!-- Ajustes -->
+    <div class="icon-container" data-tooltip="Ajustes" (click)="toggleItem('isActiveGear')">
+      <i class="bi bi-gear-fill text-white fs-5" ></i>
+      <app-settings *ngIf="isActiveItems.isActiveGear"></app-settings>
+    </div>
+  </div>
+</div>
+
+  <div class="col-6 d-flex flex-row align-items-center justify-content-end py-3 column-gap-3">
+    <!-- Buscador -->
+    <div class="position-relative rounded-pill overflow-hidden search-container">
+      <i class="bi bi-search position-absolute icon-search bg-white d-flex align-items-center justify-content-center"></i>
+      <input type="text" class="form-control w-100 text-end" placeholder="Buscar..">
+    </div>
+
+    <!-- Menú -->
+    <div class="icon-list-container icon-container" data-tooltip="Sidebar" (click)="toggleLogo()">
+      <i class="bi bi-list text-white fs-5"></i>
+    </div>
+
+    <!-- Logo -->
+    <div class="position-relative logo-container d-flex align-items-center justify-content-center column-gap-3">
+      <span class="text-white animate-width" *ngIf="isActive">Tienda Online</span>
+      <img src="/logo.svg"   routerLink="control-panel" alt="Logo Tienda">
+    </div>
+  </div>
+
+</header>

@@ -1,0 +1,59 @@
+@font-face {
+  font-family: "Monserrat";
+  src: url("./fonts/Montserrat-Light.ttf") format("truetype");
+  font-weight: 300; /* 300: light, 400: regular, 500: medium, 600: semibold, 700: bold, 800: black.. */
+  font-style: normal; /*normal o italic (italic es cursiva) */
+}
+
+@font-face {
+  font-family: "Monserrat";
+  src: url("./fonts/Montserrat-Regular.ttf") format("truetype");
+  font-weight: 400; /* 300: light, 400: regular, 500: medium, 600: semibold, 700: bold, 800: black.. */
+  font-style: normal; /*normal o italic (italic es cursiva) */
+}
+
+@font-face {
+  font-family: "Monserrat";
+  src: url("./fonts/Montserrat-Medium.ttf") format("truetype");
+  font-weight: 500; /* 300: light, 400: regular, 500: medium, 600: semibold, 700: bold, 800: black.. */
+  font-style: normal; /*normal o italic (italic es cursiva) */
+}
+
+@font-face {
+  font-family: "Monserrat";
+  src: url("./fonts/Montserrat-Bold.ttf") format("truetype");
+  font-weight: bold; /* 300: light, 400: regular, 500: medium, 600: semibold, 700: bold, 800: black.. */
+  font-style: normal; /*normal o italic (italic es cursiva) */
+}
+
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./fonts/Poppins-Light.ttf") format("truetype");
+  font-weight: 300; /* 300: light, 400: regular, 500: medium, 600: semibold, 700: bold, 800: black.. */
+  font-style: normal; /*normal o italic (italic es cursiva) */
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./fonts/Poppins-Regular.ttf") format("truetype");
+  font-weight: 400; /* 300: light, 400: regular, 500: medium, 600: semibold, 700: bold, 800: black.. */
+  font-style: normal; /*normal o italic (italic es cursiva) */
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./fonts/Poppins-Medium.ttf") format("truetype");
+  font-weight: 500; /* 300: light, 400: regular, 500: medium, 600: semibold, 700: bold, 800: black.. */
+  font-style: normal; /*normal o italic (italic es cursiva) */
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./fonts/Poppins-Bold.ttf") format("truetype");
+  font-weight: bold; /* 300: light, 400: regular, 500: medium, 600: semibold, 700: bold, 800: black.. */
+  font-style: normal; /*normal o italic (italic es cursiva) */
+}
+
+$headings-font-family: "Montserrat", sans-serif; /* Tipografía de bootstrap de encabezados (H1, H2, etc.). */
+$font-family-base: "Poppins", sans-serif; /* Tipografía de bootstrap de textos (p, span, input, etc.). */

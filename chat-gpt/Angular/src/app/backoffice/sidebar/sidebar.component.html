@@ -1,0 +1,31 @@
+<div class="bg-dark h-100 py-3 sidebar-container" [class.hide-me]="!isActiveMenuHeader">
+  <h2 class="text-white mb-3 text-end w-100 px-3 border-bottom border-white pb-2">Menú</h2>
+
+  <div routerLink="control-panel">
+    <p class="text-white text-end mb-3 px-4 d-flex flex-row flex-nowrap align-items-center justify-content-end column-gap-2">
+      <span class="fs-6"><a>Inicio</a></span> <i class="bi bi-house fs-5"></i>
+    </p>
+  </div>
+
+  <div routerLink="profile">
+    <p class="text-white text-end mb-3 px-4 d-flex flex-row flex-nowrap align-items-center justify-content-end column-gap-2">
+      <span class="fs-6"><a>Perfil</a></span> <i class="bi bi-person fs-5"></i>
+    </p>
+  </div>
+  <div routerLink="productos">
+    <p class="text-white text-end mb-3 px-4 d-flex flex-row flex-nowrap align-items-center justify-content-end column-gap-2">
+      <span class="fs-6"><a>Productos</a></span> <i class="bi bi-cart fs-5"></i>
+    </p>
+  </div>
+
+  <div routerLink="/tienda">
+    <p class="text-white text-end mb-3 px-4 d-flex flex-row flex-nowrap align-items-center justify-content-end column-gap-2">
+      <span class="fs-6"><a>Cliente</a></span> <i class="bi bi-browser-chrome fs-5"></i>
+    </p>
+  </div>
+  <div class="quit-container" (click)="logout()">
+    <p class="text-white text-end mb-3 px-4 d-flex flex-row flex-nowrap align-items-center justify-content-end column-gap-2">
+      <span class="fs-6"><a>Cerrar sesión</a></span> <i class="bi bi-power fs-5"></i>
+    </p>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="login-wrapper">
+  <div class="login-header">
+    <h2 class="login-title">Iniciar sesión</h2>
+  </div>
+  <form method="post" [formGroup]="loginForm" (ngSubmit)="submit()">
+    <!-- Campo de Usuario -->
+    <div class="login-field">
+      <label class="login-label">Usuario</label>
+      <div class="input-container">
+        <i class="bi bi-person icon"></i>
+        <input class="login-input" type="text" placeholder="Username" formControlName="username">
+      </div>
+    </div>
+
+    <!-- Campo de Contraseña -->
+    <div class="login-field">
+      <label class="login-label">Contraseña</label>
+      <div class="input-container">
+        <i class="bi bi-lock icon"></i>
+        <input class="login-input" [type]="showPassword ? 'text' : 'password'" placeholder="*****" formControlName="password">
+        <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'" (click)="togglePasswordVisibility()"></i>
+      </div>
+    </div>
+
+    <!-- Botones de Login y Registro -->
+    <div class="login-footer">
+      <button type="submit" class="login-btn" [disabled]="loginForm.invalid">Entrar</button>
+      <button type="button" class="register-btn" routerLink="/registro">Registrarse</button>
+    </div>
+  </form>
+</div>
+<app-footer></app-footer>

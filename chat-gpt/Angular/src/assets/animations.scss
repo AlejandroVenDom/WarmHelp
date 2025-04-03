@@ -1,0 +1,59 @@
+
+@keyframes animateWidth {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideToLeft {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideToRight {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+* {
+  transition: all .25s ease;
+}
+
+.slide-down {
+  animation: slideDown .25s ease-in forwards;
+}
+.animate-width {
+  /*transition: width .2s ease-in;*/
+  animation: slideToLeft .55s ease-in forwards;
+}
+
+.slide-right-to-left {
+  animation: slideToRight .5s ease forwards;
+}

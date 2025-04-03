@@ -1,0 +1,58 @@
+<div class="tienda-container">
+  <h2 class="title">Servicios</h2>
+
+  <!-- Barra de búsqueda y slider en línea -->
+  <div class="filters-container">
+    <div class="search-container">
+      <i class="bi bi-search"></i>
+      <input type="text" [(ngModel)]="searchTerm" class="form-control" placeholder="Buscar producto..." (input)="filterProducts()">
+    </div>
+
+    <div class="price-slider">
+      <label>Precio: ${{ minPrice }} - ${{ maxPrice }}</label>
+      <div class="range-slider">
+        <input type="range" [(ngModel)]="minPrice" [min]="priceRangeMin" [max]="priceRangeMax" (input)="updatePriceRange()" class="thumb left">
+        <input type="range" [(ngModel)]="maxPrice" [min]="priceRangeMin" [max]="priceRangeMax" (input)="updatePriceRange()" class="thumb right">
+        <div class="slider-track"></div>
+      </div>
+    </div>
+
+    <!--  Botón para limpiar filtros -->
+    <button class="reset-btn" (click)="resetFilters()">Restablecer</button>
+  </div>
+
+  <!--  Grid de productos -->
+  <div class="product-grid">
+    <div *ngFor="let product of filteredProducts" class="product-card" (click)="openModal(product)">
+      <div class="product-info">
+        <img src="/logofinal.png" alt="Imagen del producto" class="cart-img">
+        <h3>{{ product.name }}</h3>
+        <p class="product-description">{{ product.description.length > 15 ? (product.description | slice:0:15) + '...' : product.description }}</p>
+        <p class="price">Precio: {{ product.price}} {{ product.currency }}</p>
+        <p class="price">Tax: {{product.tax }} {{ product.currency }}</p>
+        <p>Publicado por: <strong>{{ product.sellerUsername || 'Desconocido' }}</strong></p>
+        <button class="btn-add-cart" (click)="addToCart(product, $event)">
+          <i class="bi bi-cart-plus"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--  Modal para detalles del producto -->
+<div class="modal-overlay" *ngIf="showModal">
+  <div class="modal-content">
+    <span class="icon-cancel" (click)="closeModal()">
+      <i class="bi bi-x-circle"></i>
+    </span>
+    <img src="/logofinal.png" alt="Imagen del producto" class="cart-img">
+    <h3>{{ selectedProduct?.name }}</h3>
+    <p><strong>Descripción:</strong> {{ selectedProduct?.description }}</p>
+    <p><strong>Precio:</strong> {{ selectedProduct?.price }} {{ selectedProduct?.currency }}</p>
+    <p><strong>Tax:</strong> {{ selectedProduct?.tax }} {{ selectedProduct?.currency }}</p>
+    <p><strong>Vendedor:</strong> {{ selectedProduct?.sellerUsername || 'Desconocido' }}</p>
+  </div>
+</div>
+<app-cart></app-cart>
+<app-footer></app-footer>
+

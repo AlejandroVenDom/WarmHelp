@@ -1,0 +1,31 @@
+<header class="header">
+  <div class="col-6 text-center" routerLink="/">
+    <a class="text-decoration-none d-block" rel="noopener">
+      <img style="max-width: 115px" src="/logot.png" alt="logo">
+    </a>
+  </div>
+
+  <!-- Icono del menú hamburguesa / cierre -->
+  <i [ngClass]="menuOpen ? 'bi bi-x-lg close-menu' : 'bi bi-list menu-toggle'" (click)="toggleMenu()"></i>
+
+  <nav class="nav-container" [ngClass]="{ 'active': menuOpen }">
+    <!-- <a routerLink="/" (click)="closeMenu()">Inicio</a> -->
+    <a routerLink="posts" (click)="closeMenu()">Publicaciones</a>
+    <a routerLink="chat">AI <i class="bi bi-x-diamond-fill"></i></a>
+    <a routerLink="tienda" (click)="closeMenu()">Servicios</a>
+    <a class="cart-icon" *ngIf="isLoggedIn" (click)="toggleCart()">
+      <i class="bi bi-cart"></i>
+    </a>
+
+    <!-- Contenedor para usuario autenticado -->
+    <div class="user-info" *ngIf="isLoggedIn" routerLink="per" (click)="closeMenu()">
+      <span>¡Hola, <span class="username">{{ username }}</span>!</span>
+    </div>
+
+    <!-- Botón de inicio de sesión -->
+    <button *ngIf="!isLoggedIn" type="button" class="btn-login" routerLink="app/control-panel" (click)="closeMenu()">
+      <i class="bi bi-person"></i> Iniciar sesión
+    </button>
+  </nav>
+</header>
+<app-cart></app-cart>

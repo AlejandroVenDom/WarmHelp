@@ -1,0 +1,17 @@
+<!-- Header del Back-office-->
+<app-header-backoffice></app-header-backoffice>
+
+<!--Contenedor padre-->
+<div class="web-container" [class.collapsed]="!isActiveSidebar">
+
+  <!-- Contenedor hijo donde se cargará el contenido de cada página del backoffice -->
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+
+  <!-- Contenedor donde guardaremos el sidebar -->
+  <div>
+    <app-sidebar></app-sidebar>
+  </div>
+</div>
+

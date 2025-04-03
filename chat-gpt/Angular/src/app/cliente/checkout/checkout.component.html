@@ -1,0 +1,63 @@
+<div class="checkout-container">
+  <h2><i class="bi bi-cart-check"></i> Finalizar Compra</h2>
+
+  <div class="checkout-content">
+    <!-- Información de Envío -->
+    <div class="checkout-form">
+      <h3>Información de Envío</h3>
+      <form (ngSubmit)="processCheckout()">
+        <label>Nombre Completo</label>
+        <input type="text" [(ngModel)]="shippingInfo.fullName" name="fullName" required>
+
+        <label>Correo Electrónico</label>
+        <input type="email" [(ngModel)]="shippingInfo.email" name="email" required>
+
+        <label>Dirección</label>
+        <input type="text" [(ngModel)]="shippingInfo.address" name="address" required>
+
+        <label>Ciudad</label>
+        <input type="text" [(ngModel)]="shippingInfo.city" name="city" required>
+
+        <label>Código Postal</label>
+        <input type="text" [(ngModel)]="shippingInfo.postalCode" name="postalCode" required>
+
+        <label>País</label>
+        <select [(ngModel)]="shippingInfo.country" name="country">
+          <option value="US">Estados Unidos</option>
+          <option value="ES">España</option>
+          <option value="MX">México</option>
+        </select>
+
+        <h3>Método de Pago</h3>
+        <div class="payment-options">
+          <label class="credit-card">
+            <input type="radio"  [(ngModel)]="paymentMethod" name="payment" value="credit-card" checked>
+            <i class="bi bi-credit-card"></i> Tarjeta Crédito
+          </label>
+          <label class="paypal">
+            <input type="radio" [(ngModel)]="paymentMethod" name="payment" value="paypal">
+            <i class="bi bi-paypal"></i> PayPal
+          </label>
+        </div>
+
+        <button type="submit" class="btn-confirm">
+          <i class="bi bi-check-circle"></i> Confirmar Pedido
+        </button>
+      </form>
+    </div>
+
+    <!-- Resumen del Pedido -->
+    <div class="checkout-summary">
+      <h3>Resumen del Pedido</h3>
+      <div *ngFor="let product of cart" class="summary-item">
+        <img src="/nikedunk.jpg" alt="Imagen del producto">
+        <div class="summary-info">
+          <h4>{{ product.name }}</h4>
+          <p>{{ product.quantity }} x {{ product.price + product.tax | currency:'USD' }}</p>
+        </div>
+      </div>
+
+      <p class="total-price">Total: <span>{{ totalAmount | currency:'USD' }} USD</span></p>
+    </div>
+  </div>
+</div>

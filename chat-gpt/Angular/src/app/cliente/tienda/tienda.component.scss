@@ -1,0 +1,462 @@
+// Paleta de colores warmHelp
+$color-bg: #fbfaf4;
+$color-surface: #F8F5E9;
+$color-primary: #3A7D44;
+$color-secondary: #9DC08B;
+$color-accent: #DF6D14;
+$color-text: #2B2B2B;
+
+// Contenedor general
+.tienda-container {
+  padding: 40px;
+  background: $color-bg;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 99%;
+  height: 90%;
+  margin: auto;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  border-radius: 16px;
+}
+.filter-order-bar {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 20px;
+}
+
+.btn-order, .btn-filter {
+  background: $color-primary;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+
+  i {
+    margin-right: 8px;
+  }
+
+  &:hover {
+    background: darken($color-primary, 10%);
+  }
+}
+
+.order-menu {
+  position: absolute;
+  background: white;
+  border: 2px solid $color-secondary;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 5px;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      padding: 8px 12px;
+      cursor: pointer;
+      font-weight: 500;
+      color: $color-text;
+
+      &:hover {
+        background: $color-surface;
+      }
+    }
+  }
+}
+
+.filter-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.filter-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  h3 {
+    text-align: center;
+    color: $color-primary;
+  }
+
+  .icon-cancel {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: red;
+    font-size: 1.5rem;
+    cursor: pointer;
+
+    &:hover {
+      color: darkred;
+    }
+  }
+
+  input[type="text"], input[type="range"] {
+    width: 100%;
+  }
+
+  .checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 0.95rem;
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+
+  .btn-apply-filters {
+    margin-top: 15px;
+    background: $color-accent;
+    color: white;
+    padding: 10px;
+    border: none;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+
+    &:hover {
+      background: darken($color-accent, 10%);
+    }
+  }
+}
+
+
+// Título de la sección
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  color: $color-primary;
+  letter-spacing: 3px;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 5%;
+  padding: 10px 20px;
+  background: linear-gradient(to right, $color-accent, $color-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &::after {
+    content: "";
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(to right, $color-accent, $color-primary);
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    border-radius: 5px;
+    animation: pulseGlow 1.5s infinite alternate;
+  }
+}
+
+// Filtros
+.filters-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 2px solid $color-secondary;
+  border-radius: 8px;
+  padding: 5px 10px;
+  width: 250px;
+
+  i {
+    color: $color-primary;
+    margin-right: 10px;
+    font-size: 1.2rem;
+  }
+
+  input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 1rem;
+    padding: 5px;
+    background: transparent;
+    color: $color-text;
+
+    &::placeholder {
+      color: $color-secondary;
+    }
+  }
+
+  &:focus-within {
+    border-color: $color-accent;
+  }
+}
+
+.price-slider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  font-weight: bold;
+  text-align: center;
+
+  .range-slider {
+    position: relative;
+    width: 100%;
+    height: 8px;
+    background: $color-secondary;
+    border-radius: 4px;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+  }
+
+  .slider-track {
+    position: absolute;
+    height: 8px;
+    background: $color-accent;
+    border-radius: 4px;
+    left: var(--slider-min);
+    right: calc(100% - var(--slider-max));
+  }
+
+  input[type="range"] {
+    position: absolute;
+    width: 100%;
+    -webkit-appearance: none;
+    background: transparent;
+    pointer-events: none;
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      background: $color-primary;
+      border-radius: 50%;
+      cursor: pointer;
+      pointer-events: all;
+      position: relative;
+      z-index: 2;
+    }
+  }
+}
+
+.reset-btn {
+  background: $color-accent;
+  color: white;
+  font-weight: 500;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+
+  &:hover {
+    background: darken($color-accent, 10%);
+  }
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.product-card {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: $color-text;
+    margin: 5px 0;
+  }
+
+  .product-description {
+    font-size: 0.9rem;
+    color: $color-primary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 90%;
+  }
+
+  .price {
+    font-size: 1rem;
+    font-weight: bold;
+    color: $color-accent;
+    margin-top: 5px;
+  }
+
+  .cart-img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  .btn-add-cart {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: $color-primary;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      background: darken($color-accent, 10%);
+    }
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-content {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+  border: 3px solid $color-accent;
+  color: $color-text;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+
+  .cart-img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
+  .icon-cancel {
+    color: red;
+    font-size: 1.8rem;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    &:hover {
+      color: darkred;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .filters-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .modal-content {
+    width: 95%;
+  }
+}

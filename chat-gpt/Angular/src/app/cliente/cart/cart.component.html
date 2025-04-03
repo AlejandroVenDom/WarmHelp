@@ -1,0 +1,48 @@
+<!-- Overlay al abrir el carrito -->
+<div class="cart-overlay" *ngIf="isCartVisible" (click)="toggleCart()"></div>
+
+<!-- Sidebar del carrito -->
+<div class="cart-sidebar" [class.active]="isCartVisible">
+  <button class="close-btn" (click)="toggleCart()">
+    <i class="bi bi-x-lg"></i>
+  </button>
+
+  <h2><i class="bi bi-cart-fill"></i> Mi Carrito</h2>
+
+  <div *ngIf="cart.length === 0" class="empty-cart">
+    <p>Tu carrito está vacío</p>
+  </div>
+
+  <div class="cart-list">
+    <div class="cart-item" *ngFor="let product of cart">
+      <img src="/nikedunk.jpg" alt="Imagen del producto" class="cart-img">
+
+      <div class="cart-info">
+        <h3>{{ product.name }}</h3>
+        <p class="price">
+          Precio: {{ product.currency === 'EUR' ? (product.price * 1.10 + product.tax * 1.10) : product.price + product.tax}} USD
+        </p>
+        <div class="quantity-controls">
+          <button (click)="decreaseQuantity(product.id)" class="btn-quantity"><i class="bi bi-dash-circle"></i></button>
+          <span class="quantity">{{ product.quantity }}</span>
+          <button (click)="increaseQuantity(product.id)" class="btn-quantity"><i class="bi bi-plus-circle"></i></button>
+        </div>
+
+        <button class="btn-remove" (click)="removeFromCart(product.id)">
+          <i class="bi bi-trash"></i> Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cart-total">
+    <p class="total-price">Total: <span>${{ totalAmount.toFixed(2) }} USD</span></p>
+     <!-- Botón de pago -->
+     <button class="btn-pay" routerLink="/checkout">
+      <i class="bi bi-credit-card"></i> Ir a pagar
+    </button>
+    <button class="btn-clear" (click)="clearCart()">
+      <i class="bi bi-x-circle"></i> Vaciar Carrito
+    </button>
+  </div>
+</div>

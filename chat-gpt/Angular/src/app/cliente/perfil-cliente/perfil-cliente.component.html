@@ -1,0 +1,53 @@
+<div class="profile-container">
+  <h2>Perfil de Usuario</h2>
+
+  <div class="profile-wrapper">
+    <!-- Sección de Información del Perfil -->
+    <div class="profile-info-container">
+      <div class="profile-info">
+        <p><i class="fas fa-user"></i> <strong>Usuario:</strong> {{ userData.username }}</p>
+        <p><i class="fas fa-user-shield"></i> <strong>Rol:</strong> {{ userData.role }}</p>
+        <p><i class="fas fa-id-badge"></i> <strong>Nombre:</strong> {{ userData.firstName }}</p>
+        <p><i class="fas fa-user-tag"></i> <strong>Apellido:</strong> {{ userData.lastName }}</p>
+        <p><i class="fas fa-map-marker-alt"></i> <strong>Dirección:</strong> {{ userData.address }}</p>
+
+        <div class="profile-actions">
+          <button class="btn btn-primary" (click)="logout()">
+            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+          </button>
+
+          <button *ngIf="showBackendButton" type="button" routerLink="/app/productos" class="btn btn-secondary">
+            <i class="fas fa-cogs"></i> ADMIN PANEL
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="change-password-container">
+      <form (ngSubmit)="changePassword()">
+        <!-- Contraseña Actual -->
+        <p><i class="fas fa-lock"></i> <strong>Contraseña Actual:</strong></p>
+        <div class="input-container">
+          <input [type]="showCurrentPassword ? 'text' : 'password'" [(ngModel)]="passwordData.currentPassword" name="currentPassword" required />
+          <i class="bi" [ngClass]="showCurrentPassword ? 'bi-eye-slash' : 'bi-eye'" (click)="togglePasswordVisibility('current')"></i>
+        </div>
+
+        <!-- Nueva Contraseña -->
+        <p><i class="fas fa-key"></i> <strong>Nueva Contraseña:</strong></p>
+        <div class="input-container">
+          <input [type]="showNewPassword ? 'text' : 'password'" [(ngModel)]="passwordData.newPassword" name="newPassword" required />
+          <i class="bi" [ngClass]="showNewPassword ? 'bi-eye-slash' : 'bi-eye'" (click)="togglePasswordVisibility('new')"></i>
+        </div>
+
+        <!-- Confirmar Nueva Contraseña -->
+        <p><i class="fas fa-key"></i> <strong>Confirmar Nueva Contraseña:</strong></p>
+        <div class="input-container">
+          <input [type]="showConfirmPassword ? 'text' : 'password'" [(ngModel)]="passwordData.confirmPassword" name="confirmPassword" required />
+          <i class="bi" [ngClass]="showConfirmPassword ? 'bi-eye-slash' : 'bi-eye'" (click)="togglePasswordVisibility('confirm')"></i>
+        </div>
+
+        <button type="submit" class="btn btn-success">
+          <i class="fas fa-save"></i> Guardar Cambios
+        </button>
+      </form>
+    </div>

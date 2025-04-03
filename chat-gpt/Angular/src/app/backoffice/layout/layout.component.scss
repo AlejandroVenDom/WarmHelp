@@ -1,0 +1,11 @@
+.web-container {
+  width: 100%;
+  height: calc(100dvh - 70px);
+  display: grid;
+  grid-template-columns: 1fr 225px;
+
+  &.collapsed {
+    grid-template-columns: 1fr 64px !important;
+  }
+
+}

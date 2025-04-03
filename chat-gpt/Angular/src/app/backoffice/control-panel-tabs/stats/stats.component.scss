@@ -1,0 +1,22 @@
+.stats-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr; /* repeat(4, 1fr) */
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+  align-items: center;
+  justify-content: center;
+
+  /* Puntos de ruptura 1200px y 769px */
+  @media (max-width: 1200px) {
+    & {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 769px) {
+    & {
+      grid-template-columns: 1fr;
+    }
+  }
+
+}

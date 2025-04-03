@@ -1,0 +1,173 @@
+<div class="publicaciones-container">
+  <h2>PUBLICACIONES RECIENTES</h2>
+  <div class="acciones-posts">
+    <div class="buscador-posts">
+      <i class="bi bi-search"></i>
+      <input type="text" placeholder="Buscar publicaciones...">
+    </div>
+    <button class="btn-publicar">
+      <i class="bi bi-plus-circle-fill"></i>
+      Publicar
+    </button>
+  </div>
+
+  <!-- POST 1 -->
+  <div class="card-post">
+    <img src="/juan.jpg" alt="LauraSanchez" class="avatar" />
+    <div class="content">
+      <div class="header">
+        <span class="username">LauraSanchez</span>
+        <span class="time">Hace 3 horas</span>
+      </div>
+      <p>¿Alguien puede recomendar un buen terapeuta cerca del centro?</p>
+      <div class="actions">
+        <i class="bi bi-hand-thumbs-up"></i><span>15</span>
+        <i class="bi bi-chat-left-text-fill" (click)="abrirModal()"></i><span>3</span>
+      </div>
+    </div>
+  </div>
+<!-- MODAL DE COMENTARIOS -->
+<div *ngIf="modalVisible" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" (click)="cerrarModal()">
+      <i class="bi bi-x-lg"></i>
+    </span>
+
+    <h3 *ngIf="!mostrandoRespuestas">Comentarios</h3>
+    <h3 *ngIf="mostrandoRespuestas">Respuestas a {{ comentarioSeleccionado?.autor }}</h3>
+
+    <!-- LISTA DE COMENTARIOS -->
+    <div *ngIf="!mostrandoRespuestas">
+      <div class="comentario" *ngFor="let comentario of comentarios">
+        <div class="comentario-header">
+          <strong>{{ comentario.autor }}</strong>
+        </div>
+        <p>{{ comentario.mensaje }}</p>
+        <div class="comentario-actions">
+          <span class="respuestas-count">
+            <i class="bi bi-hand-thumbs-up"></i> {{ comentario.likes }}
+          </span>
+          <span class="respuestas-count" (click)="verRespuestas(comentario)" style="cursor:pointer;">
+            <i class="bi bi-reply-fill"></i> {{ comentario.respuestas }}
+          </span>
+          <button class="btn-responder" (click)="verRespuestas(comentario)">Responder</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- LISTA DE RESPUESTAS -->
+    <div *ngIf="mostrandoRespuestas">
+      <!-- Comentario original destacado -->
+      <div class="comentario comentario-principal">
+        <div class="comentario-header">
+          <strong>{{ comentarioSeleccionado?.autor }}</strong>
+        </div>
+        <p>{{ comentarioSeleccionado?.mensaje }}</p>
+        <div class="comentario-actions">
+          <span><i class="bi bi-hand-thumbs-up"></i> {{ comentarioSeleccionado?.likes }}</span>
+          <span><i class="bi bi-reply-fill"></i> {{ comentarioSeleccionado?.respuestas }}</span>
+        </div>
+      </div>
+
+      <!-- Respuestas -->
+      <div class="comentario respuesta" *ngFor="let respuesta of respuestasEjemplo">
+        <div class="comentario-header">
+          <strong>{{ respuesta.autor }}</strong>
+        </div>
+        <p>{{ respuesta.mensaje }}</p>
+      </div>
+
+    </div>
+
+    <!-- BARRA DE COMENTAR -->
+    <div class="comentar-barra">
+      <input type="text" placeholder="Escribe tu comentario..." />
+      <button class="btn-comentar">
+        <i class="bi bi-reply-all-fill"></i> Comentar
+      </button>
+    </div>
+    <!-- BOTÓN VOLVER (solo aparece si estás viendo respuestas) -->
+<button class="btn-volver" *ngIf="mostrandoRespuestas" (click)="volverAComentarios()">
+  <i class="bi bi-arrow-left-circle"></i> Volver a comentarios
+</button>
+  </div>
+</div>
+
+
+
+
+  <!-- POST 2 -->
+  <div class="card-post">
+    <img src="/ken.gif" alt="CarmenDelgado" class="avatar" />
+    <div class="content">
+      <div class="header">
+        <span class="username">CarmenDelgado</span>
+        <span class="time">Hace 3 horas</span>
+      </div>
+      <p>¡Estoy emocionada de anunciar que comenzaré con mis sesiones de fisioterapia la próxima semana!</p>
+      <div class="actions">
+        <i class="bi bi-hand-thumbs-up"></i><span>21</span>
+        <i class="bi bi-chat-left-text-fill" (click)="abrirModal()"></i><span>8</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- POST 3 CON IMAGEN -->
+  <div class="card-post">
+    <img src="/ken.gif" alt="JavierMorales" class="avatar" />
+    <div class="content with-image">
+      <div class="header">
+        <span class="username">JavierMorales</span>
+        <span class="time">Hace 2 días</span>
+      </div>
+      <p>5 consejos para reducir el estrés:<br>
+        • Sal a caminar.<br>
+        • Disfruta de la naturaleza.<br>
+        • Lleva un diario.<br>
+        • Medita.<br>
+        • Descansa bien.
+      </p>
+      <img src="/sqz.jpg" alt="Imagen del post" class="post-image" />
+      <div class="actions">
+        <i class="bi bi-hand-thumbs-up-fill"></i><span>25</span>
+        <i class="bi bi-chat-left-text-fill"></i><span>9</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- POST 4 NUEVO -->
+  <div class="card-post">
+    <img src="/ken.gif" alt="MariaTorres" class="avatar" />
+    <div class="content">
+      <div class="header">
+        <span class="username">MariaTorres</span>
+        <span class="time">Hace 5 horas</span>
+      </div>
+      <p>Hoy empecé yoga por primera vez. ¡Me sentí increíble después de la sesión!</p>
+      <div class="actions">
+        <i class="bi bi-hand-thumbs-up-fill"></i><span>12</span>
+        <i class="bi bi-chat-left-text-fill"></i><span>2</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- POST 5 NUEVO -->
+  <div class="card-post">
+    <img src="/ken.gif" alt="PabloGomez" class="avatar" />
+    <div class="content">
+      <div class="header">
+        <span class="username">PabloGomez</span>
+        <span class="time">Hace 1 día</span>
+      </div>
+      <p>Comencé a llevar un diario de gratitud. Es sorprendente cómo mejora mi estado de ánimo.</p>
+      <div class="actions">
+        <i class="bi bi-hand-thumbs-up-fill"></i><span>19</span>
+        <i class="bi bi-chat-left-text-fill"></i><span>6</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<app-footer></app-footer>

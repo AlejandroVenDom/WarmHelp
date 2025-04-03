@@ -1,0 +1,12 @@
+div {
+  max-width: 100%;
+}
+
+
+.graphic-container {
+
+  > div {
+    height: 500px;
+  }
+
+}

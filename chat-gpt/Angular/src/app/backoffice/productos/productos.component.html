@@ -1,0 +1,51 @@
+<div class="productos-container">
+  <h2>Mis Productos</h2>
+
+  <!-- Botón para abrir modal -->
+  <button class="btn btn-primary" (click)="openModal()">Añadir Producto</button>
+
+  <!-- Modal de Creación de Producto -->
+  <div class="modal" [ngClass]="{'show': showModal}">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h2>Añadir Producto</h2>
+
+      <form (ngSubmit)="createProduct()">
+        <label>Nombre:</label>
+        <input type="text" [(ngModel)]="newProduct.name" name="name" required>
+
+        <label>Descripción:</label>
+        <textarea [(ngModel)]="newProduct.description" name="description"></textarea>
+
+        <label>Precio:</label>
+        <input type="number" [(ngModel)]="newProduct.price" name="price" required>
+
+        <label>Impuesto:</label>
+        <input type="number" [(ngModel)]="newProduct.tax" name="tax" required>
+
+        <label>Moneda:</label>
+        <select [(ngModel)]="newProduct.currency" name="currency">
+          <option value="USD">USD</option>
+          <option value="EUR">EUR</option>
+        </select>
+
+        <label>Imagen:</label>
+        <input type="file" (change)="onFileSelected($event)">
+
+        <button type="submit" class="btn btn-success">Guardar Producto</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Lista de productos -->
+  <div class="product-list">
+    <div *ngFor="let product of userProducts" class="product-card">
+      <h4>{{ product.name }}</h4>
+      <p>{{ product.description }}</p>
+      <p>Precio: {{ product.price }} {{ product.currency }}</p>
+      <p>Vendedor: <strong>{{ product.sellerUsername }}</strong></p>
+      <img *ngIf="product.image" [src]="'data:image/png;base64,' + product.image" alt="Imagen del producto">
+      <button class="btn btn-danger" (click)="deleteProduct(product.id)">Eliminar</button>
+    </div>
+  </div>
+</div>
