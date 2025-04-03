@@ -25,7 +25,7 @@ public class UserInfo {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String first_name;
 
     @Column(nullable = false)
@@ -37,7 +37,7 @@ public class UserInfo {
     @Column(nullable = true)
     private String mySelf_description;
 
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private String number;
 
     public String getEmail() {
