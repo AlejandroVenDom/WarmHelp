@@ -1,0 +1,77 @@
+.footer {
+  background-color: #3A7D44;
+  padding: 2rem 3rem;
+  color: #F8F5E9;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  text-align: center;
+}
+
+// Redes sociales
+.icon-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+
+  .icon-container {
+    background: #9DC08B;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+
+    i {
+      color: #F8F5E9;
+      font-size: 1.2rem;
+      transition: 0.3s;
+    }
+
+    &:hover {
+      background-color: #DF6D14;
+
+      i {
+        color: white;
+      }
+    }
+  }
+}
+
+// Información de contacto
+.contact-info {
+  font-size: 0.95rem;
+  line-height: 1.5;
+
+  a {
+    color: #F8F5E9;
+    text-decoration: underline;
+    font-weight: 500;
+
+    &:hover {
+      color: #DF6D14;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    padding: 2rem 1rem;
+  }
+
+  .icon-group {
+    margin-bottom: 1rem;
+  }
+
+  .contact-info {
+    font-size: 0.9rem;
+  }
+}

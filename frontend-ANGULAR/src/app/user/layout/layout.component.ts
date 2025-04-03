@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { HeaderClienteComponent } from '../header-cliente/header-cliente.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-layout',

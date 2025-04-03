@@ -5,14 +5,22 @@ import { HomeNoAuthComponent } from './user/home-no-auth/home-no-auth.component'
 import { LoginComponent} from './user/login/login.component';
 import { RegisterComponent } from './user/register/register.component';
 import { BackofficeAdminComponent } from './admin/backoffice-admin/backoffice-admin.component';
+import { InicioComponent } from './user/inicio/inicio.component';
+import { PostsComponent } from './user/posts/posts.component';
+import { TiendaComponent } from './user/tienda/tienda.component';
+import { publicGuard } from './services/auth/guards/public.guard';
+import { authGuard } from './services/auth/guards/auth.guard';
 
 const routes: Routes = [
   // users without authentication
   {
     path: '', component:LayoutComponent, children:[
-      { path: '', component: HomeNoAuthComponent },
-      { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent }
+      { path: '',component: InicioComponent},
+      { path: 'perfil', component: HomeNoAuthComponent, canActivate: [authGuard] },
+      { path: 'login', component: LoginComponent, canActivate: [publicGuard] },
+      { path: 'register', component: RegisterComponent, canActivate: [publicGuard] },
+      { path: 'posts', component: PostsComponent, canActivate: [authGuard] },
+      { path: 'tienda', component: TiendaComponent , canActivate: [authGuard] }
     ],
   },
 

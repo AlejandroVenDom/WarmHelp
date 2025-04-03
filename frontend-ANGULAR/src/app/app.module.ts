@@ -10,6 +10,11 @@ import { RegisterComponent } from './user/register/register.component';
 import { HomeNoAuthComponent } from './user/home-no-auth/home-no-auth.component';
 import { LayoutComponent } from './user/layout/layout.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HeaderClienteComponent } from './user/header-cliente/header-cliente.component';
+import { InicioComponent } from './user/inicio/inicio.component';
+import { FooterComponent } from './user/footer/footer.component';
+import { TiendaComponent } from './user/tienda/tienda.component';
+import { PostsComponent } from './user/posts/posts.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +23,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     LoginComponent,
     RegisterComponent,
     HomeNoAuthComponent,
-    LayoutComponent
+    LayoutComponent,
+    HeaderClienteComponent,
+    InicioComponent,
+    FooterComponent,
+    TiendaComponent,
+    PostsComponent
   ],
   imports: [
     BrowserModule,
