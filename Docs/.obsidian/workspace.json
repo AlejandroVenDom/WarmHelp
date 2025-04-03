@@ -11,10 +11,14 @@
             "id": "160b5888765b32d9",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "git-commands-v1.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "Nueva pestaña"
+              "title": "git-commands-v1"
             }
           }
         ]
@@ -164,8 +168,12 @@
       "command-palette:Abrir paleta de comandos": false
     }
   },
-  "active": "160b5888765b32d9",
+  "active": "9fc028b7cd7868d5",
   "lastOpenFiles": [
+    "Chat con WebSocket en Spring Boot y Angular/Resumen.md",
+    "Chat con WebSocket en Spring Boot y Angular/FrontEnd.md",
+    "Chat con WebSocket en Spring Boot y Angular/BackEnd.md",
+    "Chat con WebSocket en Spring Boot y Angular",
     "git-commands-v1.md",
     "WarmHelp.md",
     "Comandos Básicos Git.md",
