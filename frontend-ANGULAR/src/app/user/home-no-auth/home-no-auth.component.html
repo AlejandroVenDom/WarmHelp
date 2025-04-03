@@ -1,4 +1,41 @@
-<h1>prueba</h1>
-<p>{{role}}</p>
-<p>{{email}}</p>
-<p>{{username}}</p>
+<h1>Prueba de conexión de datos</h1>
+<p>Rol: {{role}}</p>
+<p>Email: {{email}}</p>
+<p>Username: {{username}}</p>
+<p>Direccion: {{address}}</p>
+<p>Tfno: {{number}}</p>
+<p>Nombre: {{first_name}}</p>
+<p>Apellidos: {{last_name}}</p>
+<p>Descripcion: {{mySelf_description}}</p>
+
+<div *ngIf="comments && comments.length > 0" class="container border">
+    <h3>Comentarios Realizados por el usuario {{username}}</h3>
+    <div *ngFor="let comment of comments">
+      <div class="border container">
+        <p></p>
+        <p><strong>Comentario:</strong> {{ comment.description }}</p>
+        <p><strong>Creado el:</strong> {{ comment.createdAt }}</p>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="posts && posts.length > 0" class="container border ">
+    <h3>Posts creados por el usuario {{username}}:</h3>
+    <div *ngFor="let post of posts" class="container border border-5">
+      <div>
+        <h4>{{ post.title }}</h4>
+        <p><strong>Descripción:</strong> {{ post.description }}</p>
+        <p><strong>Creado el:</strong> {{ post.createdAt }}</p>
+        
+        <!-- Mostrar comentarios de otros usuarios asociados a este post -->
+        <div *ngIf="post.comments && post.comments.length > 0" class="container border">
+          <h5>Comentarios del Post:</h5>
+          <div *ngFor="let comment of post.comments" class="container border">
+            <p><strong>Comentario:</strong> {{ comment.description }}</p>
+            <p><strong>Creado el:</strong> {{ comment.createdAt }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -7,7 +7,7 @@ export interface UserInterface{
     address: string,
     number: string,
     email: string,
-    mySelf_description: string
+    mySelf_description?: string
 }
 
 export type LoginInterface = Pick<UserInterface, "username"|"password">

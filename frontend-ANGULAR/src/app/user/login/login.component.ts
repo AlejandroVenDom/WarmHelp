@@ -47,18 +47,19 @@ export class LoginComponent {
 
           setTimeout(() => {
             this.tokenService.saveTokens(data.token, '234325423423');
-            this.useStateService.save(
-              data.username,
-              data.first_name,
-              data.last_name,
-              data.address,
-              data.number,
-              data.email,
-              data.mySelf_description,
-              data.comments,
-              data.posts,
-              data.role
-            );
+            this.useStateService.save({
+              username: data.username,
+              first_name: data.first_name,
+              last_name: data.last_name,
+              address: data.address,
+              number: data.number,
+              email: data.email,
+              mySelf_description: data.mySelf_description,
+              comments: data.comments,
+              posts: data.posts,
+              role: data.role
+            });
+            
             this.router.navigate(['']);
           }, 1500);
         },

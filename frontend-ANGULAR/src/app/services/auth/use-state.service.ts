@@ -1,18 +1,26 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UseStateService {
-
   private readonly USER_KEY = 'warmhelp_user';
 
-  constructor() { }
+  constructor() {}
 
-  save(username: string, role: string, first_name: string, last_name: string, address: string, number: string, email: string, mySelf_description: string, comments: any[], posts: any[]): void {
-    sessionStorage.setItem(this.USER_KEY, JSON.stringify({
-      username, role, first_name, last_name, address, number, email, mySelf_description, comments, posts
-    }));
+  save(userData: {
+    username: string;
+    first_name: string;
+    last_name: string;
+    address: string;
+    number: string;
+    email: string;
+    mySelf_description: string;
+    comments: any[];
+    posts: any[];
+    role: string;
+  }): void {
+    sessionStorage.setItem(this.USER_KEY, JSON.stringify(userData));
   }
 
   getUsername(): string | null {
