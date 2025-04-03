@@ -4,10 +4,7 @@ import com.warmhelp.app.dtos.auth.CheckTokenRequest;
 import com.warmhelp.app.dtos.auth.LoginRequest;
 import com.warmhelp.app.dtos.auth.LoginResponse;
 import com.warmhelp.app.dtos.auth.RegisterRequest;
-import com.warmhelp.app.models.Comments;
-import com.warmhelp.app.models.Role;
-import com.warmhelp.app.models.User;
-import com.warmhelp.app.models.UserInfo;
+import com.warmhelp.app.models.*;
 import com.warmhelp.app.repositories.*;
 import com.warmhelp.app.security.JwtUtil;
 import jakarta.transaction.Transactional;
@@ -135,10 +132,24 @@ public class UserService implements UserDetailsService {
             throw new BadCredentialsException("Invalid Password");
         }
 
+        UserInfo userInfo = this.userInfoRepository.findByUser(user).orElseThrow(
+                () -> new IllegalArgumentException("User info not found")
+        );
+
         LoginResponse loginData = new LoginResponse();
         loginData.setUsername(credentials.getUsername());
         loginData.setRole(user.getRole().getRoleType());
         loginData.setToken(this.jwtUtil.generateToken(credentials.getUsername()));
+        loginData.setFirst_name(userInfo.getFirst_name());
+        loginData.setLast_name(userInfo.getLast_name());
+        loginData.setAddress(userInfo.getAddress());
+        loginData.setNumber(userInfo.getNumber());
+        loginData.setEmail(userInfo.getEmail());
+        loginData.setMySelf_description(userInfo.getMySelf_description());
+        loginData.setPosts(userInfo.getPosts());
+        loginData.setComments(userInfo.getComments());
+
+
 
         return loginData;
     }

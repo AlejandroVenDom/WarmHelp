@@ -40,19 +40,24 @@ export class LoginComponent {
       .login(this.loginForm.value as LoginInterface)
       .subscribe({
         next: (data) => {
+
+          console.log("Datos recibidos del backend:", data);
+
           // popuService aqui
 
           setTimeout(() => {
             this.tokenService.saveTokens(data.token, '234325423423');
             this.useStateService.save(
               data.username,
-              data.roleType,
               data.first_name,
               data.last_name,
               data.address,
               data.number,
               data.email,
-              data.mySelf_description
+              data.mySelf_description,
+              data.comments,
+              data.posts,
+              data.role
             );
             this.router.navigate(['']);
           }, 1500);
