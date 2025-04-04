@@ -77,7 +77,7 @@ export class LoginComponent {
               'success'
             );
 
-            this.router.navigate(['']);
+            this.router.navigate(['/perfil']);
           }, 1000);
         },
         error: (err) => {

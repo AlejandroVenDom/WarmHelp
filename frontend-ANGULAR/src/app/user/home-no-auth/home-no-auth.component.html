@@ -77,7 +77,7 @@
       </div>
     </div>
 <!-- SOLO si el usuario es PROFESSIONAL -->
-<div *ngIf="role === 'PROFESSIONAL'" class="servicios-card">
+<div *ngIf="role === 'PROFESSIONAL' || role === 'ADMIN'" class="servicios-card">
   <h4><i class="bi bi-heart-pulse-fill"></i> Servicios Ofrecidos</h4>
   <div class="servicio">
     <h5>Terapia individual</h5>
