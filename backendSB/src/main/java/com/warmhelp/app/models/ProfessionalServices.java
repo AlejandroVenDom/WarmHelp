@@ -3,7 +3,6 @@ package com.warmhelp.app.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,42 +13,53 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "comments")
+@Table(name = "professional_services")
 @Getter
 @Setter
-public class Comments {
+public class ProfessionalServices {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
-    private String description;
 
     @ManyToOne
     @JoinColumn(name = "userInfo_id", nullable = false)
     @JsonBackReference
     private UserInfo userInfo;
 
-    @OneToMany(mappedBy = "comments", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<ResponseComments> responseComments = new ArrayList<>();
-
     @ManyToOne
-    @JoinColumn(name = "post_id", nullable = false)
-    @JsonBackReference
-    private Posts post;
+    @JoinColumn(name = "currency_id", nullable = false)
+    private Currency currency;
+
+    @Column(nullable = false, length = 255)
+    private String title;
+
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String description;
+
+    @Column(length = 512)
+    private String image;
+
+    @Column(nullable = false)
+    private double price;
+
+    @Column(nullable = false)
+    private int tax;
 
     @CreationTimestamp
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDateTime updatedAt;
 
     @Column(nullable = true)
     private LocalDateTime deletedAt;
+
+    @OneToMany(mappedBy = "professionalServices", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Reviews> reviews = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -57,6 +67,30 @@ public class Comments {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -67,20 +101,28 @@ public class Comments {
         this.description = description;
     }
 
-    public Posts getPost() {
-        return post;
+    public String getImage() {
+        return image;
     }
 
-    public void setPost(Posts post) {
-        this.post = post;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public UserInfo getUserInfo() {
-        return userInfo;
+    public double getPrice() {
+        return price;
     }
 
-    public void setUserInfo(UserInfo userInfo) {
-        this.userInfo = userInfo;
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getTax() {
+        return tax;
+    }
+
+    public void setTax(int tax) {
+        this.tax = tax;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -105,5 +147,13 @@ public class Comments {
 
     public void setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    public List<Reviews> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Reviews> reviews) {
+        this.reviews = reviews;
     }
 }
