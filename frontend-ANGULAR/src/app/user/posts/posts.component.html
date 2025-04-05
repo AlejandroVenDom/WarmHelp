@@ -1,1 +1,77 @@
-<p>posts works!</p>
+<div class="publicaciones-container">
+  <h2>PUBLICACIONES RECIENTES</h2>
+
+  <div class="acciones-posts">
+    <div class="buscador-posts">
+      <i class="bi bi-search"></i>
+      <input type="text" placeholder="Buscar publicaciones..." />
+    </div>
+
+    <button class="btn-publicar" (click)="abrirModal()">
+      <i class="bi bi-plus-circle-fill"></i>
+      Publicar
+    </button>
+  </div>
+
+  <!-- LISTA DE POSTS -->
+  <div class="card-post" *ngFor="let post of posts">
+    <img src="/default-avatar.jpg" class="avatar" />
+    <div class="content" [ngClass]="{ 'with-image': post.image }">
+      <div class="header">
+        <span class="username">{{ post.userInfo?.user?.username || 'Usuario' }}</span>
+        <span class="time">{{ post.createdAt | date:'medium' }}</span>
+      </div>
+      <p>{{ post.description }}</p>
+      <img *ngIf="post.image" [src]="post.image" class="post-image" />
+      <div class="actions">
+        <i class="bi bi-hand-thumbs-up"></i><span>0</span>
+        <i class="bi bi-chat-left-text-fill"></i><span>{{ post.comments?.length || 0 }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL NUEVO POST -->
+  <div *ngIf="modalVisible" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" (click)="cerrarModal()">
+        <i class="bi bi-x-lg"></i>
+      </span>
+
+      <h3>Crear nueva publicación</h3>
+
+      <div class="form-group">
+        <label for="titulo">Título</label>
+        <input
+          id="titulo"
+          type="text"
+          [(ngModel)]="nuevoPost.title"
+          placeholder="Escribe el título..."
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="descripcion">Descripción</label>
+        <textarea
+          id="descripcion"
+          rows="4"
+          [(ngModel)]="nuevoPost.description"
+          placeholder="Comparte tu experiencia, consejo o pregunta..."
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="imagen">URL de imagen (opcional)</label>
+        <input
+          id="imagen"
+          type="text"
+          [(ngModel)]="nuevoPost.image"
+          placeholder="https://..."
+        />
+      </div>
+
+      <button class="btn-publicar-modal" (click)="publicarPost()">
+        <i class="bi bi-send-fill"></i> Publicar
+      </button>
+    </div>
+  </div>
+</div>
