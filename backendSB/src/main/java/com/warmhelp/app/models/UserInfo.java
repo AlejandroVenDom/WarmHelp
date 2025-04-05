@@ -103,6 +103,22 @@ public class UserInfo {
     @Column(nullable = true)
     private LocalDateTime deletedAt;
 
+    public List<ProfessionalServices> getProfessionalServices() {
+        return professionalServices;
+    }
+
+    public void setProfessionalServices(List<ProfessionalServices> professionalServices) {
+        this.professionalServices = professionalServices;
+    }
+
+    public List<Reviews> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Reviews> reviews) {
+        this.reviews = reviews;
+    }
+
     public Long getId() {
         return id;
     }

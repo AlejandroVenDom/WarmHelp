@@ -67,8 +67,13 @@ export class LoginComponent {
               email: data.email,
               mySelf_description: data.mySelf_description,
               comments: data.comments,
-              posts: data.posts
+              posts: data.posts,
+              professionalServices: data.professionalServices,
+              reviews: data.reviews,
+              responseComments: data.responseComments
             });
+
+            console.log(data);
 
             this.popupService.close();
             this.popupService.showMessage(

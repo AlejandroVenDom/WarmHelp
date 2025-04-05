@@ -148,6 +148,9 @@ public class UserService implements UserDetailsService {
         loginData.setMySelf_description(userInfo.getMySelf_description());
         loginData.setPosts(userInfo.getPosts());
         loginData.setComments(userInfo.getComments());
+        loginData.setResponseComments(userInfo.getResponseComments());
+        loginData.setProfessionalServices(userInfo.getProfessionalServices());
+        loginData.setReviews(userInfo.getReviews());
 
 
 

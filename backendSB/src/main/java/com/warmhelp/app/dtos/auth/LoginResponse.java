@@ -1,8 +1,7 @@
 package com.warmhelp.app.dtos.auth;
 
 import com.warmhelp.app.enums.RoleType;
-import com.warmhelp.app.models.Comments;
-import com.warmhelp.app.models.Posts;
+import com.warmhelp.app.models.*;
 
 import java.util.List;
 
@@ -30,6 +29,33 @@ public class LoginResponse {
         private String mySelf_description;
         private List<Comments> comments;
         private List<Posts> posts;
+        private List<ProfessionalServices> professionalServices;
+        private List<Reviews> reviews;
+        private List<ResponseComments> responseComments;
+
+    public List<ProfessionalServices> getProfessionalServices() {
+        return professionalServices;
+    }
+
+    public void setProfessionalServices(List<ProfessionalServices> professionalServices) {
+        this.professionalServices = professionalServices;
+    }
+
+    public List<Reviews> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Reviews> reviews) {
+        this.reviews = reviews;
+    }
+
+    public List<ResponseComments> getResponseComments() {
+        return responseComments;
+    }
+
+    public void setResponseComments(List<ResponseComments> responseComments) {
+        this.responseComments = responseComments;
+    }
 
     public List<Comments> getComments() {
         return comments;

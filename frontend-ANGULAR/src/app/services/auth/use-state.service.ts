@@ -18,10 +18,15 @@ export class UseStateService {
     mySelf_description: string;
     comments: any[];
     posts: any[];
+    professionalServices: any[];
+    reviews: any[];
+    responseComments: any[];
     role: string;
   }): void {
     sessionStorage.setItem(this.USER_KEY, JSON.stringify(userData));
   }
+
+  
 
   getUsername(): string | null {
     const session = this.getSession();
@@ -71,6 +76,21 @@ export class UseStateService {
   getPosts(): any[] {
     const session = this.getSession();
     return session ? session.posts : [];
+  }
+
+  getProfessionalServices(): any[] {
+    const session = this.getSession();
+    return session ? session.professionalServices : [];
+  }
+
+  getReviews(): any[] {
+    const session = this.getSession();
+    return session ? session.reviews : [];
+  }
+
+  getResponseComments(): any[] {  
+    const session = this.getSession();
+    return session ? session.responseComments : [];
   }
 
   removeSession(): void {
