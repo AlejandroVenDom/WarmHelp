@@ -60,7 +60,9 @@ public class SecurityConfiguration {
                                 "/responseComments",
                                 "/responseComments/registerResponseComment",
                                 "/professionalServices",
-                                "/professionalServices/registerService"
+                                "/professionalServices/registerService",
+                                "/reviews",
+                                "/reviews/registerReview"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
