@@ -21,6 +21,9 @@ export class PerfilComponent implements OnInit {
   first_name: string | null = null;
   last_name: string | null = null;
   mySelf_description: string | null = null;
+  responseComments: any[] = [];
+  professionalServices: any[] = [];
+  reviews: any[] = [];
 
   constructor(
     private useStateService: UseStateService,
@@ -40,6 +43,10 @@ export class PerfilComponent implements OnInit {
     this.first_name = this.useStateService.getFirstName();
     this.last_name = this.useStateService.getLastName();
     this.mySelf_description = this.useStateService.getMySelfDescription();
+    this.responseComments = this.useStateService.getResponseComments();
+    this.professionalServices = this.useStateService.getProfessionalServices();
+    this.reviews = this.useStateService.getReviews();
+
   }
 
   async logout() {

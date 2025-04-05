@@ -38,14 +38,14 @@
 
     <!-- Derecha: Comentarios -->
     <div class="resenas-card">
-      <h4><i class="bi bi bi-star-half"></i>Reseñas recibidas</h4>
-      <div *ngIf="comments.length === 0" class="resena">Aún no has recibido reseñas.</div>
-      <div *ngFor="let comment of comments" class="resena">
+      <h4><i class="bi bi bi-star-half"></i> Reseñas recibidas</h4>
+      <div *ngIf="reviews.length === 0" class="resena">Aún no has recibido reseñas.</div>
+      <div *ngFor="let review of reviews" class="resena">
         <div class="resena-header">
           <strong>{{ username }}</strong>
-          <span>{{ comment.createdAt | date:'longDate' }}</span>
+          <span>{{ review.createdAt | date:'longDate' }}</span>
         </div>
-        <p>{{ comment.description }}</p>
+        <p>{{ review.description }}</p>
       </div>
     </div>
   </div>
@@ -76,20 +76,15 @@
         </div>
       </div>
     </div>
-<!-- SOLO si el usuario es PROFESSIONAL -->
-<div *ngIf="role === 'PROFESSIONAL' || role === 'ADMIN'" class="servicios-card">
-  <h4><i class="bi bi-heart-pulse-fill"></i> Servicios Ofrecidos</h4>
-  <div class="servicio">
-    <h5>Terapia individual</h5>
-    <p>Trato personalizado para mejorar tu bienestar emocional.</p>
-    <span class="precio">50€/sesión</span>
-  </div>
-  <div class="servicio">
-    <h5>Terapia online</h5>
-    <p>Sesiones por videollamada cómodas desde casa.</p>
-    <span class="precio">45€/sesión</span>
-  </div>
-</div>
-  </div>
-</div>
 
+    <!-- SOLO si el usuario es PROFESSIONAL -->
+    <div *ngIf="role === 'PROFESSIONAL' || role === 'ADMIN'" class="servicios-card">
+      <h4><i class="bi bi-heart-pulse-fill"></i> Servicios Ofrecidos</h4>
+      <div *ngFor="let service of professionalServices" class="servicio">
+        <h5>{{ service.name }}</h5>
+        <p>{{ service.description }}</p>
+        <span class="precio">{{ service.price | currency:'EUR' }}</span>
+      </div>
+    </div>
+  </div>
+</div>
