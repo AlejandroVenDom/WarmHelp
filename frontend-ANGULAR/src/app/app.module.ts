@@ -15,6 +15,7 @@ import { InicioComponent } from './user/inicio/inicio.component';
 import { FooterComponent } from './user/footer/footer.component';
 import { TiendaComponent } from './user/tienda/tienda.component';
 import { PostsComponent } from './user/posts/posts.component';
+import { PerfilComponent } from './user/perfil/perfil.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { PostsComponent } from './user/posts/posts.component';
     InicioComponent,
     FooterComponent,
     TiendaComponent,
-    PostsComponent
+    PostsComponent,
+    PerfilComponent
   ],
   imports: [
     BrowserModule,

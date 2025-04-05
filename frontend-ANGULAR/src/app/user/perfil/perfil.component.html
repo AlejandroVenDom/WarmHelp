@@ -1,0 +1,95 @@
+<div class="perfil-container">
+  <h2 class="title">Mi Perfil</h2>
+
+  <div class="perfil-grid">
+    <!-- Izquierda: Info usuario -->
+    <div class="perfil-card">
+      <div class="avatar-section">
+        <img src="/ken.gif" alt="Avatar del usuario" class="avatar">
+        <button class="btn-editar"><i class="bi bi-pencil-fill"></i></button>
+      </div>
+
+      <div class="info-section">
+        <h3 class="nombre">{{ first_name }} {{ last_name }}</h3>
+        <p class="username"><i class="bi bi-person-fill"></i> {{ username }}</p>
+        <p class="email"><i class="bi bi-envelope-fill"></i> {{ email }}</p>
+        <p class="telefono"><i class="bi bi-telephone-fill"></i> {{ number }}</p>
+        <p class="direccion"><i class="bi bi-geo-alt-fill"></i> {{ address }}</p>
+        <p class="rol"><i class="bi bi-award-fill"></i> {{ role }}</p>
+      </div>
+
+      <div class="descripcion">
+        <p>{{ mySelf_description }}</p>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn-cambiar-pass">
+          <i class="bi bi-key-fill"></i> Cambiar contraseña
+        </button>
+        <button class="btn-actualizar">
+          <i class="bi bi-gear-fill"></i> Modificar perfil
+        </button>
+        <!-- Cerrar sesión -->
+      </div>
+      <button class="btn-logout" (click)="logout()">
+        <i class="bi bi-box-arrow-right"></i> Salir
+      </button>
+    </div>
+
+    <!-- Derecha: Comentarios -->
+    <div class="resenas-card">
+      <h4><i class="bi bi bi-star-half"></i>Reseñas recibidas</h4>
+      <div *ngIf="comments.length === 0" class="resena">Aún no has recibido reseñas.</div>
+      <div *ngFor="let comment of comments" class="resena">
+        <div class="resena-header">
+          <strong>{{ username }}</strong>
+          <span>{{ comment.createdAt | date:'longDate' }}</span>
+        </div>
+        <p>{{ comment.description }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Segunda fila: Posts -->
+  <div class="perfil-grid-secundaria">
+    <div class="posts-card">
+      <h4><i class="bi bi-journal-richtext"></i> Publicaciones</h4>
+
+      <div *ngIf="posts.length === 0">Aún no has creado publicaciones.</div>
+      <div *ngFor="let post of posts" class="post">
+        <img src="/ans.jpg" alt="Imagen del post">
+        <div class="contenido">
+          <h5>{{ post.title }}</h5>
+          <p class="fecha">{{ post.createdAt | date:'longDate' }}</p>
+          <p class="resumen">{{ post.description }}</p>
+
+          <div *ngIf="post.comments?.length > 0" class="resenas">
+            <h6><i class="bi bi-chat-left-text-fill"></i> Comentarios del post</h6>
+            <div *ngFor="let c of post.comments" class="resena">
+              <div class="resena-header">
+                <strong>Usuario</strong>
+                <span>{{ c.createdAt | date:'medium' }}</span>
+              </div>
+              <p>{{ c.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- SOLO si el usuario es PROFESSIONAL -->
+<div *ngIf="role === 'PROFESSIONAL' || role === 'ADMIN'" class="servicios-card">
+  <h4><i class="bi bi-heart-pulse-fill"></i> Servicios Ofrecidos</h4>
+  <div class="servicio">
+    <h5>Terapia individual</h5>
+    <p>Trato personalizado para mejorar tu bienestar emocional.</p>
+    <span class="precio">50€/sesión</span>
+  </div>
+  <div class="servicio">
+    <h5>Terapia online</h5>
+    <p>Sesiones por videollamada cómodas desde casa.</p>
+    <span class="precio">45€/sesión</span>
+  </div>
+</div>
+  </div>
+</div>
+

@@ -10,13 +10,14 @@ import { PostsComponent } from './user/posts/posts.component';
 import { TiendaComponent } from './user/tienda/tienda.component';
 import { publicGuard } from './services/auth/guards/public.guard';
 import { authGuard } from './services/auth/guards/auth.guard';
+import { PerfilComponent } from './user/perfil/perfil.component';
 
 const routes: Routes = [
   // users without authentication
   {
     path: '', component:LayoutComponent, children:[
-      { path: '',component: InicioComponent},
-      { path: 'perfil', component: HomeNoAuthComponent, canActivate: [authGuard] },
+      { path: '',component: HomeNoAuthComponent},
+      { path: 'perfil', component: PerfilComponent, canActivate: [authGuard] },
       { path: 'login', component: LoginComponent, canActivate: [publicGuard] },
       { path: 'register', component: RegisterComponent, canActivate: [publicGuard] },
       { path: 'posts', component: PostsComponent, canActivate: [authGuard] },
