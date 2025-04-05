@@ -1,0 +1,37 @@
+package com.warmhelp.app.controllers;
+
+import com.warmhelp.app.dtos.auth.ProfessionalServicesRequest;
+import com.warmhelp.app.models.ProfessionalServices;
+import com.warmhelp.app.services.ProfessionalServicesService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/professionalServices")
+@CrossOrigin("*")
+public class ProfessionalServicesController {
+    private final ProfessionalServicesService professionalServicesService;
+
+    public ProfessionalServicesController(ProfessionalServicesService professionalServicesService) {
+        this.professionalServicesService = professionalServicesService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ProfessionalServices>> getAllProfessionalServices(){
+        return ResponseEntity.ok(this.professionalServicesService.getAllProfessionalServices());
+    }
+
+    @PostMapping("/registerService")
+    public ResponseEntity<?> registerProfessionalService(@RequestBody ProfessionalServicesRequest professionalServicesRequest){
+        try {
+            ProfessionalServices professionalServices = this.professionalServicesService.createProfessionalService(professionalServicesRequest);
+            return ResponseEntity.ok(professionalServices);
+        }
+        catch (IllegalArgumentException e){
+            return ResponseEntity.status(401).body(e.getMessage());
+        }
+    }
+
+}

@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,10 +42,10 @@ public class ProfessionalServices {
     private String image;
 
     @Column(nullable = false)
-    private double price;
+    private BigDecimal price;
 
     @Column(nullable = false)
-    private int tax;
+    private Double tax;
 
     @CreationTimestamp
     @Column(nullable = false)
@@ -109,19 +110,19 @@ public class ProfessionalServices {
         this.image = image;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public int getTax() {
+    public Double getTax() {
         return tax;
     }
 
-    public void setTax(int tax) {
+    public void setTax(Double tax) {
         this.tax = tax;
     }
 
