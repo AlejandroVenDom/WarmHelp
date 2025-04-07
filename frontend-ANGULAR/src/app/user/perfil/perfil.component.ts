@@ -41,9 +41,8 @@ export class PerfilComponent implements OnInit {
     this.address = this.useStateService.getAddress();
     this.number = this.useStateService.getNumber();
     this.comments = this.useStateService.getComments();
-    this.postService.getAllPosts().subscribe((allPosts) => {
-      this.posts = allPosts.filter(p => p.userInfo?.user?.username === this.username);
-    });
+    this.posts = this.useStateService.getPosts();
+
     this.first_name = this.useStateService.getFirstName();
     this.last_name = this.useStateService.getLastName();
     this.mySelf_description = this.useStateService.getMySelfDescription();
