@@ -1,6 +1,7 @@
 package com.warmhelp.app.controllers;
 
 import com.warmhelp.app.dtos.auth.ProfessionalServicesRequest;
+import com.warmhelp.app.dtosResponses.ProfessionalServiceResponseDTO;
 import com.warmhelp.app.models.ProfessionalServices;
 import com.warmhelp.app.services.ProfessionalServicesService;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +20,14 @@ public class ProfessionalServicesController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProfessionalServices>> getAllProfessionalServices(){
+    public ResponseEntity<List<ProfessionalServiceResponseDTO>> getAllProfessionalServices(){
         return ResponseEntity.ok(this.professionalServicesService.getAllProfessionalServices());
     }
 
     @PostMapping("/registerService")
     public ResponseEntity<?> registerProfessionalService(@RequestBody ProfessionalServicesRequest professionalServicesRequest){
         try {
-            ProfessionalServices professionalServices = this.professionalServicesService.createProfessionalService(professionalServicesRequest);
+            ProfessionalServiceResponseDTO professionalServices = this.professionalServicesService.createProfessionalService(professionalServicesRequest);
             return ResponseEntity.ok(professionalServices);
         }
         catch (IllegalArgumentException e){

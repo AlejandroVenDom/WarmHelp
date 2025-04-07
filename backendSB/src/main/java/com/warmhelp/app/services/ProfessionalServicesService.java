@@ -1,6 +1,8 @@
 package com.warmhelp.app.services;
 
 import com.warmhelp.app.dtos.auth.ProfessionalServicesRequest;
+import com.warmhelp.app.dtosResponses.ProfessionalServiceResponseDTO;
+import com.warmhelp.app.dtosResponses.ReviewResponseDTO;
 import com.warmhelp.app.models.Currency;
 import com.warmhelp.app.models.ProfessionalServices;
 import com.warmhelp.app.models.UserInfo;
@@ -29,8 +31,36 @@ public class ProfessionalServicesService {
         this.currencyRepository = currencyRepository;
     }
 
-    public List<ProfessionalServices> getAllProfessionalServices(){
-        return this.professionalServicesRepository.findAll();
+    public List<ProfessionalServiceResponseDTO> getAllProfessionalServices(){
+        List<ProfessionalServices> services = professionalServicesRepository.findAll();
+
+        return services
+                .stream()
+                .map(service -> {
+                    List<ReviewResponseDTO> reviews = service.getReviews().stream().map(reviews1 ->
+                            new ReviewResponseDTO(
+                                        reviews1.getId(),
+                                        reviews1.getDescription(),
+                                    reviews1.getUserInfo().getUser().getUsername(),
+                                    reviews1.getCalification().getCalificationType().name(),
+                                        reviews1.getCreatedAt()
+                            )
+                    ).toList();
+
+                return new ProfessionalServiceResponseDTO(
+                        service.getId(),
+                        service.getTitle(),
+                        service.getDescription(),
+                        service.getPrice(),
+                        service.getTax(),
+                        service.getUserInfo().getUser().getUsername(),
+                        service.getCurrency().getCurrencyType().name(),
+                        reviews,
+                        service.getCreatedAt(),
+                        service.getUpdatedAt(),
+                        service.getDeletedAt()
+                );
+                }).toList();
     }
 
     public Optional<ProfessionalServices> getProfessionalServicesById (Long id){
@@ -41,7 +71,7 @@ public class ProfessionalServicesService {
         return this.professionalServicesRepository.findByTitle(title);
     }
 
-    public ProfessionalServices createProfessionalService(ProfessionalServicesRequest postFormFront){
+    public ProfessionalServiceResponseDTO createProfessionalService(ProfessionalServicesRequest postFormFront){
         UserInfo userInfo = this.userInfoRepository.findByUser_Username(postFormFront.getUserName())
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
@@ -57,7 +87,20 @@ public class ProfessionalServicesService {
         professionalServices.setTax(postFormFront.getTax());
         professionalServices.setUserInfo(userInfo);
 
-        return this.professionalServicesRepository.save(professionalServices);
+        ProfessionalServices saveService = this.professionalServicesRepository.save(professionalServices);
+        return new ProfessionalServiceResponseDTO(
+                saveService.getId(),
+                saveService.getTitle(),
+                saveService.getDescription(),
+                saveService.getPrice(),
+                saveService.getTax(),
+                userInfo.getUser().getUsername(),
+                saveService.getCurrency().getCurrencyType().name(),
+                List.of(),
+                saveService.getCreatedAt(),
+                saveService.getUpdatedAt(),
+                saveService.getDeletedAt()
+        );
 
     }
 

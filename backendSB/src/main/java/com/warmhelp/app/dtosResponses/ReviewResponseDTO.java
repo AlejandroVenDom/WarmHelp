@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 public class ReviewResponseDTO {
     private long id;
     private String description;
-    private String username;
     private String calification;
+    private String username;
     private LocalDateTime createdAt;
 
     public ReviewResponseDTO(long id, String description, String username, String calification, LocalDateTime createdAt) {
