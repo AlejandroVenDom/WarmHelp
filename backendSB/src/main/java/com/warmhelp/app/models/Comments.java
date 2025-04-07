@@ -51,6 +51,14 @@ public class Comments {
     @Column(nullable = true)
     private LocalDateTime deletedAt;
 
+    public List<ResponseComments> getResponseComments() {
+        return responseComments;
+    }
+
+    public void setResponseComments(List<ResponseComments> responseComments) {
+        this.responseComments = responseComments;
+    }
+
     public Long getId() {
         return id;
     }

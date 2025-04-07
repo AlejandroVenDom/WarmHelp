@@ -1,11 +1,14 @@
 package com.warmhelp.app.services;
 
 import com.warmhelp.app.dtos.auth.CommentsRequest;
+import com.warmhelp.app.dtosResponses.CommentsResponseDTO;
+import com.warmhelp.app.dtosResponses.ResponseCommentsResponseDTO;
 import com.warmhelp.app.models.Comments;
 import com.warmhelp.app.models.Posts;
 import com.warmhelp.app.models.UserInfo;
 import com.warmhelp.app.repositories.CommentsRepository;
 import com.warmhelp.app.repositories.PostsRepository;
+import com.warmhelp.app.repositories.ResponseCommentsRespository;
 import com.warmhelp.app.repositories.UserInfoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;

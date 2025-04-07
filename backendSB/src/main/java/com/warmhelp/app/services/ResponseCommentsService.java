@@ -1,6 +1,7 @@
 package com.warmhelp.app.services;
 
 import com.warmhelp.app.dtos.auth.ResponseCommentsRequest;
+import com.warmhelp.app.dtosResponses.ResponseCommentsResponseDTO;
 import com.warmhelp.app.models.Comments;
 import com.warmhelp.app.models.ResponseComments;
 import com.warmhelp.app.models.UserInfo;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ResponseCommentsService {
@@ -24,8 +26,18 @@ public class ResponseCommentsService {
         this.userInfoRepository = userInfoRepository;
     }
 
-    public List<ResponseComments> getAllResponseComments(){
-        return this.responseCommentsRespository.findAll();
+    public List<ResponseCommentsResponseDTO> getAllResponseComments(){
+        return this.responseCommentsRespository.findAll()
+                .stream()
+                .map(reponseComments -> new ResponseCommentsResponseDTO(
+                        reponseComments.getId(),
+                        reponseComments.getDescription(),
+                        reponseComments.getUserInfo().getUser().getUsername(),
+                        reponseComments.getCreatedAt(),
+                        reponseComments.getUpdatedAt(),
+                        reponseComments.getDeletedAt()
+                ))
+                .collect(Collectors.toList());
     }
 
     public Optional<ResponseComments> getResponseCommentsById(Long id){
@@ -36,7 +48,7 @@ public class ResponseCommentsService {
         this.responseCommentsRespository.deleteResponseCommentById(id);
     }
 
-    public ResponseComments createResponseComment(ResponseCommentsRequest responseFormFront){
+    public ResponseCommentsResponseDTO createResponseComment(ResponseCommentsRequest responseFormFront){
         UserInfo userInfo = this.userInfoRepository.findByUser_Username(responseFormFront.getUserName())
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
@@ -47,7 +59,16 @@ public class ResponseCommentsService {
         responseComments.setDescription(responseFormFront.getDescription());
         responseComments.setUserInfo(userInfo);
         responseComments.setComments(comment);
-        return this.responseCommentsRespository.save(responseComments);
+        ResponseComments savedResponseComments = this.responseCommentsRespository.save(responseComments);
+
+        return new ResponseCommentsResponseDTO(
+                savedResponseComments.getId(),
+                savedResponseComments.getDescription(),
+                savedResponseComments.getUserInfo().getUser().getUsername(),
+                savedResponseComments.getCreatedAt(),
+                responseComments.getUpdatedAt(),
+                responseComments.getDeletedAt()
+        );
     }
 
 }

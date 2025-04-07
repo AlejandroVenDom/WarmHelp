@@ -1,6 +1,7 @@
 package com.warmhelp.app.controllers;
 
 import com.warmhelp.app.dtos.auth.ResponseCommentsRequest;
+import com.warmhelp.app.dtosResponses.ResponseCommentsResponseDTO;
 import com.warmhelp.app.models.ResponseComments;
 import com.warmhelp.app.services.ResponseCommentsService;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +20,14 @@ public class ResponseCommentController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ResponseComments>> getAllResponseComments(){
+    public ResponseEntity<List<ResponseCommentsResponseDTO>> getAllResponseComments(){
         return ResponseEntity.ok(this.responseCommentsService.getAllResponseComments());
     }
 
     @PostMapping("/registerResponseComment")
     public ResponseEntity<?> registerResponseComment(@RequestBody ResponseCommentsRequest responseCommentsRequest){
         try {
-            ResponseComments responseComments = this.responseCommentsService.createResponseComment(responseCommentsRequest);
+            ResponseCommentsResponseDTO responseComments = this.responseCommentsService.createResponseComment(responseCommentsRequest);
             return ResponseEntity.ok(responseComments);
         }
         catch (IllegalArgumentException e){
