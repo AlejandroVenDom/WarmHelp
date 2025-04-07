@@ -1,1 +1,35 @@
-<p>backoffice-admin works!</p>
+<div class="mis-servicios-container">
+  <h2 class="title">Mis Servicios Profesionales</h2>
+  <button class="btn-crear" (click)="openModal()">+ Añadir Servicio</button>
+
+  <div class="mis-servicios-grid">
+    <div *ngFor="let servicio of servicios" class="servicio-card">
+      <img [src]="servicio.image" alt="Imagen" class="imagen-servicio" />
+      <h4>{{ servicio.title }}</h4>
+      <p>{{ servicio.description }}</p>
+      <p><strong>Precio:</strong> {{ servicio.price }} {{ servicio.currencyType }}</p>
+      <p><strong>Impuesto:</strong> {{ servicio.tax }}%</p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de creación -->
+<div class="modal-overlay" *ngIf="showModal">
+  <div class="modal-content">
+    <span class="icon-cancel" (click)="closeModal()">
+      <i class="bi bi-x-circle"></i>
+    </span>
+    <h3>Crear nuevo servicio</h3>
+    <input type="text" placeholder="Título" [(ngModel)]="nuevoServicio.title">
+    <textarea placeholder="Descripción" [(ngModel)]="nuevoServicio.description"></textarea>
+    <input type="text" placeholder="URL de la imagen" [(ngModel)]="nuevoServicio.image">
+    <input type="number" placeholder="Precio" [(ngModel)]="nuevoServicio.price">
+    <input type="number" placeholder="Impuesto (%)" [(ngModel)]="nuevoServicio.tax">
+    <select [(ngModel)]="nuevoServicio.currencyType">
+      <option value="USD">USD</option>
+      <option value="EUR">EUR</option>
+      <option value="JPY">JPY</option>
+    </select>
+    <button class="btn-confirmar" (click)="crearServicio()">Guardar</button>
+  </div>
+</div>

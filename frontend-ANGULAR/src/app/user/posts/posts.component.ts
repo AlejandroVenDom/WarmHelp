@@ -22,18 +22,22 @@ export class PostsComponent implements OnInit {
 
   constructor(
     private postService: PostService,
-    private useState: UseStateService
+    private useStateService: UseStateService
   ) {}
 
   ngOnInit(): void {
-    this.nuevoPost.userName = this.useState.getUsername() || '';
+    this.nuevoPost.userName = this.useStateService.getUsername() || '';
     this.cargarPosts();
   }
 
   cargarPosts(): void {
-    this.postService.getAllPosts().subscribe((data) => {
-      console.log("Posts recibidos desde el backend:", data);
-      this.posts = data.reverse(); // ordenar del más reciente al más antiguo
+    this.postService.getAllPosts().subscribe({
+      next: (data) => {
+        this.posts = data.reverse();
+      },
+      error: (err) => {
+        console.error("Error al cargar posts:", err);
+      }
     });
   }
 
@@ -47,7 +51,7 @@ export class PostsComponent implements OnInit {
       title: '',
       description: '',
       image: '',
-      userName: this.useState.getUsername() || ''
+      userName: this.useStateService.getUsername() || ''
     };
   }
 
@@ -57,9 +61,11 @@ export class PostsComponent implements OnInit {
       return;
     }
 
+    this.nuevoPost.userName = this.useStateService.getUsername() || '';
+
     this.postService.createPost(this.nuevoPost).subscribe({
       next: (post) => {
-        this.posts.unshift(post); // insertar al principio de la lista
+        this.posts.unshift(post);
         this.cerrarModal();
       },
       error: (err) => {

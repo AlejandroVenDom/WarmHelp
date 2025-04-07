@@ -15,13 +15,14 @@
 
   <!-- LISTA DE POSTS -->
   <div class="card-post" *ngFor="let post of posts">
-    <img src="/default-avatar.jpg" class="avatar" />
+    <img src="/ans.jpg" class="avatar" />
     <div class="content" [ngClass]="{ 'with-image': post.image }">
       <div class="header">
         <span class="username">{{ post.userInfo?.user?.username || 'Usuario' }}</span>
         <span class="time">{{ post.createdAt | date:'medium' }}</span>
       </div>
-      <p>{{ post.description }}</p>
+      <h4 style="font-weight: bold; color: #3A7D44;">{{ post.title }}</h4>
+<p>{{ post.description }}</p>
       <img *ngIf="post.image" [src]="post.image" class="post-image" />
       <div class="actions">
         <i class="bi bi-hand-thumbs-up"></i><span>0</span>

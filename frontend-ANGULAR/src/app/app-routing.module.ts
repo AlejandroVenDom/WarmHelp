@@ -21,7 +21,8 @@ const routes: Routes = [
       { path: 'login', component: LoginComponent, canActivate: [publicGuard] },
       { path: 'register', component: RegisterComponent, canActivate: [publicGuard] },
       { path: 'posts', component: PostsComponent, canActivate: [authGuard] },
-      { path: 'tienda', component: TiendaComponent , canActivate: [authGuard] }
+      { path: 'tienda', component: TiendaComponent , canActivate: [authGuard] },
+      { path: 'servicioscr', component: BackofficeAdminComponent , canActivate: [authGuard] },
     ],
   },
 

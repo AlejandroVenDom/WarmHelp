@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { TokenService } from '../../services/auth/token.service';
 import { UseStateService } from '../../services/auth/use-state.service';
 import { PopupService } from '../../services/popup.service';
+import { PostService } from '../../services/posts/post.service';
 
 @Component({
   selector: 'app-perfil',
@@ -29,7 +30,8 @@ export class PerfilComponent implements OnInit {
     private useStateService: UseStateService,
     private tokenService: TokenService,
     private router: Router,
-    private popupService: PopupService
+    private popupService: PopupService,
+    private postService: PostService
   ) {}
 
   ngOnInit(): void {
@@ -39,7 +41,9 @@ export class PerfilComponent implements OnInit {
     this.address = this.useStateService.getAddress();
     this.number = this.useStateService.getNumber();
     this.comments = this.useStateService.getComments();
-    this.posts = this.useStateService.getPosts();
+    this.postService.getAllPosts().subscribe((allPosts) => {
+      this.posts = allPosts.filter(p => p.userInfo?.user?.username === this.username);
+    });
     this.first_name = this.useStateService.getFirstName();
     this.last_name = this.useStateService.getLastName();
     this.mySelf_description = this.useStateService.getMySelfDescription();

@@ -80,14 +80,14 @@
     <!-- SOLO si el usuario es PROFESSIONAL -->
     <div *ngIf="role === 'PROFESSIONAL' || role === 'ADMIN'" class="servicios-card">
       <h4><i class="bi bi-heart-pulse-fill"></i> Servicios Ofrecidos</h4>
-      
+
       <!-- Recorrer los servicios profesionales -->
       <div *ngFor="let service of professionalServices" class="servicio">
         <h5>{{ service.title }}</h5>
         <p>{{ service.description }}</p>
         <span class="precio">{{ service.price | currency:'EUR' }}</span><br>
         <span class="tax">Esto es el tax: {{ service.tax }}</span>
-    
+
         <!-- Mostrar Reseñas del Servicio -->
         <div *ngIf="service.reviews && service.reviews.length > 0" class="reseñas mt-3">
           <h6><i class="bi bi-star-fill"></i> Reseñas</h6>
@@ -101,6 +101,6 @@
         </div>
       </div>
     </div>
-    
+
   </div>
 </div>
