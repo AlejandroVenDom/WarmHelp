@@ -1,6 +1,7 @@
 package com.warmhelp.app.services;
 
 import com.warmhelp.app.dtos.auth.ReviewsRequest;
+import com.warmhelp.app.dtosResponses.ReviewResponseDTO;
 import com.warmhelp.app.models.Calification;
 import com.warmhelp.app.models.ProfessionalServices;
 import com.warmhelp.app.models.Reviews;
@@ -12,6 +13,7 @@ import com.warmhelp.app.repositories.UserInfoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewsService {
@@ -27,11 +29,20 @@ public class ReviewsService {
         this.professionalServicesRepository = professionalServicesRepository;
     }
 
-    public List<Reviews> getAllReviews(){
-        return this.reviewsRepository.findAll();
+    public List<ReviewResponseDTO> getAllReviews(){
+        return this.reviewsRepository.findAll()
+                .stream()
+                .map(reviews -> new ReviewResponseDTO(
+                        reviews.getId(),
+                        reviews.getDescription(),
+                        reviews.getUserInfo().getUser().getUsername(),
+                        reviews.getCalification().getCalificationType().name(),
+                        reviews.getCreatedAt()
+                ))
+                .collect(Collectors.toList());
     }
 
-    public Reviews createReview(ReviewsRequest reviewsRequest){
+    public ReviewResponseDTO createReview(ReviewsRequest reviewsRequest){
         UserInfo userInfo = this.userInfoRepository.findByUser_Username(reviewsRequest.getUserName())
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
@@ -50,6 +61,14 @@ public class ReviewsService {
         reviews.setCalification(calification);
         reviews.setProfessionalServices(professionalServices);
 
-        return this.reviewsRepository.save(reviews);
+        Reviews saveReviews = this.reviewsRepository.save(reviews);
+
+        return new ReviewResponseDTO(
+                saveReviews.getId(),
+                saveReviews.getDescription(),
+                saveReviews.getUserInfo().getUser().getUsername(),
+                saveReviews.getCalification().getCalificationType().name(),
+                saveReviews.getCreatedAt()
+        );
     }
 }
