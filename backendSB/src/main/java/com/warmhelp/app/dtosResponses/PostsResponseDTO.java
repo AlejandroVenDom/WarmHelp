@@ -3,31 +3,25 @@ package com.warmhelp.app.dtosResponses;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class CommentsResponseDTO {
+public class PostsResponseDTO {
     private long id;
     private String username;
     private String description;
-    private List<ResponseCommentsResponseDTO> responseComments;
+    private String image;
+    private List<CommentsResponseDTO> comments;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
 
-    public CommentsResponseDTO(long id, String username, String description, List<ResponseCommentsResponseDTO> responseComments, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
+    public PostsResponseDTO(long id, String username, String description, String image, List<CommentsResponseDTO> comments, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
         this.id = id;
         this.username = username;
         this.description = description;
-        this.responseComments = responseComments;
+        this.image = image;
+        this.comments = comments;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public long getId() {
@@ -38,6 +32,14 @@ public class CommentsResponseDTO {
         this.id = id;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -46,12 +48,20 @@ public class CommentsResponseDTO {
         this.description = description;
     }
 
-    public List<ResponseCommentsResponseDTO> getResponseComments() {
-        return responseComments;
+    public String getImage() {
+        return image;
     }
 
-    public void setResponseComments(List<ResponseCommentsResponseDTO> responseComments) {
-        this.responseComments = responseComments;
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public List<CommentsResponseDTO> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentsResponseDTO> comments) {
+        this.comments = comments;
     }
 
     public LocalDateTime getCreatedAt() {

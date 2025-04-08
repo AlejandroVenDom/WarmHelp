@@ -4,6 +4,7 @@ import com.warmhelp.app.dtos.auth.CheckTokenRequest;
 import com.warmhelp.app.dtos.auth.LoginRequest;
 import com.warmhelp.app.dtos.auth.LoginResponse;
 import com.warmhelp.app.dtos.auth.RegisterRequest;
+import com.warmhelp.app.dtosResponses.*;
 import com.warmhelp.app.models.*;
 import com.warmhelp.app.repositories.*;
 import com.warmhelp.app.security.JwtUtil;
@@ -123,6 +124,85 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    // RESPONSE OF LOGIN FOR REVIEWS
+    private ReviewResponseDTO mapToReviewResponseDTIO(Reviews reviews){
+        return new ReviewResponseDTO(
+                reviews.getId(),
+                reviews.getDescription(),
+                reviews.getUserInfo().getUser().getUsername(),
+                reviews.getCalification().getCalificationType().name(),
+                reviews.getCreatedAt()
+        );
+    }
+
+    // RESPONSE OF LOGIN FOR PROFESSIONAL SERVICES
+    private ProfessionalServiceResponseDTO mapToProfessionalServicesResponseDTO(ProfessionalServices professionalServices){
+        List<ReviewResponseDTO> reviewResponseDTOS = professionalServices.getReviews()
+                .stream()
+                .map(this::mapToReviewResponseDTIO)
+                .toList();
+        return new ProfessionalServiceResponseDTO(
+                professionalServices.getId(),
+                professionalServices.getTitle(),
+                professionalServices.getDescription(),
+                professionalServices.getPrice(),
+                professionalServices.getTax(),
+                professionalServices.getUserInfo().getUser().getUsername(),
+                professionalServices.getCurrency().getCurrencyType().name(),
+                reviewResponseDTOS,
+                professionalServices.getCreatedAt(),
+                professionalServices.getUpdatedAt(),
+                professionalServices.getDeletedAt()
+        );
+    }
+
+    // RESPONSE OF LOGIN FOR RESPONSE COMMENTS
+    private ResponseCommentsResponseDTO mapToResponseCommentsDTO(ResponseComments rc){
+        return new ResponseCommentsResponseDTO(
+                rc.getId(),
+                rc.getDescription(),
+                rc.getUserInfo().getUser().getUsername(),
+                rc.getCreatedAt(),
+                rc.getUpdatedAt(),
+                rc.getDeletedAt()
+        );
+    }
+
+    // RESPONSE OF LOGIN FOR COMMENTS
+    private CommentsResponseDTO mapToCommentsResponseDTO(Comments comments){
+        List<ResponseCommentsResponseDTO> responseDTOS = comments.getResponseComments()
+                .stream()
+                .map(this::mapToResponseCommentsDTO)
+                .toList();
+        return new CommentsResponseDTO(
+                comments.getId(),
+                comments.getUserInfo().getUser().getUsername(),
+                comments.getDescription(),
+                responseDTOS,
+                comments.getCreatedAt(),
+                comments.getUpdatedAt(),
+                comments.getDeletedAt()
+        );
+    }
+
+    // RESPONSE OF LOGIN FOR POSTS
+    private PostsResponseDTO mapToPostsResponseDTO(Posts posts){
+        List<CommentsResponseDTO> commentsResponseDTOS = posts.getComments()
+                .stream()
+                .map(this::mapToCommentsResponseDTO)
+                .toList();
+        return new PostsResponseDTO(
+                posts.getId(),
+                posts.getUserInfo().getUser().getUsername(),
+                posts.getDescription(),
+                posts.getImage(),
+                commentsResponseDTOS,
+                posts.getCreatedAt(),
+                posts.getUpdatedAt(),
+                posts.getDeletedAt()
+        );
+    }
+
     public LoginResponse login(LoginRequest credentials){
         User user = this.userRepository.findByUsername(credentials.getUsername()).orElseThrow(
                 () -> new BadCredentialsException("User not found")
@@ -146,13 +226,46 @@ public class UserService implements UserDetailsService {
         loginData.setNumber(userInfo.getNumber());
         loginData.setEmail(userInfo.getEmail());
         loginData.setMySelf_description(userInfo.getMySelf_description());
-        loginData.setPosts(userInfo.getPosts());
-        loginData.setComments(userInfo.getComments());
-        loginData.setResponseComments(userInfo.getResponseComments());
-        loginData.setProfessionalServices(userInfo.getProfessionalServices());
-        loginData.setReviews(userInfo.getReviews());
 
 
+
+        List<PostsResponseDTO> postsResponseDTOS = userInfo.getPosts()
+                .stream()
+                .map(this::mapToPostsResponseDTO)
+                .toList();
+        loginData.setPosts(postsResponseDTOS);
+
+
+
+        List<CommentsResponseDTO> commentsResponseDTOS = userInfo.getComments()
+                .stream()
+                .map(this::mapToCommentsResponseDTO)
+                .toList();
+        loginData.setComments(commentsResponseDTOS);
+
+
+
+        List<ResponseCommentsResponseDTO> responseDTOS = userInfo.getResponseComments()
+                .stream()
+                .map(this::mapToResponseCommentsDTO)
+                .toList();
+        loginData.setResponseComments(responseDTOS);
+
+
+
+        List<ProfessionalServiceResponseDTO> professionalServiceResponseDTOS = userInfo.getProfessionalServices()
+                .stream()
+                .map(this::mapToProfessionalServicesResponseDTO)
+                .toList();
+        loginData.setProfessionalServices(professionalServiceResponseDTOS);
+
+
+
+        List<ReviewResponseDTO> reviewResponseDTOS = userInfo.getReviews()
+                .stream()
+                .map(this::mapToReviewResponseDTIO)
+                .toList();
+        loginData.setReviews(reviewResponseDTOS);
 
 
 
