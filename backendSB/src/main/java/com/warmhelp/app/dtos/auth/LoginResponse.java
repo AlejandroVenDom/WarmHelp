@@ -1,5 +1,6 @@
 package com.warmhelp.app.dtos.auth;
 
+import com.warmhelp.app.dtosResponses.*;
 import com.warmhelp.app.enums.RoleType;
 import com.warmhelp.app.models.*;
 
@@ -27,49 +28,49 @@ public class LoginResponse {
         private String number;
         private String email;
         private String mySelf_description;
-        private List<Comments> comments;
-        private List<Posts> posts;
-        private List<ProfessionalServices> professionalServices;
-        private List<Reviews> reviews;
-        private List<ResponseComments> responseComments;
+        private List<CommentsResponseDTO> comments;
+        private List<PostsResponseDTO> posts;
+        private List<ProfessionalServiceResponseDTO> professionalServices;
+        private List<ReviewResponseDTO> reviews;
+        private List<ResponseCommentsResponseDTO> responseComments;
 
-    public List<ProfessionalServices> getProfessionalServices() {
+    public List<ProfessionalServiceResponseDTO> getProfessionalServices() {
         return professionalServices;
     }
 
-    public void setProfessionalServices(List<ProfessionalServices> professionalServices) {
+    public void setProfessionalServices(List<ProfessionalServiceResponseDTO> professionalServices) {
         this.professionalServices = professionalServices;
     }
 
-    public List<Reviews> getReviews() {
+    public List<ReviewResponseDTO> getReviews() {
         return reviews;
     }
 
-    public void setReviews(List<Reviews> reviews) {
+    public void setReviews(List<ReviewResponseDTO> reviews) {
         this.reviews = reviews;
     }
 
-    public List<ResponseComments> getResponseComments() {
+    public List<ResponseCommentsResponseDTO> getResponseComments() {
         return responseComments;
     }
 
-    public void setResponseComments(List<ResponseComments> responseComments) {
+    public void setResponseComments(List<ResponseCommentsResponseDTO> responseComments) {
         this.responseComments = responseComments;
     }
 
-    public List<Comments> getComments() {
+    public List<CommentsResponseDTO> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comments> comments) {
+    public void setComments(List<CommentsResponseDTO> comments) {
         this.comments = comments;
     }
 
-    public List<Posts> getPosts() {
+    public List<PostsResponseDTO> getPosts() {
         return posts;
     }
 
-    public void setPosts(List<Posts> posts) {
+    public void setPosts(List<PostsResponseDTO> posts) {
         this.posts = posts;
     }
 
