@@ -448,6 +448,42 @@
   color: #DF6D14;
   cursor: pointer;
 }
+.comentarios {
+  margin-top: 15px;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
+
+.comentario {
+  margin-bottom: 10px;
+  padding: 5px;
+  background-color: #f8f5e9;
+  border-radius: 8px;
+}
+
+.formulario-comentario {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+textarea {
+  resize: none;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  align-self: flex-end;
+  background-color: #3A7D44;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
 
 
 

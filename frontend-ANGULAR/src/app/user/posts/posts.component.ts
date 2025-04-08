@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UseStateService } from '../../services/auth/use-state.service';
 import { Post } from '../../services/interfaces/post';
 import { PostService } from '../../services/posts/post.service';
+import { CommentRequest, CommentService } from '../../services/posts/comment.service';
+import { ResponseCommentsService, ResponseCommentRequest } from '../../services/posts/response-comments.service';
 
 @Component({
   selector: 'app-posts',
@@ -11,7 +13,17 @@ import { PostService } from '../../services/posts/post.service';
 })
 export class PostsComponent implements OnInit {
   posts: Post[] = [];
-  modalVisible = false;
+  modalNuevoPost = false;
+  modalComentariosVisible = false;
+  mostrandoRespuestas = false;
+
+  postSeleccionado: Post | null = null;
+  comentarioSeleccionado: any = null;
+
+  comentarios: any[] = [];
+  respuestas: any[] = [];
+  nuevoComentario: string = '';
+  nuevaRespuesta: string = '';
 
   nuevoPost = {
     title: '',
@@ -22,7 +34,9 @@ export class PostsComponent implements OnInit {
 
   constructor(
     private postService: PostService,
-    private useStateService: UseStateService
+    private useStateService: UseStateService,
+    private commentService: CommentService,
+    private responseCommentsService: ResponseCommentsService
   ) {}
 
   ngOnInit(): void {
@@ -35,18 +49,16 @@ export class PostsComponent implements OnInit {
       next: (data) => {
         this.posts = data.reverse();
       },
-      error: (err) => {
-        console.error("Error al cargar posts:", err);
-      }
+      error: (err) => console.error("Error al cargar posts:", err)
     });
   }
 
-  abrirModal(): void {
-    this.modalVisible = true;
+  abrirModalNuevoPost(): void {
+    this.modalNuevoPost = true;
   }
 
-  cerrarModal(): void {
-    this.modalVisible = false;
+  cerrarModalNuevoPost(): void {
+    this.modalNuevoPost = false;
     this.nuevoPost = {
       title: '',
       description: '',
@@ -61,15 +73,84 @@ export class PostsComponent implements OnInit {
       return;
     }
 
-    this.nuevoPost.userName = this.useStateService.getUsername() || '';
-
     this.postService.createPost(this.nuevoPost).subscribe({
       next: (post) => {
         this.posts.unshift(post);
-        this.cerrarModal();
+        this.cerrarModalNuevoPost();
       },
-      error: (err) => {
-        alert('Error al crear el post: ' + err.error);
+      error: (err) => alert('Error al crear el post: ' + err.error)
+    });
+  }
+
+  abrirModalComentarios(post: Post): void {
+    this.postSeleccionado = post;
+    this.comentarios = post.comments || [];
+    this.modalComentariosVisible = true;
+    this.nuevoComentario = '';
+    this.mostrandoRespuestas = false;
+  }
+
+  cerrarModalComentarios(): void {
+    this.modalComentariosVisible = false;
+    this.nuevoComentario = '';
+    this.nuevaRespuesta = '';
+    this.postSeleccionado = null;
+    this.comentarioSeleccionado = null;
+  }
+
+  enviarComentario(): void {
+    if (!this.nuevoComentario.trim() || !this.postSeleccionado) return;
+
+    const comentario: CommentRequest = {
+      description: this.nuevoComentario.trim(),
+      userName: this.useStateService.getUsername() || 'anon',
+      postId: this.postSeleccionado.id
+    };
+
+    this.commentService.createComment(comentario).subscribe({
+      next: () => {
+        this.nuevoComentario = '';
+        this.cargarPosts();
+        setTimeout(() => {
+          const actualizado = this.posts.find(p => p.id === this.postSeleccionado?.id);
+          if (actualizado) {
+            this.postSeleccionado = actualizado;
+            this.comentarios = actualizado.comments || [];
+          }
+        }, 300);
+      }
+    });
+  }
+
+  verRespuestas(comentario: any): void {
+    this.comentarioSeleccionado = comentario;
+    this.responseCommentsService.getAllResponseComments().subscribe({
+      next: (res) => {
+        this.respuestas = res.filter(r => r.commentId === comentario.id);
+        this.mostrandoRespuestas = true;
+      }
+    });
+  }
+
+  volverAComentarios(): void {
+    this.mostrandoRespuestas = false;
+    this.comentarioSeleccionado = null;
+    this.nuevaRespuesta = '';
+  }
+
+  enviarRespuesta(): void {
+    if (!this.nuevaRespuesta.trim() || !this.comentarioSeleccionado) return;
+
+    const respuesta: ResponseCommentRequest = {
+      description: this.nuevaRespuesta.trim(),
+      userName: this.useStateService.getUsername() || 'anon',
+      commentId: this.comentarioSeleccionado.id
+    };
+
+    this.responseCommentsService.createResponseComment(respuesta).subscribe({
+      next: () => {
+        this.verRespuestas(this.comentarioSeleccionado);
+        this.nuevaRespuesta = '';
       }
     });
   }

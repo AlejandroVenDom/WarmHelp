@@ -10,7 +10,13 @@ export interface Post {
     };
   };
   comments?: {
+    id?: number;
     description: string;
     createdAt: string;
+    userInfo?: {
+      user?: {
+        username: string;
+      };
+    };
   }[];
 }

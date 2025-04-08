@@ -29,8 +29,8 @@ import { PerfilComponent } from './user/perfil/perfil.component';
     InicioComponent,
     FooterComponent,
     TiendaComponent,
-    PostsComponent,
-    PerfilComponent
+    PerfilComponent,
+    PostsComponent
   ],
   imports: [
     BrowserModule,
