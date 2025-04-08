@@ -17,7 +17,7 @@
     </ng-container>
 
     <!-- Si está logueado -->
-    <div class="user-info" *ngIf="isLoggedIn" routerLink="/perfil" (click)="closeMenu()">
+    <div class="user-info" *ngIf="isLoggedIn" routerLink="/perfil" (click)="closeMenu()" style="cursor: pointer;">
       <span>¡Hola, <span class="username">{{ username }}</span>!</span>
     </div>
 
