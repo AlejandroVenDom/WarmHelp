@@ -193,6 +193,7 @@ public class UserService implements UserDetailsService {
                 .toList();
         return new PostsResponseDTO(
                 posts.getId(),
+                posts.getTitle(),
                 posts.getUserInfo().getUser().getUsername(),
                 posts.getDescription(),
                 posts.getImage(),

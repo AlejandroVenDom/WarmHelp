@@ -5,6 +5,7 @@ import java.util.List;
 
 public class PostsResponseDTO {
     private long id;
+    private String title;
     private String username;
     private String description;
     private String image;
@@ -13,8 +14,9 @@ public class PostsResponseDTO {
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
 
-    public PostsResponseDTO(long id, String username, String description, String image, List<CommentsResponseDTO> comments, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
+    public PostsResponseDTO(long id, String title, String username, String description, String image, List<CommentsResponseDTO> comments, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
         this.id = id;
+        this.title = title;
         this.username = username;
         this.description = description;
         this.image = image;
@@ -22,6 +24,14 @@ public class PostsResponseDTO {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public long getId() {
