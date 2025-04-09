@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class ProfessionalService {
-  private apiUrl = `${environment.apiUrl}/professionalServices`;
+  private apiUrl = 'http://localhost:8080/api/professionalServices';
 
   constructor(private http: HttpClient) {}
 
@@ -17,6 +17,7 @@ export class ProfessionalService {
   }
 
   registerService(service: ProfessionalServiceInterface): Observable<any> {
+
     return this.http.post(`${this.apiUrl}/registerService`, service);
   }
 }

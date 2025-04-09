@@ -4,7 +4,7 @@
 
   <div class="mis-servicios-grid">
     <div *ngFor="let servicio of servicios" class="servicio-card">
-      <img [src]="servicio.image" alt="Imagen" class="imagen-servicio" />
+      <img [src]="servicio.image || 'https://seranking.com/es/blog/wp-content/uploads/sites/13/2021/09/que-es-una-url.png'" alt="Imagen" class="imagen-servicio" />
       <h4>{{ servicio.title }}</h4>
       <p>{{ servicio.description }}</p>
       <p><strong>Precio:</strong> {{ servicio.price }} {{ servicio.currencyType }}</p>

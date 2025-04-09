@@ -33,10 +33,22 @@ export class BackofficeAdminComponent implements OnInit {
 
   loadMyServices() {
     const currentUser = this.userState.getUsername();
-    this.service.getAll().subscribe(services => {
-      this.servicios = services.filter(s => s.userName === currentUser);
+    this.service.getAll().subscribe(response => {
+      this.servicios = response
+        .map((s: any) => ({
+          id: s.id,
+          title: s.title,
+          description: s.description,
+          image: s.image,
+          price: s.price,
+          tax: s.tax,
+          currencyType: s.currency, // viene como 'currency' en lugar de 'currencyType'
+          userName: s.username      // viene como 'username' en lugar de 'userName'
+        }))
+        .filter(s => s.userName === currentUser);
     });
   }
+
 
   openModal() {
     this.showModal = true;
@@ -56,14 +68,23 @@ export class BackofficeAdminComponent implements OnInit {
   }
 
   crearServicio() {
+    console.log("Enviando servicio:", this.nuevoServicio);
     this.service.registerService(this.nuevoServicio).subscribe({
       next: () => {
         this.closeModal();
         this.loadMyServices();
       },
       error: (err) => {
+        if (err.status === 400) {
+          alert('❌ Error en los datos: ' + err.error); // <-- Aquí te dirá "Valor de moneda no válido"
+        } else if (err.status === 401) {
+          alert('⚠️ No autorizado. Verifica tu sesión.');
+        } else {
+          alert('🚨 Error inesperado.');
+        }
         console.error('❌ Error al crear servicio', err);
       }
     });
   }
+
 }
