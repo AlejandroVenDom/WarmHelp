@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -13,9 +13,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderClienteComponent } from './user/header-cliente/header-cliente.component';
 import { InicioComponent } from './user/inicio/inicio.component';
 import { FooterComponent } from './user/footer/footer.component';
-import { TiendaComponent } from './user/tienda/tienda.component';
 import { PostsComponent } from './user/posts/posts.component';
 import { PerfilComponent } from './user/perfil/perfil.component';
+import { TiendaComponent } from './user/tienda/tienda.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -28,14 +29,15 @@ import { PerfilComponent } from './user/perfil/perfil.component';
     HeaderClienteComponent,
     InicioComponent,
     FooterComponent,
-    TiendaComponent,
     PerfilComponent,
+    TiendaComponent,
     PostsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule
