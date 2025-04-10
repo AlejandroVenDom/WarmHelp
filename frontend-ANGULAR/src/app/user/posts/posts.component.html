@@ -58,72 +58,83 @@
   </div>
 
   <!-- MODAL COMENTARIOS -->
-  <div *ngIf="modalComentariosVisible && postSeleccionado" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" (click)="cerrarModalComentarios()">
-        <i class="bi bi-x-lg"></i>
-      </span>
+<div *ngIf="modalComentariosVisible && postSeleccionado" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" (click)="cerrarModalComentarios()">
+      <i class="bi bi-x-lg"></i>
+    </span>
 
-      <h3 *ngIf="!mostrandoRespuestas">Comentarios</h3>
-      <h3 *ngIf="mostrandoRespuestas">Respuestas a {{ comentarioSeleccionado?.userInfo?.user?.username }}</h3>
+    <h3 *ngIf="!mostrandoRespuestas">Comentarios</h3>
+    <h3 *ngIf="mostrandoRespuestas">Respuestas a {{ comentarioSeleccionado?.userInfo?.user?.username || 'Usuario' }}</h3>
 
-      <!-- COMENTARIOS -->
-      <div *ngIf="!mostrandoRespuestas">
-        <div class="comentario" *ngFor="let comentario of comentarios">
-          <div class="comentario-header">
-            <strong>{{ comentario.userInfo?.user?.username || 'Usuario' }}</strong>
-          </div>
-          <p>{{ comentario.description }}</p>
-          <div class="comentario-actions">
-            <span><i class="bi bi-hand-thumbs-up"></i> 0</span>
-            <span class="respuestas-count" (click)="verRespuestas(comentario)">
-              <i class="bi bi-reply-fill"></i> Ver respuestas
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <!-- RESPUESTAS -->
-      <div *ngIf="mostrandoRespuestas">
-        <div class="comentario comentario-principal">
-          <div class="comentario-header">
-            <strong>{{ comentarioSeleccionado?.userInfo?.user?.username }}</strong>
-          </div>
-          <p>{{ comentarioSeleccionado?.description }}</p>
-          <div class="comentario-actions">
-            <span><i class="bi bi-hand-thumbs-up"></i> 0</span>
-          </div>
-        </div>
-
-        <div class="comentario respuesta" *ngFor="let respuesta of respuestas">
-          <div class="comentario-header">
-            <strong>{{ respuesta.username }}</strong>
-          </div>
-          <p>{{ respuesta.description }}</p>
-        </div>
-      </div>
-
-      <!-- INPUT COMENTARIO/RESPUESTA -->
-      <div class="comentar-barra">
-        <input *ngIf="!mostrandoRespuestas"
-               type="text"
-               [(ngModel)]="nuevoComentario"
-               placeholder="Escribe tu comentario..." />
-
-        <input *ngIf="mostrandoRespuestas"
-               type="text"
-               [(ngModel)]="nuevaRespuesta"
-               placeholder="Escribe tu respuesta..." />
-
-        <button class="btn-comentar" (click)="mostrandoRespuestas ? enviarRespuesta() : enviarComentario()">
-          <i class="bi bi-reply-all-fill"></i>
-          {{ mostrandoRespuestas ? 'Responder' : 'Comentar' }}
-        </button>
-      </div>
-
-      <button class="btn-volver" *ngIf="mostrandoRespuestas" (click)="volverAComentarios()">
-        <i class="bi bi-arrow-left-circle"></i> Volver a comentarios
+<!-- COMENTARIOS -->
+<div *ngIf="!mostrandoRespuestas">
+  <div class="comentario" *ngFor="let comentario of comentarios">
+    <div class="comentario-header">
+      <strong>{{ comentario.username || 'Usuario' }}</strong>
+    </div>
+    <p>{{ comentario.description }}</p>
+    <div class="comentario-actions">
+      <span><i class="bi bi-hand-thumbs-up"></i> 0</span>
+      <button class="btn-responder" (click)="verRespuestas(comentario)">
+        <i class="bi bi-reply-fill"></i> Responder
       </button>
     </div>
+
+    <!-- RESPUESTAS EN EL MISMO BLOQUE -->
+    <div class="comentario respuesta" *ngFor="let respuesta of comentario.responseComments">
+      <div class="comentario-header">
+        <strong>{{ respuesta.username || 'Usuario' }}</strong>
+      </div>
+      <p>{{ respuesta.description }}</p>
+    </div>
+  </div>
+</div>
+
+<!-- RESPUESTAS DETALLADAS -->
+<div *ngIf="mostrandoRespuestas && comentarioSeleccionado">
+  <div class="comentario comentario-principal">
+    <div class="comentario-header">
+      <strong>{{ comentarioSeleccionado.username || 'Usuario' }}</strong>
+    </div>
+    <p>{{ comentarioSeleccionado.description }}</p>
+    <div class="comentario-actions">
+      <span><i class="bi bi-hand-thumbs-up"></i> 0</span>
+    </div>
+  </div>
+
+  <div class="respuesta" *ngFor="let respuesta of comentarioSeleccionado.responseComments">
+    <div class="comentario-header">
+      <strong>{{ respuesta.username || 'Usuario' }}</strong>
+    </div>
+    <p>{{ respuesta.description }}</p>
+    <div class="comentario-actions">
+      <span><i class="bi bi-clock"></i> {{ respuesta.createdAt | date:'short' }}</span>
+    </div>
+  </div>
+</div>
+
+
+    <!-- INPUT COMENTARIO/RESPUESTA -->
+    <div class="comentar-barra">
+      <input *ngIf="!mostrandoRespuestas"
+             type="text"
+             [(ngModel)]="nuevoComentario"
+             placeholder="Escribe tu comentario..." />
+
+      <input *ngIf="mostrandoRespuestas"
+             type="text"
+             [(ngModel)]="nuevaRespuesta"
+             placeholder="Escribe tu respuesta..." />
+
+      <button class="btn-comentar" (click)="mostrandoRespuestas ? enviarRespuesta() : enviarComentario()">
+        <i class="bi bi-reply-all-fill"></i>
+        {{ mostrandoRespuestas ? 'Responder' : 'Comentar' }}
+      </button>
+    </div>
+
+    <button class="btn-volver" *ngIf="mostrandoRespuestas" (click)="volverAComentarios()">
+      <i class="bi bi-arrow-left-circle"></i> Volver a comentarios
+    </button>
   </div>
 </div>

@@ -485,6 +485,45 @@ button {
   border-radius: 6px;
   cursor: pointer;
 }
+.respuesta {
+  background: #ffffff;
+  border-left: 4px solid #9DC08B;
+  margin: 0.8rem 0;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #f2f7f0;
+  }
+
+  .comentario-header {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #3A7D44;
+    margin-bottom: 0.3rem;
+  }
+
+  p {
+    margin: 0.3rem 0 0.5rem;
+    font-size: 1rem;
+    color: #444;
+  }
+
+  .comentario-actions {
+    font-size: 0.8rem;
+    color: #A2A393;
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+
+    i {
+      color: #DF6D14;
+      margin-right: 4px;
+    }
+  }
+}
 
 
 

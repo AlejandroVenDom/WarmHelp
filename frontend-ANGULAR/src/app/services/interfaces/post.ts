@@ -9,14 +9,5 @@ export interface Post {
       username: string;
     };
   };
-  comments?: {
-    id?: number;
-    description: string;
-    createdAt: string;
-    userInfo?: {
-      user?: {
-        username: string;
-      };
-    };
-  }[];
+  comments: Comment[];
 }

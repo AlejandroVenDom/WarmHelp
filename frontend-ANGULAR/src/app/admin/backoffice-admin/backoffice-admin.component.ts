@@ -42,8 +42,8 @@ export class BackofficeAdminComponent implements OnInit {
           image: s.image,
           price: s.price,
           tax: s.tax,
-          currencyType: s.currency, // viene como 'currency' en lugar de 'currencyType'
-          userName: s.username      // viene como 'username' en lugar de 'userName'
+          currencyType: s.currency,
+          userName: s.username
         }))
         .filter(s => s.userName === currentUser);
     });

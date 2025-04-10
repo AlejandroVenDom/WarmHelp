@@ -4,6 +4,7 @@ import { Post } from '../../services/interfaces/post';
 import { PostService } from '../../services/posts/post.service';
 import { CommentRequest, CommentService } from '../../services/posts/comment.service';
 import { ResponseCommentsService, ResponseCommentRequest } from '../../services/posts/response-comments.service';
+import { ResponseComment } from '../../services/interfaces/response-coment';
 
 @Component({
   selector: 'app-posts',
@@ -21,7 +22,7 @@ export class PostsComponent implements OnInit {
   comentarioSeleccionado: any = null;
 
   comentarios: any[] = [];
-  respuestas: any[] = [];
+  respuestas: ResponseComment[] = [];
   nuevoComentario: string = '';
   nuevaRespuesta: string = '';
 
@@ -88,6 +89,7 @@ export class PostsComponent implements OnInit {
     this.modalComentariosVisible = true;
     this.nuevoComentario = '';
     this.mostrandoRespuestas = false;
+    this.respuestas = []; // limpiar por si acaso
   }
 
   cerrarModalComentarios(): void {
@@ -96,6 +98,7 @@ export class PostsComponent implements OnInit {
     this.nuevaRespuesta = '';
     this.postSeleccionado = null;
     this.comentarioSeleccionado = null;
+    this.respuestas = [];
   }
 
   enviarComentario(): void {
@@ -124,9 +127,10 @@ export class PostsComponent implements OnInit {
 
   verRespuestas(comentario: any): void {
     this.comentarioSeleccionado = comentario;
+    this.respuestas = [];
     this.responseCommentsService.getAllResponseComments().subscribe({
       next: (res) => {
-        this.respuestas = res.filter(r => r.commentId === comentario.id);
+        this.respuestas = res.filter(r => r.commentId == comentario.id); // ⚠️ usa == por si acaso son string vs number
         this.mostrandoRespuestas = true;
       }
     });
@@ -136,6 +140,7 @@ export class PostsComponent implements OnInit {
     this.mostrandoRespuestas = false;
     this.comentarioSeleccionado = null;
     this.nuevaRespuesta = '';
+    this.respuestas = [];
   }
 
   enviarRespuesta(): void {
@@ -148,9 +153,18 @@ export class PostsComponent implements OnInit {
     };
 
     this.responseCommentsService.createResponseComment(respuesta).subscribe({
-      next: () => {
-        this.verRespuestas(this.comentarioSeleccionado);
+      next: (nuevaRespuesta) => {
+        this.respuestas.push(nuevaRespuesta);
+        if (this.comentarioSeleccionado.responseComments) {
+          this.comentarioSeleccionado.responseComments.push(nuevaRespuesta);
+        } else {
+          this.comentarioSeleccionado.responseComments = [nuevaRespuesta];
+        }
         this.nuevaRespuesta = '';
+      },
+      error: (err) => {
+        console.error("Error al enviar respuesta:", err);
+        alert("❌ Hubo un problema al guardar tu respuesta");
       }
     });
   }
