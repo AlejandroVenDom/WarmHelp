@@ -332,6 +332,7 @@
   border-radius: 12px;
   display: inline-flex;
   align-items: center;
+  width: 100%;
   gap: 8px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
@@ -524,11 +525,29 @@ button {
     }
   }
 }
+.respuestas-count {
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #3A7D44;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 
+  i {
+    color: #DF6D14;
+    font-size: 1.1rem;
+  }
 
-
-
-
+  &:hover {
+    color: darken(#3A7D44, 10%);
+    i {
+      transform: scale(1.1);
+    }
+  }
+}
 
 
   // Responsive
