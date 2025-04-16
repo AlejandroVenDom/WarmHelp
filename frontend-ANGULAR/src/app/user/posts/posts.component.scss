@@ -224,6 +224,45 @@
       }
     }
   }
+  .selector-cantidad {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    border: 2px solid #9DC08B;
+    border-radius: 12px;
+    padding: 8px 14px;
+    color: #3A7D44;
+    font-weight: 600;
+    font-size: 1rem;
+
+    i {
+      color: #DF6D14;
+      font-size: 1.2rem;
+    }
+
+    label {
+      margin-right: 4px;
+    }
+
+    select {
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      background: transparent;
+      color: #3A7D44;
+      font-weight: 600;
+
+      option {
+        color: #3A7D44;
+        font-weight: 600;
+      }
+    }
+
+    &:focus-within {
+      border-color: #DF6D14;
+    }
+  }
 
 }
 .modal {

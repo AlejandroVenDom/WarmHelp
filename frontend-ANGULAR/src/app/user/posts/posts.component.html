@@ -10,7 +10,13 @@
   placeholder="Buscar publicaciones..."
   [(ngModel)]="filtroBusqueda"
   (input)="filtrarPosts()"/>
-
+    </div>
+    <div class="selector-cantidad">
+      <i class="bi bi-list-ol"></i>
+      <label for="cantidadSelect">Mostrar:</label>
+      <select id="cantidadSelect" [(ngModel)]="cantidadMostrar" (change)="filtrarPosts()">
+        <option *ngFor="let c of cantidadesDisponibles" [value]="c">{{ c }}</option>
+      </select>
     </div>
     <div class="botones-acciones">
       <button class="btn-secundario" routerLink="/mis-publicaciones">

@@ -13,6 +13,8 @@ import { ResponseComment } from '../../services/interfaces/response-coment';
   styleUrl: './posts.component.scss'
 })
 export class PostsComponent implements OnInit {
+  cantidadMostrar = 10;
+  cantidadesDisponibles = [5, 10, 15, 20, 30, 40, 50];
   posts: Post[] = [];
   modalNuevoPost = false;
   modalComentariosVisible = false;
@@ -21,7 +23,7 @@ export class PostsComponent implements OnInit {
   comentarioSeleccionado: any = null;
   comentarios: any[] = [];
   filtroBusqueda: string = '';
-  allPosts: Post[] = []; // para mantener la lista completa de publicaciones
+  allPosts: Post[] = [];
   respuestas: ResponseComment[] = [];
   nuevoComentario: string = '';
   nuevaRespuesta: string = '';
@@ -56,19 +58,22 @@ export class PostsComponent implements OnInit {
     this.postService.getAllPosts().subscribe({
       next: (data) => {
         this.allPosts = data.reverse();
-        this.posts = [...this.allPosts];
+        this.filtrarPosts(); // ya respeta filtro y cantidad
       },
       error: (err) => console.error("Error al cargar posts:", err)
     });
   }
+
   filtrarPosts(): void {
     const filtro = this.filtroBusqueda.toLowerCase().trim();
-    this.posts = this.allPosts.filter(post =>
+    const filtrados = this.allPosts.filter(post =>
       post.title.toLowerCase().includes(filtro) ||
       post.description.toLowerCase().includes(filtro) ||
       post.username.toLowerCase().includes(filtro)
     );
+    this.posts = filtrados.slice(0, this.cantidadMostrar);
   }
+
 
 
 
