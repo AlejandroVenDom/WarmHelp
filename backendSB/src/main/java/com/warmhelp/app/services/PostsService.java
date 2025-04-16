@@ -1,6 +1,9 @@
 package com.warmhelp.app.services;
 
 import com.warmhelp.app.dtos.auth.PostsRequest;
+import com.warmhelp.app.dtosResponses.CommentsResponseDTO;
+import com.warmhelp.app.dtosResponses.PostsResponseDTO;
+import com.warmhelp.app.dtosResponses.ResponseCommentsResponseDTO;
 import com.warmhelp.app.models.Posts;
 import com.warmhelp.app.models.User;
 import com.warmhelp.app.models.UserInfo;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PostsService {
@@ -26,8 +30,44 @@ public class PostsService {
         this.userInfoRepository = userInfoRepository;
     }
 
-    public List<Posts> getAllPosts(){
-        return this.postsRepository.findAll();
+    public List<PostsResponseDTO> getAllPosts(){
+        return postsRepository.findAll().stream().map(post -> {
+            List<CommentsResponseDTO> commentsResponseDTOS = post.getComments().stream().map(comment -> {
+                List<ResponseCommentsResponseDTO> responseDTOS = comment.getResponseComments().stream().map(response ->
+                        new ResponseCommentsResponseDTO(
+                                response.getId(),
+                                response.getDescription(),
+                                response.getUserInfo().getUser().getUsername(),
+                                response.getCreatedAt(),
+                                response.getUpdatedAt(),
+                                response.getDeletedAt()
+                        )
+                ).collect(Collectors.toList());
+
+                return new CommentsResponseDTO(
+                        comment.getId(),
+                        comment.getUserInfo().getUser().getUsername(),
+                        comment.getDescription(),
+                        responseDTOS,
+                        comment.getCreatedAt(),
+                        comment.getUpdatedAt(),
+                        comment.getDeletedAt()
+                );
+
+            }).collect(Collectors.toList());
+
+            return new PostsResponseDTO(
+                    post.getId(),
+                    post.getTitle(),
+                    post.getUserInfo().getUser().getUsername(),
+                    post.getDescription(),
+                    post.getImage(),
+                    commentsResponseDTOS,
+                    post.getCreatedAt(),
+                    post.getUpdatedAt(),
+                    post.getDeletedAt()
+            );
+        }).collect(Collectors.toList());
     }
 
     public Optional<Posts> getPostsById(Long id){

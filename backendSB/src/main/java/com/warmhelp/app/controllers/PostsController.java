@@ -1,6 +1,7 @@
 package com.warmhelp.app.controllers;
 
 import com.warmhelp.app.dtos.auth.PostsRequest;
+import com.warmhelp.app.dtosResponses.PostsResponseDTO;
 import com.warmhelp.app.models.Posts;
 import com.warmhelp.app.services.PostsService;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class PostsController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Posts>> getAllPosts(){
+    public ResponseEntity<List<PostsResponseDTO>> getAllPosts(){
         return ResponseEntity.ok(this.postsService.getAllPosts());
     }
 

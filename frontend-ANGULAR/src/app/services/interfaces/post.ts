@@ -4,10 +4,6 @@ export interface Post {
   description: string;
   image?: string;
   createdAt: string;
-  userInfo?: {
-    user?: {
-      username: string;
-    };
-  };
+  username:string;
   comments: Comment[];
 }

@@ -17,15 +17,12 @@ export class PostsComponent implements OnInit {
   modalNuevoPost = false;
   modalComentariosVisible = false;
   mostrandoRespuestas = false;
-
   postSeleccionado: Post | null = null;
   comentarioSeleccionado: any = null;
-
   comentarios: any[] = [];
   respuestas: ResponseComment[] = [];
   nuevoComentario: string = '';
   nuevaRespuesta: string = '';
-
   nuevoPost = {
     title: '',
     description: '',
@@ -48,6 +45,7 @@ export class PostsComponent implements OnInit {
   cargarPosts(): void {
     this.postService.getAllPosts().subscribe({
       next: (data) => {
+        console.log(data);
         this.posts = data.reverse();
       },
       error: (err) => console.error("Error al cargar posts:", err)
