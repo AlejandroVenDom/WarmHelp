@@ -11,7 +11,6 @@ import { HomeNoAuthComponent } from './user/home-no-auth/home-no-auth.component'
 import { LayoutComponent } from './user/layout/layout.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderClienteComponent } from './user/header-cliente/header-cliente.component';
-import { InicioComponent } from './user/inicio/inicio.component';
 import { FooterComponent } from './user/footer/footer.component';
 import { PostsComponent } from './user/posts/posts.component';
 import { PerfilComponent } from './user/perfil/perfil.component';
@@ -27,7 +26,6 @@ import { CommonModule } from '@angular/common';
     HomeNoAuthComponent,
     LayoutComponent,
     HeaderClienteComponent,
-    InicioComponent,
     FooterComponent,
     PerfilComponent,
     TiendaComponent,
