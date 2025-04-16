@@ -1,0 +1,211 @@
+.mis-publicaciones-container {
+  background-color: #fbfaf4;
+  padding: 3rem 1rem;
+  max-width: 70%;
+  margin: auto;
+  border-radius: 16px;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  font-family: 'Segoe UI', sans-serif;
+  color: #3A7D44;
+
+  h2 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+  }
+
+  .acciones {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+
+    .buscador {
+      display: flex;
+      align-items: center;
+      border: 2px solid #9DC08B;
+      border-radius: 12px;
+      padding: 10px 14px;
+      max-width: 420px;
+      width: 100%;
+      background: #fff;
+
+      i {
+        margin-right: 10px;
+        color: #3A7D44;
+      }
+
+      input {
+        border: none;
+        outline: none;
+        flex: 1;
+        font-size: 1rem;
+        background: transparent;
+        color: #2B2B2B;
+      }
+    }
+
+    .botones-acciones {
+      display: flex;
+      gap: 12px;
+
+      .btn-secundario, .btn-principal {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .btn-secundario {
+        background: #9DC08B;
+        color: #F8F5E9;
+        border: none;
+
+        &:hover {
+          background-color: darken(#9DC08B, 10%);
+        }
+      }
+
+      .btn-principal {
+        background: #DF6D14;
+        color: #fbfaf4;
+        border: none;
+
+        &:hover {
+          background-color: darken(#DF6D14, 10%);
+        }
+      }
+    }
+  }
+
+  .lista-posts {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    .post-card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+      padding: 1.2rem;
+
+      h4 {
+        font-size: 1.3rem;
+        color: #DF6D14;
+        margin-bottom: 0.6rem;
+      }
+
+      p {
+        font-size: 1rem;
+        color: #3A7D44;
+      }
+
+      img {
+        max-width: 100%;
+        border-radius: 10px;
+        margin-top: 0.8rem;
+      }
+
+      .fecha {
+        display: block;
+        margin-top: 0.6rem;
+        font-size: 0.85rem;
+        color: #A2A393;
+      }
+    }
+  }
+
+  .modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(58, 125, 68, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+
+    .modal-content {
+      background: #F8F5E9;
+      padding: 2rem;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 520px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+      position: relative;
+      animation: fadeIn 0.3s ease-in-out;
+
+      h3 {
+        text-align: center;
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1.2rem;
+
+        label {
+          font-weight: 600;
+          margin-bottom: 0.3rem;
+          color: #3A7D44;
+        }
+
+        input,
+        textarea {
+          padding: 10px 14px;
+          border-radius: 12px;
+          border: 2px solid #9DC08B;
+          font-size: 1rem;
+          outline: none;
+          background-color: white;
+          color: #3A7D44;
+
+          &::placeholder {
+            color: #A2A393;
+          }
+        }
+
+        textarea {
+          resize: vertical;
+        }
+      }
+
+      .close-btn {
+        position: absolute;
+        top: 16px;
+        right: 20px;
+        font-size: 1.3rem;
+        color: #DF6D14;
+        cursor: pointer;
+      }
+
+      .btn-principal {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background-color: #DF6D14;
+        color: #F8F5E9;
+        border: none;
+        padding: 10px 16px;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 12px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: darken(#DF6D14, 10%);
+        }
+      }
+    }
+  }
+}

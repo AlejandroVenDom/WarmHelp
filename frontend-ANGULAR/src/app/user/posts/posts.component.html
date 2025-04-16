@@ -5,7 +5,12 @@
   <div class="acciones-posts">
     <div class="buscador-posts">
       <i class="bi bi-search"></i>
-      <input type="text" placeholder="Buscar publicaciones..." />
+      <input
+  type="text"
+  placeholder="Buscar publicaciones..."
+  [(ngModel)]="filtroBusqueda"
+  (input)="filtrarPosts()"/>
+
     </div>
     <div class="botones-acciones">
       <button class="btn-secundario" routerLink="/mis-publicaciones">

@@ -20,6 +20,8 @@ export class PostsComponent implements OnInit {
   postSeleccionado: Post | null = null;
   comentarioSeleccionado: any = null;
   comentarios: any[] = [];
+  filtroBusqueda: string = '';
+  allPosts: Post[] = []; // para mantener la lista completa de publicaciones
   respuestas: ResponseComment[] = [];
   nuevoComentario: string = '';
   nuevaRespuesta: string = '';
@@ -53,12 +55,22 @@ export class PostsComponent implements OnInit {
   cargarPosts(): void {
     this.postService.getAllPosts().subscribe({
       next: (data) => {
-        console.log(data);
-        this.posts = data.reverse();
+        this.allPosts = data.reverse();
+        this.posts = [...this.allPosts];
       },
       error: (err) => console.error("Error al cargar posts:", err)
     });
   }
+  filtrarPosts(): void {
+    const filtro = this.filtroBusqueda.toLowerCase().trim();
+    this.posts = this.allPosts.filter(post =>
+      post.title.toLowerCase().includes(filtro) ||
+      post.description.toLowerCase().includes(filtro) ||
+      post.username.toLowerCase().includes(filtro)
+    );
+  }
+
+
 
   abrirModalNuevoPost(): void {
     this.modalNuevoPost = true;

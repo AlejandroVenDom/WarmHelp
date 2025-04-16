@@ -1,1 +1,55 @@
-<p>mis-publicaciones works!</p>
+<div class="mis-publicaciones-container">
+  <h2>MIS PUBLICACIONES</h2>
+
+  <div class="acciones">
+    <div class="buscador">
+      <i class="bi bi-search"></i>
+      <input type="text" [(ngModel)]="filtroBusqueda" (input)="filtrarPosts()" placeholder="Buscar en tus publicaciones..." />
+    </div>
+
+    <div class="botones-acciones">
+      <button class="btn-secundario" routerLink="/posts">
+        <i class="bi bi-list-ul"></i>
+        Todas las publicaciones
+      </button>
+      <button class="btn-principal" (click)="abrirModalNuevoPost()">
+        <i class="bi bi-plus-circle-fill"></i>
+        Publicar
+      </button>
+    </div>
+  </div>
+
+  <div class="lista-posts">
+    <div class="post-card" *ngFor="let post of postsFiltrados">
+      <h4>{{ post.title }}</h4>
+      <p>{{ post.description }}</p>
+      <img *ngIf="post.image" [src]="post.image" />
+      <span class="fecha">{{ post.createdAt | date: 'short' }}</span>
+    </div>
+  </div>
+
+  <!-- Modal de publicación -->
+  <div *ngIf="modalNuevoPost" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" (click)="cerrarModalNuevoPost()">
+        <i class="bi bi-x-lg"></i>
+      </span>
+      <h3>Crear nueva publicación</h3>
+      <div class="form-group">
+        <label>Título</label>
+        <input type="text" [(ngModel)]="nuevoPost.title" />
+      </div>
+      <div class="form-group">
+        <label>Descripción</label>
+        <textarea [(ngModel)]="nuevoPost.description" rows="4"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Imagen (URL)</label>
+        <input type="text" [(ngModel)]="nuevoPost.image" />
+      </div>
+      <button class="btn-principal" (click)="publicarPost()">
+        <i class="bi bi-send-fill"></i> Publicar
+      </button>
+    </div>
+  </div>
+</div>
