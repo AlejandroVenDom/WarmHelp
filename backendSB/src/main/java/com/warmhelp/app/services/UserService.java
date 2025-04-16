@@ -204,6 +204,7 @@ public class UserService implements UserDetailsService {
         );
     }
 
+    // RESPONSE LOGIN AUTH
     public LoginResponse login(LoginRequest credentials){
         User user = this.userRepository.findByUsername(credentials.getUsername()).orElseThrow(
                 () -> new BadCredentialsException("User not found")
@@ -273,6 +274,7 @@ public class UserService implements UserDetailsService {
         return loginData;
     }
 
+    // RESPONSE CHECK TOKEN REQUEST
     public boolean checkToken(CheckTokenRequest checkTokenRequest) {
         return this.jwtUtil.validateToken(
                 checkTokenRequest.getToken(),
