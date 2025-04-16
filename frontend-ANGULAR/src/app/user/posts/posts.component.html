@@ -73,7 +73,7 @@
       <h3 *ngIf="mostrandoRespuestas">Respuestas a {{ comentarioSeleccionado?.username || 'Usuario' }}</h3>
 
       <!-- COMENTARIOS -->
-      <div *ngIf="!mostrandoRespuestas">
+      <div *ngIf="!mostrandoRespuestas" class="comentarios-scroll">
         <div class="comentario" *ngFor="let comentario of comentarios">
           <div class="comentario-header">
             <strong>{{ comentario.username || 'Usuario' }}</strong>
@@ -97,7 +97,7 @@
       </div>
 
       <!-- RESPUESTAS DETALLADAS -->
-      <div *ngIf="mostrandoRespuestas && comentarioSeleccionado">
+      <div *ngIf="mostrandoRespuestas && comentarioSeleccionado" class="respuestas-scroll">
         <div class="comentario comentario-principal">
           <div class="comentario-header">
             <strong>{{ comentarioSeleccionado.username || 'Usuario' }}</strong>

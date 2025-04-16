@@ -555,6 +555,32 @@ button {
     }
   }
 }
+.comentarios-scroll,
+.respuestas-scroll {
+  max-height: 380px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  margin-top: 1rem;
+  scroll-behavior: smooth;
+
+  scrollbar-width: thin;
+  scrollbar-color: #9DC08B #F8F5E9;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #9DC08B;
+    border-radius: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #F8F5E9;
+    border-radius: 8px;
+  }
+}
+
 
 
   // Responsive
