@@ -7,12 +7,17 @@
       <i class="bi bi-search"></i>
       <input type="text" placeholder="Buscar publicaciones..." />
     </div>
+    <div class="botones-acciones">
+      <button class="btn-secundario" routerLink="/mis-publicaciones">
+        <i class="bi bi-person-lines-fill"></i>
+        Mis publicaciones
+      </button>
     <button class="btn-publicar" (click)="abrirModalNuevoPost()">
       <i class="bi bi-plus-circle-fill"></i>
       Publicar
     </button>
   </div>
-
+</div>
   <!-- LISTA DE POSTS -->
   <div class="card-post" *ngFor="let post of posts">
     <img src="/ans.jpg" class="avatar" />

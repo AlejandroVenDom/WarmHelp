@@ -16,6 +16,7 @@ import { PostsComponent } from './user/posts/posts.component';
 import { PerfilComponent } from './user/perfil/perfil.component';
 import { TiendaComponent } from './user/tienda/tienda.component';
 import { CommonModule } from '@angular/common';
+import { MisPublicacionesComponent } from './user/mis-publicaciones/mis-publicaciones.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { CommonModule } from '@angular/common';
     FooterComponent,
     PerfilComponent,
     TiendaComponent,
-    PostsComponent
+    PostsComponent,
+    MisPublicacionesComponent
   ],
   imports: [
     BrowserModule,

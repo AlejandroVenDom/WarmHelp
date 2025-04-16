@@ -190,6 +190,41 @@
       box-shadow: 0 0 0 3px rgba(223, 109, 20, 0.4);
     }
   }
+  .botones-acciones {
+    display: flex;
+    gap: 12px;
+
+    .btn-secundario {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #9DC08B;
+      color: #F8F5E9;
+      font-weight: 600;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+
+      i {
+        font-size: 1.2rem;
+      }
+
+      &:hover {
+        background: darken(#9DC08B, 10%);
+        transform: scale(1.05);
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(157, 192, 139, 0.4);
+      }
+    }
+  }
+
 }
 .modal {
   display: flex;

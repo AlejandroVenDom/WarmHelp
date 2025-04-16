@@ -11,6 +11,7 @@ import { publicGuard } from './services/auth/guards/public.guard';
 import { authGuard } from './services/auth/guards/auth.guard';
 import { roleGuard } from './services/auth/guards/role.guard';
 import { PerfilComponent } from './user/perfil/perfil.component';
+import { MisPublicacionesComponent } from './user/mis-publicaciones/mis-publicaciones.component';
 
 const routes: Routes = [
   // users without authentication
@@ -23,6 +24,7 @@ const routes: Routes = [
       { path: 'posts', component: PostsComponent, canActivate: [authGuard] },
       { path: 'tienda', component: TiendaComponent , canActivate: [authGuard] },
       { path: 'servicioscr', component: BackofficeAdminComponent , canActivate: [roleGuard] },
+      { path: 'mis-publicaciones', component: MisPublicacionesComponent , canActivate: [authGuard] },
     ],
   },
 
