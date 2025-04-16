@@ -1,0 +1,163 @@
+body {
+    background-color: #F8F5E9;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
+    color: #3A7D44;
+  }
+  
+  // Contenedor principal
+  .register-wrapper {
+    width: 100%;
+    max-width: 1000px;
+    margin: 5% auto;
+    padding: 3rem;
+    border-radius: 18px;
+    background: white;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  // Título
+  .register-header {
+    margin-bottom: 2rem;
+  
+    .register-title {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #3A7D44;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  }
+  
+  // Campo de entrada
+  .register-field {
+    text-align: left;
+    margin-bottom: 1.8rem;
+  
+    .register-label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #3A7D44;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+  
+    .input-container {
+      position: relative;
+  
+      .icon {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #3A7D44;
+        font-size: 1.2rem;
+      }
+  
+      input {
+        width: 100%;
+        padding: 12px 12px 12px 42px;
+        border: 1.5px solid #9DC08B;
+        border-radius: 10px;
+        background: #F8F5E9;
+        color: #2B2B2B;
+        font-size: 1rem;
+        transition: 0.3s;
+  
+        &:focus {
+          outline: none;
+          background: white;
+          border-color: #3A7D44;
+          box-shadow: 0 0 8px rgba(58, 125, 68, 0.3);
+        }
+      }
+  
+      .bi-eye, .bi-eye-slash {
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 1.2rem;
+        color: #3A7D44;
+      }
+    }
+  
+    .register-select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1.5px solid #9DC08B;
+      background: #F8F5E9;
+      color: #2B2B2B;
+      font-size: 1rem;
+      transition: 0.3s;
+  
+      &:focus {
+        outline: none;
+        background: white;
+        border-color: #3A7D44;
+        box-shadow: 0 0 8px rgba(58, 125, 68, 0.3);
+      }
+    }
+  }
+  
+  // Mensaje de error
+  .text-danger {
+    font-size: 0.95rem;
+    color: #DF6D14;
+    margin-top: 6px;
+  }
+  
+  // Botón
+  .register-footer {
+    margin-top: 2.5rem;
+  
+    .register-btn {
+      background: #3A7D44;
+      color: #F8F5E9;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      width: 100%;
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+      box-shadow: 0 6px 15px rgba(58, 125, 68, 0.3);
+  
+      &:hover {
+        background: #DF6D14;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(223, 109, 20, 0.3);
+      }
+  
+      &:disabled {
+        background: #9DC08B;
+        color: #F8F5E9;
+        cursor: not-allowed;
+      }
+    }
+  }
+  
+  // Responsive
+  @media (max-width: 768px) {
+    .register-wrapper {
+      width: 90%;
+      padding: 2rem;
+    }
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
