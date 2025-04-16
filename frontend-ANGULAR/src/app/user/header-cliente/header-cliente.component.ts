@@ -13,6 +13,7 @@ export class HeaderClienteComponent implements OnInit {
   isLoggedIn: boolean = false;
   username: string | null = null;
   menuOpen: boolean = false;
+  role: string | null = null;
 
   constructor(
     private tokenService: TokenService,
@@ -22,7 +23,9 @@ export class HeaderClienteComponent implements OnInit {
 
   ngOnInit(): void {
     this.updateLoginStatus();
-    this.listenToSessionChanges();
+    this.router.events.subscribe(() => {
+      this.updateLoginStatus();
+    });
   }
 
   toggleMenu() {
@@ -39,15 +42,15 @@ export class HeaderClienteComponent implements OnInit {
 
     if (this.isLoggedIn) {
       this.username = this.useStateService.getUsername();
+      this.role = this.useStateService.getTypeRole(); // ✅ Obtiene el rol
     } else {
       this.username = null;
+      this.role = null;
     }
   }
 
-  listenToSessionChanges() {
-    this.router.events.subscribe(() => {
-      this.updateLoginStatus();
-    });
+  hasAdminOrProfessionalRole(): boolean {
+    return ['ADMIN', 'PROFESSIONAL'].includes(this.role?.toUpperCase() || '');
   }
 
   @HostListener('document:click', ['$event'])

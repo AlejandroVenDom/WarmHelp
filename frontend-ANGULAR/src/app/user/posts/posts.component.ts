@@ -41,6 +41,14 @@ export class PostsComponent implements OnInit {
     this.nuevoPost.userName = this.useStateService.getUsername() || '';
     this.cargarPosts();
   }
+  contarTotalRespuestas(post: Post): number {
+    if (!post.comments || post.comments.length === 0) return 0;
+    return post.comments.reduce((total, comment) => {
+      return total + ((comment as any).responseComments?.length || 0);
+    }, 0);
+  }
+
+
 
   cargarPosts(): void {
     this.postService.getAllPosts().subscribe({

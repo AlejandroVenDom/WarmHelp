@@ -13,7 +13,7 @@
     </button>
   </div>
 
-  <!-- LISTA DE POSTS --> 
+  <!-- LISTA DE POSTS -->
   <div class="card-post" *ngFor="let post of posts">
     <img src="/ans.jpg" class="avatar" />
     <div class="content" [ngClass]="{ 'with-image': post.image }">
@@ -28,6 +28,11 @@
         <i class="bi bi-hand-thumbs-up"></i><span>0</span>
         <i class="bi bi-chat-left-text-fill" (click)="abrirModalComentarios(post)" style="cursor: pointer;"></i>
         <span>{{ post.comments?.length || 0 }}</span>
+
+        <!-- Ícono de respuestas -->
+        <i class="bi bi-reply-fill respuesta-icono" (click)="abrirModalComentarios(post)" title="Respuestas a comentarios"></i>
+        <span>{{ contarTotalRespuestas(post) }}</span>
+
       </div>
     </div>
   </div>

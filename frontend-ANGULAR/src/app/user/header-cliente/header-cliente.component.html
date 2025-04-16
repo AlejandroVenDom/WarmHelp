@@ -13,7 +13,8 @@
     <ng-container *ngIf="isLoggedIn">
       <a routerLink="/posts" (click)="closeMenu()">Publicaciones</a>
       <a routerLink="/chat" (click)="closeMenu()">AI <i class="bi bi-x-diamond-fill"></i></a>
-      <a routerLink="/servicioscr" (click)="closeMenu()">Servicios</a>
+      <a *ngIf="hasAdminOrProfessionalRole()" routerLink="/servicioscr" (click)="closeMenu()">Mis Servicios</a>
+      <a routerLink="/tienda" (click)="closeMenu()">Tienda</a>
     </ng-container>
 
     <!-- Si está logueado -->
