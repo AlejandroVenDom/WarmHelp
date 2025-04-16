@@ -635,6 +635,7 @@ button {
   align-items: center;
   margin-top: 1rem;
   flex-wrap: wrap;
+  margin-bottom: 1%;
 
   .action-item {
     display: flex;
@@ -726,11 +727,6 @@ button {
   margin-bottom: 1rem;
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
-
-
-
-
-
   // Responsive
   @media (max-width: 768px) {
     padding: 2rem 1rem;

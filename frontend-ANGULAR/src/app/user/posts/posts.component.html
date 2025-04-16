@@ -35,7 +35,7 @@
     <div class="content" [ngClass]="{ 'with-image': post.image }">
       <div class="header">
         <span class="username">{{ post.username || 'Usuario' }}</span>
-        <span class="time">{{ post.createdAt | date:'short' }}</span>
+        <span class="time">{{ post.createdAt | date:'long' }}</span>
       </div>
       <h4>{{ post.title }}</h4>
       <p>{{ post.description }}</p>
@@ -65,7 +65,7 @@
 
     <h3>{{ postDetalleSeleccionado.title }}</h3>
     <p><strong>Autor:</strong> {{ postDetalleSeleccionado.username || 'Usuario' }}</p>
-    <p><strong>Fecha:</strong> {{ postDetalleSeleccionado.createdAt | date:'short' }}</p>
+    <p><strong>Fecha:</strong> {{ postDetalleSeleccionado.createdAt | date:'long' }}</p>
 
     <div class="detalle-wrapper">
       <div class="detalle-description">
