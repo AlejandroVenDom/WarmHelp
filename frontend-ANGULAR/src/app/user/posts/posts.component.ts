@@ -21,6 +21,8 @@ export class PostsComponent implements OnInit {
   mostrandoRespuestas = false;
   postSeleccionado: Post | null = null;
   comentarioSeleccionado: any = null;
+  modalDetallePostVisible = false;
+postDetalleSeleccionado: Post | null = null;
   comentarios: any[] = [];
   filtroBusqueda: string = '';
   allPosts: Post[] = [];
@@ -45,6 +47,15 @@ export class PostsComponent implements OnInit {
     this.nuevoPost.userName = this.useStateService.getUsername() || '';
     this.cargarPosts();
   }
+  abrirModalDetallePost(post: Post): void {
+  this.postDetalleSeleccionado = post;
+  this.modalDetallePostVisible = true;
+}
+
+cerrarModalDetallePost(): void {
+  this.modalDetallePostVisible = false;
+  this.postDetalleSeleccionado = null;
+}
   contarTotalRespuestas(post: Post): number {
     if (!post.comments || post.comments.length === 0) return 0;
     return post.comments.reduce((total, comment) => {
@@ -191,4 +202,5 @@ export class PostsComponent implements OnInit {
       }
     });
   }
+
 }

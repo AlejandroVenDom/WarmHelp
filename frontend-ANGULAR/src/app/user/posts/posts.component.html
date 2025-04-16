@@ -30,7 +30,7 @@
   </div>
 </div>
   <!-- LISTA DE POSTS -->
-  <div class="card-post" *ngFor="let post of posts">
+  <div class="card-post" *ngFor="let post of posts" (click)="abrirModalDetallePost(post)">
     <img src="/ans.jpg" class="avatar" />
     <div class="content" [ngClass]="{ 'with-image': post.image }">
       <div class="header">
@@ -41,17 +41,55 @@
       <p>{{ post.description }}</p>
       <img *ngIf="post.image" [src]="post.image" class="post-image" />
       <div class="actions">
-        <i class="bi bi-hand-thumbs-up"></i><span>0</span>
-        <i class="bi bi-chat-left-text-fill" (click)="abrirModalComentarios(post)" style="cursor: pointer;"></i>
-        <span>{{ post.comments?.length || 0 }}</span>
-
-        <!-- Ícono de respuestas -->
-        <i class="bi bi-reply-fill respuesta-icono" (click)="abrirModalComentarios(post)" title="Respuestas a comentarios"></i>
-        <span>{{ contarTotalRespuestas(post) }}</span>
-
+        <div class="action-item" title="Me gusta">
+          <i class="bi bi-hand-thumbs-up-fill"></i>
+          <span>0</span>
+        </div>
+        <div class="action-item" title="Comentarios" (click)="abrirModalComentarios(post)">
+          <i class="bi bi-chat-dots-fill"></i>
+          <span>{{ post.comments?.length || 0 }}</span>
+        </div>
+        <div class="action-item" title="Respuestas a comentarios" (click)="abrirModalComentarios(post)">
+          <i class="bi bi-arrow-return-right"></i>
+          <span>{{ contarTotalRespuestas(post) }}</span>
+        </div>
       </div>
     </div>
   </div>
+<!-- MODAL DETALLE POST -->
+<div *ngIf="modalDetallePostVisible && postDetalleSeleccionado" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" (click)="cerrarModalDetallePost()">
+      <i class="bi bi-x-lg"></i>
+    </span>
+
+    <h3>{{ postDetalleSeleccionado.title }}</h3>
+    <p><strong>Autor:</strong> {{ postDetalleSeleccionado.username || 'Usuario' }}</p>
+    <p><strong>Fecha:</strong> {{ postDetalleSeleccionado.createdAt | date:'short' }}</p>
+
+    <div class="detalle-wrapper">
+      <div class="detalle-description">
+        {{ postDetalleSeleccionado.description }}
+      </div>
+
+    <img *ngIf="postDetalleSeleccionado.image" [src]="postDetalleSeleccionado.image" class="detalle-img" />
+</div>
+    <div class="actions">
+      <div class="action-item">
+        <i class="bi bi-chat-dots-fill"></i>
+        {{ postDetalleSeleccionado.comments?.length || 0 }} comentario(s)
+      </div>
+      <div class="action-item">
+        <i class="bi bi-arrow-return-right"></i>
+        {{ contarTotalRespuestas(postDetalleSeleccionado) }} respuesta(s)
+      </div>
+    </div>
+
+    <button class="btn-comentar" (click)="abrirModalComentarios(postDetalleSeleccionado)">
+      <i class="bi bi-chat-left-dots"></i> Ver comentarios
+    </button>
+  </div>
+</div>
 
   <!-- MODAL NUEVO POST -->
   <div *ngIf="modalNuevoPost" class="modal">
