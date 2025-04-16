@@ -28,7 +28,7 @@ export class RegisterComponent {
     private popupService: PopupService
   ) {
     this.registerForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.maxLength(15)]],
+      username: ['', [Validators.required]],
       password: [
         '',
         [
@@ -38,11 +38,11 @@ export class RegisterComponent {
         ],
       ],
       roleType: ['', [Validators.required]],
-      first_name: ['', [Validators.required, Validators.maxLength(15)]],
-      last_name: ['', [Validators.required, Validators.maxLength(15)]],
-      address: ['', [Validators.required, Validators.maxLength(25)]],
+      first_name: ['', [Validators.required]],
+      last_name: ['', [Validators.required]],
+      address: ['', [Validators.required]],
       number: ['', Validators.required], // nuevo
-      email: ['', [Validators.required, Validators.email]], // nuevo
+      email: ['', [Validators.required]], // nuevo
       mySelf_description: [''],
     });
   }
