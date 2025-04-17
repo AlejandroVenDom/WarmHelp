@@ -62,7 +62,7 @@
     <span class="close-btn" (click)="cerrarModalDetallePost()">
       <i class="bi bi-x-lg"></i>
     </span>
-
+<br>
     <h3>{{ postDetalleSeleccionado.title }}</h3>
     <p><strong>Fecha:</strong> {{ postDetalleSeleccionado.createdAt | date:'long' }}</p>
 
@@ -83,7 +83,7 @@
         {{ contarTotalRespuestas(postDetalleSeleccionado) }} respuesta(s)
       </div>
     </div>
-
+<br>
     <button class="btn-comentar" (click)="abrirModalComentarios(postDetalleSeleccionado)">
       <i class="bi bi-chat-left-dots"></i> Ver comentarios
     </button>
