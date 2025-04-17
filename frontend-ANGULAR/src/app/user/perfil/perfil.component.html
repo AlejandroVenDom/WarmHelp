@@ -38,7 +38,10 @@
 
     <!-- Derecha: Comentarios -->
     <div class="resenas-card">
-      <h4><i class="bi bi bi-star-half"></i> Reseñas realizadas</h4>
+      <div class="section-header">
+        <i class="bi bi-star-half"></i>
+        Reseñas realizadas
+      </div>
       <div *ngIf="reviews.length === 0" class="resena">Aún no has realizado reseñas.</div>
       <div *ngFor="let review of reviews" class="resena">
         <div class="resena-header">
@@ -53,7 +56,10 @@
   <!-- Segunda fila: Posts -->
   <div class="perfil-grid-secundaria">
     <div class="posts-card">
-      <h4><i class="bi bi-journal-richtext"></i> Publicaciones</h4>
+      <div class="section-header">
+        <i class="bi bi-journal-richtext"></i>
+        Publicaciones
+      </div>
 
       <div *ngIf="posts.length === 0">Aún no has creado publicaciones.</div>
       <div *ngFor="let post of posts" class="post">
@@ -63,7 +69,7 @@
           <p class="fecha">{{ post.createdAt | date:'longDate' }}</p>
           <p class="resumen">{{ post.description }}</p>
 
-          <div *ngIf="post.comments?.length > 0" class="resenas">
+          <!-- <div *ngIf="post.comments?.length > 0" class="resenas">
             <h6><i class="bi bi-chat-left-text-fill"></i> Comentarios del post</h6>
             <div *ngFor="let c of post.comments" class="resena">
               <div class="resena-header">
@@ -72,14 +78,18 @@
               </div>
               <p>{{ c.description }}</p>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
 
     <!-- SOLO si el usuario es PROFESSIONAL -->
     <div *ngIf="role === 'PROFESSIONAL' || role === 'ADMIN'" class="servicios-card">
-      <h4><i class="bi bi-heart-pulse-fill"></i> Servicios Ofrecidos</h4>
+      <div class="section-header">
+        <i class="bi bi-heart-pulse-fill"></i>
+        Servicios ofrecidos
+      </div>
+
 
       <!-- Recorrer los servicios profesionales -->
       <div *ngFor="let service of professionalServices" class="servicio" >

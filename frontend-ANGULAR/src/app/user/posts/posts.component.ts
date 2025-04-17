@@ -22,7 +22,7 @@ export class PostsComponent implements OnInit {
   postSeleccionado: Post | null = null;
   comentarioSeleccionado: any = null;
   modalDetallePostVisible = false;
-postDetalleSeleccionado: Post | null = null;
+  postDetalleSeleccionado: Post | null = null;
   comentarios: any[] = [];
   filtroBusqueda: string = '';
   allPosts: Post[] = [];

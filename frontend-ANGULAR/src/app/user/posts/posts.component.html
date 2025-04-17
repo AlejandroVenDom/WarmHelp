@@ -64,7 +64,6 @@
     </span>
 
     <h3>{{ postDetalleSeleccionado.title }}</h3>
-    <p><strong>Autor:</strong> {{ postDetalleSeleccionado.username || 'Usuario' }}</p>
     <p><strong>Fecha:</strong> {{ postDetalleSeleccionado.createdAt | date:'long' }}</p>
 
     <div class="detalle-wrapper">
@@ -141,11 +140,9 @@
           </div>
 
           <!-- NUEVO: ÍCONO DE RESPUESTAS -->
-          <div *ngIf="comentario.responseComments?.length > 0"
-               class="respuestas-count"
-               (click)="verRespuestas(comentario)">
+          <div class="respuestas-count" (click)="verRespuestas(comentario)">
             <i class="bi bi-chat-left-dots-fill"></i>
-            {{ comentario.responseComments.length }} respuesta{{ comentario.responseComments.length > 1 ? 's' : '' }}
+            {{ comentario.responseComments?.length || 0 }} respuesta{{ (comentario.responseComments?.length || 0) !== 1 ? 's' : '' }}
           </div>
         </div>
       </div>
