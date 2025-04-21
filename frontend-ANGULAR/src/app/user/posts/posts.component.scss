@@ -3,7 +3,7 @@
   font-family: 'Segoe UI', sans-serif;
   color: #3A7D44;
   padding: 3rem 1rem;
-  max-width: 70%;
+  max-width: 95%;
   height: 90%;
   margin: auto;
   margin-top: 1%;
@@ -25,6 +25,7 @@
   }
 
   .card-post {
+    cursor: pointer;
     background-color: #fff;
     border-radius: 16px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
@@ -645,7 +646,7 @@ button {
     gap: 6px;
     font-size: 0.95rem;
     color: #3A7D44;
-    background: #f8f5e9;
+    // background: #f8f5e9;
     padding: 6px 12px;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
@@ -654,7 +655,7 @@ button {
 
     &:hover {
       background: #f0f4ec;
-      transform: translateY(-1px);
+      // transform: translateY(-1px);
       box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
     }
 
