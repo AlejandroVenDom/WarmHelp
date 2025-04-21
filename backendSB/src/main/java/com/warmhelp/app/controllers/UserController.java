@@ -64,5 +64,10 @@ public class UserController {
         return ResponseEntity.ok("Username actualizado correctamente");
     }
 
+    @PostMapping("/change-password")
+    public ResponseEntity<String> changePwd(@RequestBody ChangePasswordRequest request){
+        userService.changePassword(request);
+        return ResponseEntity.ok("Contraseña actualizada con éxito");
+    }
 
 }

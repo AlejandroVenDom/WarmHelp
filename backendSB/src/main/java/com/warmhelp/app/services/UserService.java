@@ -1,9 +1,6 @@
 package com.warmhelp.app.services;
 
-import com.warmhelp.app.dtos.auth.CheckTokenRequest;
-import com.warmhelp.app.dtos.auth.LoginRequest;
-import com.warmhelp.app.dtos.auth.LoginResponse;
-import com.warmhelp.app.dtos.auth.RegisterRequest;
+import com.warmhelp.app.dtos.auth.*;
 import com.warmhelp.app.dtosResponses.*;
 import com.warmhelp.app.models.*;
 import com.warmhelp.app.repositories.*;
@@ -123,6 +120,17 @@ public class UserService implements UserDetailsService {
             return user;
         }
     }
+
+    public void changePassword(ChangePasswordRequest request) {
+        User user = userRepository.findByUsername(request.getUsername())
+                .orElseThrow(()-> new UsernameNotFoundException("Usuario no encontrado"));
+        if(!passwordEncoder.matches(request.getOldPassword(), user.getPassword())){
+            throw new IllegalArgumentException("La contraseña antigua es incorrecta");
+        }
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
+    }
+
 
     // RESPONSE OF LOGIN FOR REVIEWS
     private ReviewResponseDTO mapToReviewResponseDTIO(Reviews reviews){
