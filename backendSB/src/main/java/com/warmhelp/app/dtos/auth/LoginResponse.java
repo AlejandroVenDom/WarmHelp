@@ -18,7 +18,7 @@ public class LoginResponse {
      * }
      *
      * */
-
+        private Long id;
         private String token;
         private String username;
         private RoleType role;
@@ -33,6 +33,14 @@ public class LoginResponse {
         private List<ProfessionalServiceResponseDTO> professionalServices;
         private List<ReviewResponseDTO> reviews;
         private List<ResponseCommentsResponseDTO> responseComments;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public List<ProfessionalServiceResponseDTO> getProfessionalServices() {
         return professionalServices;
@@ -145,5 +153,4 @@ public class LoginResponse {
         public void setRole(RoleType role) {
             this.role = role;
         }
-
 }

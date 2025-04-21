@@ -91,6 +91,28 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
+    public UserInfo updateUserInfo(Long id, UpdateUserInfoRequest request){
+        UserInfo userInfo = userInfoRepository.findByUserId(id).orElseThrow(
+                ()->new IllegalArgumentException("Usuario no encontrado")
+        );
+
+        if(!userInfo.getUser().getUsername().equals(request.getUsername())){
+            userInfo.getUser().setUsername(request.getUsername());
+        }
+
+        userInfo.setFirst_name(request.getFirst_name());
+        userInfo.setLast_name(request.getLast_name());
+        userInfo.setEmail(request.getEmail());
+        userInfo.setNumber(request.getNumber());
+        userInfo.setAddress(request.getAddress());
+        userInfo.setMySelf_description(request.getMySelf_description());
+
+        userInfoRepository.save(userInfo);
+        return userInfo;
+
+    }
+
+    @Transactional
     public User createUser(RegisterRequest userFromFront){
         if (this.userRepository.existsByUsername(userFromFront.getUsername())){
             throw new IllegalArgumentException("User alredy exists");
@@ -227,6 +249,7 @@ public class UserService implements UserDetailsService {
         );
 
         LoginResponse loginData = new LoginResponse();
+        loginData.setId(user.getId());
         loginData.setUsername(credentials.getUsername());
         loginData.setRole(user.getRole().getRoleType());
         loginData.setToken(this.jwtUtil.generateToken(credentials.getUsername()));

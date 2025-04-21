@@ -70,4 +70,10 @@ public class UserController {
         return ResponseEntity.ok("Contraseña actualizada con éxito");
     }
 
+    @PostMapping("/{id}/update")
+    public ResponseEntity<UserInfo> updateUser(@PathVariable Long id, @RequestBody UpdateUserInfoRequest request){
+        UserInfo updateUser = userService.updateUserInfo(id, request);
+        return ResponseEntity.ok(updateUser);
+    }
+
 }

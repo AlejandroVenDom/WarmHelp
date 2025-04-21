@@ -63,6 +63,7 @@ public class SecurityConfiguration {
                                 "/users/register",
                                 "/users/check-token",
                                 "/users/change-password",
+                                "/users/*/update",
                                 "/posts",
                                 "/posts/registerPost",
                                 "/comments",
