@@ -13,7 +13,6 @@ import { CredentialsService } from '../../services/auth/credentials.service';
   styleUrls: ['./perfil.component.scss']
 })
 export class PerfilComponent implements OnInit {
-  // Datos del perfil
   username: string | null = null;
   role: string | null = null;
   email: string | null = null;
@@ -28,14 +27,12 @@ export class PerfilComponent implements OnInit {
   professionalServices: any[] = [];
   reviews: any[] = [];
 
-  // Campos del modal de cambio de contraseña
+  // Cambio de contraseña
   oldPassword: string = '';
   newPassword: string = '';
   repeatNewPassword: string = '';
   passwordError: boolean = false;
-
-  // Propiedad para controlar la visibilidad del modal
-  showPasswordModal: boolean = false;
+  showPasswordFields: boolean = false;
 
   constructor(
     private useStateService: UseStateService,
@@ -63,9 +60,53 @@ export class PerfilComponent implements OnInit {
     this.reviews = this.useStateService.getReviews();
   }
 
+  togglePasswordFields() {
+    this.showPasswordFields = !this.showPasswordFields;
+    this.passwordError = false;
+  }
 
-   
-  // Método para cerrar sesión
+  cancelPasswordChange() {
+    this.oldPassword = '';
+    this.newPassword = '';
+    this.repeatNewPassword = '';
+    this.showPasswordFields = false;
+    this.passwordError = false;
+  }
+
+  onChangePassword() {
+    if (this.newPassword !== this.repeatNewPassword) {
+      this.passwordError = true;
+      return;
+    }
+
+    this.passwordError = false;
+
+    this.credentialsService.changePassword(this.oldPassword, this.newPassword, this.username!)
+      .subscribe({
+        next: (response) => {
+          if (typeof response === 'string') {
+            this.popupService.showMessage('Éxito', response, 'success');
+          } else {
+            this.popupService.showMessage('Éxito', 'Contraseña actualizada correctamente', 'success');
+          }
+          this.cancelPasswordChange();
+        },
+        error: (err) => {
+          let errorMessage = 'Error al cambiar la contraseña';
+
+          if (typeof err.error === 'string') {
+            errorMessage = err.error;
+          } else if (err.error?.message) {
+            errorMessage = err.error.message;
+          }
+
+          this.popupService.showMessage('Error', errorMessage, 'error');
+        }
+
+
+      });
+  }
+
   async logout() {
     const confirmLogout = await this.popupService.showConfirmation(
       'Cerrar Sesión',

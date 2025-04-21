@@ -212,6 +212,90 @@
   padding: 2rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
+.password-change-container {
+  margin-top: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  .password-form {
+    width: 100%;
+    max-width: 500px;
+    background: #f5f5ef;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        font-weight: 600;
+        margin-bottom: 0.4rem;
+        color: #3A7D44;
+      }
+
+      input {
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        transition: 0.3s;
+
+        &:focus {
+          border-color: #3A7D44;
+          box-shadow: 0 0 5px rgba(58, 125, 68, 0.4);
+        }
+      }
+
+      .error-text {
+        color: #DF6D14;
+        font-size: 0.85rem;
+        margin-top: 4px;
+      }
+    }
+
+    .form-btns {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+
+      button {
+        padding: 10px 18px;
+        font-weight: 600;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .btn-guardar {
+        background: #3A7D44;
+        color: white;
+
+        &:hover {
+          background: darken(#3A7D44, 10%);
+        }
+      }
+
+      .btn-cancelar {
+        background: #DF6D14;
+        color: white;
+
+        &:hover {
+          background: darken(#DF6D14, 10%);
+        }
+      }
+    }
+  }
+}
 
 .posts-card {
   .post {
