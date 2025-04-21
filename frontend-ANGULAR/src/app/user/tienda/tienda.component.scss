@@ -170,7 +170,7 @@ $color-text: #2B2B2B;
   transition: transform 0.3s ease-in-out;
 
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.01);
   }
 
   &::after {
@@ -312,6 +312,7 @@ $color-text: #2B2B2B;
   text-align: center;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease-in-out;
+  cursor: pointer;
 
   &:hover {
     transform: translateY(-5px);

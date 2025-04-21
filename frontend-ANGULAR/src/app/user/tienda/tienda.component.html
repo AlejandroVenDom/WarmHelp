@@ -29,7 +29,7 @@
         <p class="product-description">{{ servicio.description.length > 15 ? (servicio.description | slice:0:15) + '...' : servicio.description }}</p>
         <p class="price">Precio: {{ servicio.price }} {{ servicio.currencyType }}</p>
         <p class="price">Tax: {{ servicio.tax }}%</p>
-        <p>Publicado por: <strong>{{ servicio.userName || 'Desconocido' }}</strong></p>
+        <p>Publicado por: <strong>{{ servicio.username || 'Desconocido' }}</strong></p>
       </div>
     </div>
   </div>
@@ -46,6 +46,6 @@
     <p><strong>Descripción:</strong> {{ selectedService?.description }}</p>
     <p><strong>Precio:</strong> {{ selectedService?.price }} {{ selectedService?.currencyType }}</p>
     <p><strong>Tax:</strong> {{ selectedService?.tax }}%</p>
-    <p><strong>Publicado por:</strong> {{ selectedService?.userName || 'Desconocido' }}</p>
+    <p><strong>Publicado por:</strong> {{ selectedService?.username || 'Desconocido' }}</p>
   </div>
 </div>
