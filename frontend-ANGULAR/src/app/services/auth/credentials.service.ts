@@ -21,4 +21,14 @@ export class CredentialsService {
     return this.http.post<any>(`${environment.apiUrl}/users/register`, userData);
   }
 
+  // cambio de contraseña, REVISAR POR SI ACASO ESTÁ MAL, * No se si realizar una interfaz o no
+  changePassword(oldPassword: string, newPassword: string, username:string):Observable<any>{
+    const payload = {
+      oldPassword,
+      newPassword,
+      username
+    };
+    return this.http.post<any>(`${environment.apiUrl}/users/change-password`, payload);
+  }
+
 }

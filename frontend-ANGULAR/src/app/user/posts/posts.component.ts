@@ -5,6 +5,8 @@ import { PostService } from '../../services/posts/post.service';
 import { CommentRequest, CommentService } from '../../services/posts/comment.service';
 import { ResponseCommentsService, ResponseCommentRequest } from '../../services/posts/response-comments.service';
 import { ResponseComment } from '../../services/interfaces/response-coment';
+import { PopupService } from '../../services/popup.service';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-posts',
@@ -40,7 +42,8 @@ export class PostsComponent implements OnInit {
     private postService: PostService,
     private useStateService: UseStateService,
     private commentService: CommentService,
-    private responseCommentsService: ResponseCommentsService
+    private responseCommentsService: ResponseCommentsService,
+    private popupService: PopupService
   ) {}
 
   ngOnInit(): void {
@@ -107,13 +110,22 @@ cerrarModalDetallePost(): void {
       alert('Completa el título y la descripción');
       return;
     }
-
-    this.postService.createPost(this.nuevoPost).subscribe({
+    this.popupService.loader('Publicando...', 'Esto puede tardar un poco');
+    // Agregamos un delay de 2.3 segundos
+    this.postService.createPost(this.nuevoPost).pipe(delay(2300)).subscribe({
       next: (post) => {
         this.posts.unshift(post);
+        this.cargarPosts();
+        // aqui agregar popupservice 
+        this.popupService.close();
+  
+        this.popupService.showMessage('Publicación subida', '¡Tu publicación ha sido subida exitosamente!', 'success'); 
         this.cerrarModalNuevoPost();
       },
-      error: (err) => alert('Error al crear el post: ' + err.error)
+      error: (err) => {
+        this.popupService.showMessage('Error de publicación', 'ERROR: ' + err.error, 'error'); 
+      }
+      
     });
   }
 

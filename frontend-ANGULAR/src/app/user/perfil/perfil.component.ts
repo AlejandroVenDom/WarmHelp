@@ -4,14 +4,16 @@ import { TokenService } from '../../services/auth/token.service';
 import { UseStateService } from '../../services/auth/use-state.service';
 import { PopupService } from '../../services/popup.service';
 import { PostService } from '../../services/posts/post.service';
+import { CredentialsService } from '../../services/auth/credentials.service';
 
 @Component({
   selector: 'app-perfil',
   standalone: false,
   templateUrl: './perfil.component.html',
-  styleUrl: './perfil.component.scss'
+  styleUrls: ['./perfil.component.scss']
 })
 export class PerfilComponent implements OnInit {
+  // Datos del perfil
   username: string | null = null;
   role: string | null = null;
   email: string | null = null;
@@ -26,12 +28,22 @@ export class PerfilComponent implements OnInit {
   professionalServices: any[] = [];
   reviews: any[] = [];
 
+  // Campos del modal de cambio de contraseña
+  oldPassword: string = '';
+  newPassword: string = '';
+  repeatNewPassword: string = '';
+  passwordError: boolean = false;
+
+  // Propiedad para controlar la visibilidad del modal
+  showPasswordModal: boolean = false;
+
   constructor(
     private useStateService: UseStateService,
     private tokenService: TokenService,
     private router: Router,
     private popupService: PopupService,
-    private postService: PostService
+    private postService: PostService,
+    private credentialsService: CredentialsService
   ) {}
 
   ngOnInit(): void {
@@ -49,9 +61,11 @@ export class PerfilComponent implements OnInit {
     this.responseComments = this.useStateService.getResponseComments();
     this.professionalServices = this.useStateService.getProfessionalServices();
     this.reviews = this.useStateService.getReviews();
-
   }
 
+
+   
+  // Método para cerrar sesión
   async logout() {
     const confirmLogout = await this.popupService.showConfirmation(
       'Cerrar Sesión',
