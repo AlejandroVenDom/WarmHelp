@@ -369,6 +369,135 @@
     border-radius: 10px;
   }
 }
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-edit {
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 550px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  animation: scaleIn 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  h2 {
+    color: #3A7D44;
+    font-size: 1.8rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    i {
+      color: #DF6D14;
+    }
+  }
+
+  .form-edit {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        font-weight: 600;
+        margin-bottom: 0.4rem;
+        color: #3A7D44;
+      }
+
+      input, textarea {
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+        font-family: inherit;
+        transition: border 0.3s, box-shadow 0.3s;
+
+        &:focus {
+          border-color: #3A7D44;
+          box-shadow: 0 0 6px rgba(58, 125, 68, 0.3);
+        }
+      }
+
+      textarea {
+        resize: none;
+      }
+    }
+
+    .form-btns {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      margin-top: 1rem;
+
+      .btn-guardar,
+      .btn-cancelar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        font-weight: 600;
+        border-radius: 10px;
+        font-size: 1rem;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s ease-in-out;
+      }
+
+      .btn-guardar {
+        background: #3A7D44;
+        color: white;
+
+        &:hover {
+          background: darken(#3A7D44, 8%);
+        }
+      }
+
+      .btn-cancelar {
+        background: #DF6D14;
+        color: white;
+
+        &:hover {
+          background: darken(#DF6D14, 8%);
+        }
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 
 
 .servicios-card {

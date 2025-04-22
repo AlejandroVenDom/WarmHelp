@@ -26,8 +26,6 @@ export class UseStateService {
     sessionStorage.setItem(this.USER_KEY, JSON.stringify(userData));
   }
 
-  
-
   getUsername(): string | null {
     const session = this.getSession();
     return session ? session.username : null;
@@ -88,7 +86,7 @@ export class UseStateService {
     return session ? session.reviews : [];
   }
 
-  getResponseComments(): any[] {  
+  getResponseComments(): any[] {
     const session = this.getSession();
     return session ? session.responseComments : [];
   }

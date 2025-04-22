@@ -30,13 +30,24 @@ export class PerfilComponent implements OnInit {
   showNewPassword: boolean = false;
   showRepeatPassword: boolean = false;
 
-
   // Cambio de contraseña
   oldPassword: string = '';
   newPassword: string = '';
   repeatNewPassword: string = '';
   passwordError: boolean = false;
   showPasswordFields: boolean = false;
+
+  // Modal edición de perfil
+  showEditModal: boolean = false;
+  editData: any = {
+    username: '',
+    first_name: '',
+    last_name: '',
+    address: '',
+    number: '',
+    email: '',
+    mySelf_description: ''
+  };
 
   constructor(
     private useStateService: UseStateService,
@@ -55,7 +66,6 @@ export class PerfilComponent implements OnInit {
     this.number = this.useStateService.getNumber();
     this.comments = this.useStateService.getComments();
     this.posts = this.useStateService.getPosts();
-
     this.first_name = this.useStateService.getFirstName();
     this.last_name = this.useStateService.getLastName();
     this.mySelf_description = this.useStateService.getMySelfDescription();
@@ -78,14 +88,12 @@ export class PerfilComponent implements OnInit {
   }
 
   onChangePassword() {
-    // Validación: las contraseñas nuevas deben coincidir
     if (this.newPassword !== this.repeatNewPassword) {
       this.passwordError = true;
       this.popupService.showMessage('Error', 'Las nuevas contraseñas no coinciden', 'error');
       return;
     }
 
-    // Validación: la nueva contraseña no debe ser igual a la actual
     if (this.oldPassword === this.newPassword) {
       this.passwordError = true;
       this.popupService.showMessage('Error', 'La nueva contraseña no puede ser igual a la actual', 'error');
@@ -112,7 +120,6 @@ export class PerfilComponent implements OnInit {
       });
   }
 
-
   async logout() {
     const confirmLogout = await this.popupService.showConfirmation(
       'Cerrar Sesión',
@@ -123,7 +130,6 @@ export class PerfilComponent implements OnInit {
 
     if (confirmLogout) {
       this.popupService.loader('Cerrando sesión...', 'Por favor espera');
-
       this.tokenService.removeToken();
       this.useStateService.removeSession();
 
@@ -134,5 +140,46 @@ export class PerfilComponent implements OnInit {
     } else {
       this.popupService.showMessage('Cancelado', 'Tu sesión sigue activa', 'info');
     }
+  }
+
+  // Editar perfil
+  openEditModal() {
+    this.editData = {
+      username: this.username!,
+      first_name: this.first_name!,
+      last_name: this.last_name!,
+      address: this.address!,
+      number: this.number!,
+      email: this.email!,
+      mySelf_description: this.mySelf_description!
+    };
+    this.showEditModal = true;
+  }
+
+  closeEditModal() {
+    this.showEditModal = false;
+  }
+
+  onUpdateProfile() {
+    this.credentialsService.updateProfileByUsername(this.username!, this.editData).subscribe({
+      next: (updated) => {
+        this.popupService.showMessage('Éxito', 'Perfil actualizado correctamente', 'success');
+        this.useStateService.save({
+          ...updated,
+          role: this.role!,
+          comments: this.comments,
+          posts: this.posts,
+          reviews: this.reviews,
+          professionalServices: this.professionalServices,
+          responseComments: this.responseComments,
+        });
+        location.reload();
+      },
+      error: (err) => {
+        this.popupService.showMessage('Error', err?.error?.message || 'Error al actualizar el perfil', 'error');
+      }
+    });
+
+    this.closeEditModal();
   }
 }

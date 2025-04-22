@@ -77,10 +77,62 @@
 
 
 
-        <button class="btn-actualizar">
-          <i class="bi bi-gear-fill"></i> Modificar perfil
+<button class="btn-actualizar" (click)="openEditModal()">
+  <i class="bi bi-gear-fill"></i> Modificar perfil
+</button>
+
+       <!-- MODAL DE EDICIÓN DE PERFIL -->
+<div class="modal-overlay" *ngIf="showEditModal">
+  <div class="modal-edit">
+    <h2><i class="bi bi-pencil-fill"></i> Editar perfil</h2>
+    <form (ngSubmit)="onUpdateProfile()" class="form-edit">
+      <div class="input-group">
+        <label>Nombre</label>
+        <input [(ngModel)]="editData.first_name" name="first_name" required />
+      </div>
+
+      <div class="input-group">
+        <label>Apellido</label>
+        <input [(ngModel)]="editData.last_name" name="last_name" required />
+      </div>
+
+      <div class="input-group">
+        <label>Nombre de usuario</label>
+        <input [(ngModel)]="editData.username" name="username" required />
+      </div>
+
+      <div class="input-group">
+        <label>Email</label>
+        <input [(ngModel)]="editData.email" name="email" type="email" required />
+      </div>
+
+      <div class="input-group">
+        <label>Dirección</label>
+        <input [(ngModel)]="editData.address" name="address" />
+      </div>
+
+      <div class="input-group">
+        <label>Teléfono</label>
+        <input [(ngModel)]="editData.number" name="number" />
+      </div>
+
+      <div class="input-group">
+        <label>Sobre mí</label>
+        <textarea [(ngModel)]="editData.mySelf_description" name="mySelf_description" rows="3"></textarea>
+      </div>
+
+      <div class="form-btns">
+        <button type="submit" class="btn-guardar">
+          <i class="bi bi-check-lg"></i> Guardar cambios
         </button>
-        <!-- Cerrar sesión -->
+        <button type="button" class="btn-cancelar" (click)="closeEditModal()">
+          <i class="bi bi-x-lg"></i> Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
       </div>
       <button class="btn-logout" (click)="logout()">
         <i class="bi bi-box-arrow-right"></i> Salir
