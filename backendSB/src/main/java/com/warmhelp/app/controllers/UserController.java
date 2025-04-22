@@ -9,6 +9,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
@@ -65,10 +66,17 @@ public class UserController {
     }
 
     @PostMapping("/change-password")
-    public ResponseEntity<String> changePwd(@RequestBody ChangePasswordRequest request){
-        userService.changePassword(request);
-        return ResponseEntity.ok("Contraseña actualizada con éxito");
+    public ResponseEntity<?> changePwd(@RequestBody ChangePasswordRequest request){
+        try {
+            userService.changePassword(request);
+            return ResponseEntity.ok(Map.of("message", "Contraseña actualizada con éxito"));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("message", "Error interno del servidor"));
+        }
     }
+
 
     @PostMapping("/{id}/update")
     public ResponseEntity<UserInfo> updateUser(@PathVariable Long id, @RequestBody UpdateUserInfoRequest request){

@@ -296,6 +296,28 @@
     }
   }
 }
+.password-group {
+  .input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    input {
+      flex: 1;
+    }
+
+    .toggle-eye {
+      position: absolute;
+      right: 10px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: #3A7D44;
+    }
+  }
+}
+
 
 .posts-card {
   .post {

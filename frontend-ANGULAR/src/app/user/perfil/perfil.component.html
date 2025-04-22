@@ -32,21 +32,37 @@
 <!-- Campos de cambio de contraseña -->
 <div *ngIf="showPasswordFields" class="password-change-container">
   <form (ngSubmit)="onChangePassword()" class="password-form">
-    <div class="form-group">
+    <div class="form-group password-group">
       <label>Contraseña actual</label>
-      <input type="password" [(ngModel)]="oldPassword" name="oldPassword" required />
+      <div class="input-wrapper">
+        <input [type]="showOldPassword ? 'text' : 'password'" [(ngModel)]="oldPassword" name="oldPassword" required />
+        <button type="button" (click)="showOldPassword = !showOldPassword" class="toggle-eye">
+          <i class="bi" [ngClass]="showOldPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+        </button>
+      </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group password-group">
       <label>Nueva contraseña</label>
-      <input type="password" [(ngModel)]="newPassword" name="newPassword" required />
+      <div class="input-wrapper">
+        <input [type]="showNewPassword ? 'text' : 'password'" [(ngModel)]="newPassword" name="newPassword" required />
+        <button type="button" (click)="showNewPassword = !showNewPassword" class="toggle-eye">
+          <i class="bi" [ngClass]="showNewPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+        </button>
+      </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group password-group">
       <label>Repetir nueva contraseña</label>
-      <input type="password" [(ngModel)]="repeatNewPassword" name="repeatNewPassword" required />
+      <div class="input-wrapper">
+        <input [type]="showRepeatPassword ? 'text' : 'password'" [(ngModel)]="repeatNewPassword" name="repeatNewPassword" required />
+        <button type="button" (click)="showRepeatPassword = !showRepeatPassword" class="toggle-eye">
+          <i class="bi" [ngClass]="showRepeatPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+        </button>
+      </div>
       <small *ngIf="passwordError" class="error-text">Las nuevas contraseñas no coinciden</small>
     </div>
+
 
     <div class="form-btns">
       <button type="submit" class="btn-guardar">

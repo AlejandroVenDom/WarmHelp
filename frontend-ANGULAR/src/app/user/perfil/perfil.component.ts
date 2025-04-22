@@ -26,6 +26,10 @@ export class PerfilComponent implements OnInit {
   responseComments: any[] = [];
   professionalServices: any[] = [];
   reviews: any[] = [];
+  showOldPassword: boolean = false;
+  showNewPassword: boolean = false;
+  showRepeatPassword: boolean = false;
+
 
   // Cambio de contraseña
   oldPassword: string = '';
@@ -74,8 +78,17 @@ export class PerfilComponent implements OnInit {
   }
 
   onChangePassword() {
+    // Validación: las contraseñas nuevas deben coincidir
     if (this.newPassword !== this.repeatNewPassword) {
       this.passwordError = true;
+      this.popupService.showMessage('Error', 'Las nuevas contraseñas no coinciden', 'error');
+      return;
+    }
+
+    // Validación: la nueva contraseña no debe ser igual a la actual
+    if (this.oldPassword === this.newPassword) {
+      this.passwordError = true;
+      this.popupService.showMessage('Error', 'La nueva contraseña no puede ser igual a la actual', 'error');
       return;
     }
 
@@ -83,29 +96,22 @@ export class PerfilComponent implements OnInit {
 
     this.credentialsService.changePassword(this.oldPassword, this.newPassword, this.username!)
       .subscribe({
-        next: (response) => {
-          if (typeof response === 'string') {
-            this.popupService.showMessage('Éxito', response, 'success');
-          } else {
-            this.popupService.showMessage('Éxito', 'Contraseña actualizada correctamente', 'success');
-          }
+        next: (res) => {
+          const message = typeof res === 'string' ? res : res?.message || 'Contraseña actualizada correctamente';
+          this.popupService.showMessage('Éxito', message, 'success');
           this.cancelPasswordChange();
         },
         error: (err) => {
-          let errorMessage = 'Error al cambiar la contraseña';
-
-          if (typeof err.error === 'string') {
-            errorMessage = err.error;
-          } else if (err.error?.message) {
-            errorMessage = err.error.message;
-          }
+          const errorMessage =
+            typeof err.error === 'string'
+              ? err.error
+              : err.error?.message || 'Error al cambiar la contraseña';
 
           this.popupService.showMessage('Error', errorMessage, 'error');
         }
-
-
       });
   }
+
 
   async logout() {
     const confirmLogout = await this.popupService.showConfirmation(
