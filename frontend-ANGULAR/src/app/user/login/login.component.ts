@@ -58,6 +58,7 @@ export class LoginComponent {
             this.tokenService.saveTokens(data.token, '234325423423');
 
             this.useStateService.save({
+              id: data.id,
               username: data.username,
               role: data.role,
               first_name: data.first_name,

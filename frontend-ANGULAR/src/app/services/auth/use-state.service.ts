@@ -6,9 +6,11 @@ import { Injectable } from '@angular/core';
 export class UseStateService {
   private readonly USER_KEY = 'warmhelp_user';
 
+
   constructor() {}
 
   save(userData: {
+    id: number;
     username: string;
     first_name: string;
     last_name: string;
@@ -24,6 +26,10 @@ export class UseStateService {
     role: string;
   }): void {
     sessionStorage.setItem(this.USER_KEY, JSON.stringify(userData));
+  }
+  getUserId(): number | null {
+    const session = this.getSession();
+    return session ? session.id : null;
   }
 
   getUsername(): string | null {

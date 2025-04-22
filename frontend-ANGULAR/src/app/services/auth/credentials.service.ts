@@ -31,9 +31,10 @@ export class CredentialsService {
     return this.http.post<any>(`${environment.apiUrl}/users/change-password`, payload);
   }
 
-  updateProfileByUsername(username: string, data: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/users/${username}/update`, data);
+  updateProfileById(id: number, data: any): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/users/${id}/update`, data);
   }
+
 
 
 

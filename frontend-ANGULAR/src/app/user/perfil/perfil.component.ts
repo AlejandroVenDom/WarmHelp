@@ -161,25 +161,44 @@ export class PerfilComponent implements OnInit {
   }
 
   onUpdateProfile() {
-    this.credentialsService.updateProfileByUsername(this.username!, this.editData).subscribe({
+    const userId = this.useStateService.getUserId();
+
+    if (!userId) {
+      this.popupService.showMessage('Error', 'No se pudo obtener el ID del usuario', 'error');
+      return;
+    }
+
+    this.credentialsService.updateProfileById(userId, this.editData).subscribe({
       next: (updated) => {
         this.popupService.showMessage('Éxito', 'Perfil actualizado correctamente', 'success');
-        this.useStateService.save({
-          ...updated,
-          role: this.role!,
-          comments: this.comments,
-          posts: this.posts,
-          reviews: this.reviews,
-          professionalServices: this.professionalServices,
-          responseComments: this.responseComments,
-        });
-        location.reload();
+
+        const currentSession = JSON.parse(sessionStorage.getItem('warmhelp_user')!);
+
+        const newSession = {
+          ...currentSession,
+          ...updated
+        };
+
+        this.useStateService.save(newSession);
+
+        // ACTUALIZAR datos locales (visualmente)
+        this.username = newSession.username;
+        this.first_name = newSession.first_name;
+        this.last_name = newSession.last_name;
+        this.address = newSession.address;
+        this.number = newSession.number;
+        this.email = newSession.email;
+        this.mySelf_description = newSession.mySelf_description;
+
+        this.closeEditModal(); // Cerrar modal tras actualizar
       },
       error: (err) => {
         this.popupService.showMessage('Error', err?.error?.message || 'Error al actualizar el perfil', 'error');
       }
     });
-
-    this.closeEditModal();
   }
+
+
+
+
 }
