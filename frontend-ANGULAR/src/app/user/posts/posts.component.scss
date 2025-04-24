@@ -756,3 +756,63 @@ button {
     }
   }
 }
+.no-resultados {
+  text-align: center;
+  color: #A2A393;
+  margin: 2rem 0;
+
+  i {
+    font-size: 2.5rem;
+    color: #DF6D14;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+}
+
+.paginacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+
+  button {
+    background-color: #9DC08B;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 12px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:disabled {
+      background-color: #d2e4cb;
+      cursor: not-allowed;
+    }
+
+    i {
+      font-size: 1.2rem;
+      color: white;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: darken(#9DC08B, 10%);
+    }
+  }
+
+  span {
+    font-weight: 600;
+    color: #3A7D44;
+  }
+}
+

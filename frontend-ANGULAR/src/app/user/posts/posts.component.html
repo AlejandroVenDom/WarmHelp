@@ -45,17 +45,33 @@
           <i class="bi bi-hand-thumbs-up-fill"></i>
           <span>0</span>
         </div>
-        <div class="action-item" title="Comentarios" (click)="abrirModalComentarios(post)">
+        <div class="action-item" title="Comentarios" (click)="abrirModalComentarios(post); $event.stopPropagation()">
           <i class="bi bi-chat-dots-fill"></i>
           <span>{{ post.comments?.length || 0 }}</span>
         </div>
-        <div class="action-item" title="Respuestas a comentarios" (click)="abrirModalComentarios(post)">
+        <div class="action-item" title="Respuestas a comentarios" (click)="abrirModalComentarios(post); $event.stopPropagation()">
           <i class="bi bi-arrow-return-right"></i>
           <span>{{ contarTotalRespuestas(post) }}</span>
         </div>
       </div>
     </div>
   </div>
+  <!-- Cuando no hay resultados -->
+<div *ngIf="posts.length === 0" class="no-resultados">
+  <i class="bi bi-emoji-frown-fill"></i>
+  <p>No se encontraron publicaciones con el filtro actual.</p>
+</div>
+
+<!-- Paginación -->
+<div class="paginacion" *ngIf="totalPaginas > 1">
+  <button (click)="cambiarPagina(-1)" [disabled]="paginaActual === 1">
+    <i class="bi bi-arrow-left-circle-fill"></i> Anterior
+  </button>
+  <span>Página {{ paginaActual }} de {{ totalPaginas }}</span>
+  <button (click)="cambiarPagina(1)" [disabled]="paginaActual === totalPaginas">
+    Siguiente <i class="bi bi-arrow-right-circle-fill"></i>
+  </button>
+</div>
 <!-- MODAL DETALLE POST -->
 <div *ngIf="modalDetallePostVisible && postDetalleSeleccionado" class="modal">
   <div class="modal-content">

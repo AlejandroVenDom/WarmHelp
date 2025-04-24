@@ -18,6 +18,8 @@ export class PostsComponent implements OnInit {
   cantidadMostrar = 10;
   cantidadesDisponibles = [5, 10, 15, 20, 30, 40, 50];
   posts: Post[] = [];
+  paginaActual = 1;
+  totalPaginas = 99999;
   modalNuevoPost = false;
   modalComentariosVisible = false;
   mostrandoRespuestas = false;
@@ -78,6 +80,19 @@ cerrarModalDetallePost(): void {
     });
   }
 
+  getPostsPaginados(posts: Post[]): Post[] {
+    const inicio = (this.paginaActual - 1) * this.cantidadMostrar;
+    return posts.slice(inicio, inicio + this.cantidadMostrar);
+  }
+
+  cambiarPagina(valor: number): void {
+    const nuevaPagina = this.paginaActual + valor;
+    if (nuevaPagina > 0 && nuevaPagina <= this.totalPaginas) {
+      this.paginaActual = nuevaPagina;
+      this.actualizarLista();
+    }
+  }
+
   filtrarPosts(): void {
     const filtro = this.filtroBusqueda.toLowerCase().trim();
     const filtrados = this.allPosts.filter(post =>
@@ -85,7 +100,20 @@ cerrarModalDetallePost(): void {
       post.description.toLowerCase().includes(filtro) ||
       post.username.toLowerCase().includes(filtro)
     );
-    this.posts = filtrados.slice(0, this.cantidadMostrar);
+    this.totalPaginas = Math.ceil(filtrados.length / this.cantidadMostrar);
+    this.paginaActual = 1;
+    this.actualizarLista(filtrados);
+  }
+
+  actualizarLista(postsFiltrados: Post[] = this.allPosts): void {
+    const filtro = this.filtroBusqueda.toLowerCase().trim();
+    const filtrados = postsFiltrados.filter(post =>
+      post.title.toLowerCase().includes(filtro) ||
+      post.description.toLowerCase().includes(filtro) ||
+      post.username.toLowerCase().includes(filtro)
+    );
+    this.totalPaginas = Math.ceil(filtrados.length / this.cantidadMostrar);
+    this.posts = this.getPostsPaginados(filtrados);
   }
 
 
@@ -116,16 +144,16 @@ cerrarModalDetallePost(): void {
       next: (post) => {
         this.posts.unshift(post);
         this.cargarPosts();
-        // aqui agregar popupservice 
+        // aqui agregar popupservice
         this.popupService.close();
-  
-        this.popupService.showMessage('Publicación subida', '¡Tu publicación ha sido subida exitosamente!', 'success'); 
+
+        this.popupService.showMessage('Publicación subida', '¡Tu publicación ha sido subida exitosamente!', 'success');
         this.cerrarModalNuevoPost();
       },
       error: (err) => {
-        this.popupService.showMessage('Error de publicación', 'ERROR: ' + err.error, 'error'); 
+        this.popupService.showMessage('Error de publicación', 'ERROR: ' + err.error, 'error');
       }
-      
+
     });
   }
 
