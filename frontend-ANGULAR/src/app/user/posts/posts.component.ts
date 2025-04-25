@@ -15,24 +15,34 @@ import { delay } from 'rxjs';
   styleUrl: './posts.component.scss'
 })
 export class PostsComponent implements OnInit {
+  // Estado de posts y paginación
+  allPosts: Post[] = [];
+  posts: Post[] = [];
+  filtroBusqueda = '';
   cantidadMostrar = 10;
   cantidadesDisponibles = [5, 10, 15, 20, 30, 40, 50];
-  posts: Post[] = [];
   paginaActual = 1;
-  totalPaginas = 99999;
+  totalPaginas = 1;
+  paginas: number[] = [];
+
+  // Estado de modales
   modalNuevoPost = false;
   modalComentariosVisible = false;
-  mostrandoRespuestas = false;
-  postSeleccionado: Post | null = null;
-  comentarioSeleccionado: any = null;
   modalDetallePostVisible = false;
+
+  // Post seleccionado
+  postSeleccionado: Post | null = null;
   postDetalleSeleccionado: Post | null = null;
+
+  // Comentarios y respuestas
   comentarios: any[] = [];
-  filtroBusqueda: string = '';
-  allPosts: Post[] = [];
   respuestas: ResponseComment[] = [];
-  nuevoComentario: string = '';
-  nuevaRespuesta: string = '';
+  comentarioSeleccionado: any = null;
+  mostrandoRespuestas = false;
+  nuevoComentario = '';
+  nuevaRespuesta = '';
+
+  // Nuevo post
   nuevoPost = {
     title: '',
     description: '',
@@ -42,83 +52,76 @@ export class PostsComponent implements OnInit {
 
   constructor(
     private postService: PostService,
-    private useStateService: UseStateService,
     private commentService: CommentService,
     private responseCommentsService: ResponseCommentsService,
+    private useStateService: UseStateService,
     private popupService: PopupService
   ) {}
 
   ngOnInit(): void {
-    this.nuevoPost.userName = this.useStateService.getUsername() || '';
+    this.nuevoPost.userName = this.useStateService.getUsername() || 'anon';
     this.cargarPosts();
   }
-  abrirModalDetallePost(post: Post): void {
-  this.postDetalleSeleccionado = post;
-  this.modalDetallePostVisible = true;
-}
 
-cerrarModalDetallePost(): void {
-  this.modalDetallePostVisible = false;
-  this.postDetalleSeleccionado = null;
-}
-  contarTotalRespuestas(post: Post): number {
-    if (!post.comments || post.comments.length === 0) return 0;
-    return post.comments.reduce((total, comment) => {
-      return total + ((comment as any).responseComments?.length || 0);
-    }, 0);
-  }
-
-
-
+  // --- Manejo de posts ---
   cargarPosts(): void {
     this.postService.getAllPosts().subscribe({
-      next: (data) => {
-        this.allPosts = data.reverse();
-        this.filtrarPosts(); // ya respeta filtro y cantidad
+      next: posts => {
+        this.allPosts = posts.reverse();
+        this.resetearFiltros();
       },
-      error: (err) => console.error("Error al cargar posts:", err)
+      error: err => console.error('Error al cargar posts:', err)
     });
   }
 
-  getPostsPaginados(posts: Post[]): Post[] {
+  actualizarLista(): void {
+    const filtro = this.filtroBusqueda.toLowerCase().trim();
+    const postsFiltrados = this.allPosts.filter(p =>
+      p.title.toLowerCase().includes(filtro) ||
+      p.description.toLowerCase().includes(filtro) ||
+      p.username.toLowerCase().includes(filtro)
+    );
+
+    this.totalPaginas = Math.max(1, Math.ceil(postsFiltrados.length / this.cantidadMostrar));
+    this.paginas = Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
+
     const inicio = (this.paginaActual - 1) * this.cantidadMostrar;
-    return posts.slice(inicio, inicio + this.cantidadMostrar);
+    this.posts = postsFiltrados.slice(inicio, inicio + this.cantidadMostrar);
+  }
+
+  resetearFiltros(): void {
+    this.filtroBusqueda = '';
+    this.cantidadMostrar = 10;
+    this.paginaActual = 1;
+    this.actualizarLista();
+  }
+
+  filtrarPosts(): void {
+    this.paginaActual = 1;
+    this.actualizarLista();
+  }
+
+  onCantidadChange(): void {
+    this.paginaActual = 1;
+    this.actualizarLista();
   }
 
   cambiarPagina(valor: number): void {
     const nuevaPagina = this.paginaActual + valor;
-    if (nuevaPagina > 0 && nuevaPagina <= this.totalPaginas) {
+    if (nuevaPagina >= 1 && nuevaPagina <= this.totalPaginas) {
       this.paginaActual = nuevaPagina;
       this.actualizarLista();
     }
   }
 
-  filtrarPosts(): void {
-    const filtro = this.filtroBusqueda.toLowerCase().trim();
-    const filtrados = this.allPosts.filter(post =>
-      post.title.toLowerCase().includes(filtro) ||
-      post.description.toLowerCase().includes(filtro) ||
-      post.username.toLowerCase().includes(filtro)
-    );
-    this.totalPaginas = Math.ceil(filtrados.length / this.cantidadMostrar);
-    this.paginaActual = 1;
-    this.actualizarLista(filtrados);
+  irAPagina(pagina: number): void {
+    if (pagina >= 1 && pagina <= this.totalPaginas) {
+      this.paginaActual = pagina;
+      this.actualizarLista();
+    }
   }
 
-  actualizarLista(postsFiltrados: Post[] = this.allPosts): void {
-    const filtro = this.filtroBusqueda.toLowerCase().trim();
-    const filtrados = postsFiltrados.filter(post =>
-      post.title.toLowerCase().includes(filtro) ||
-      post.description.toLowerCase().includes(filtro) ||
-      post.username.toLowerCase().includes(filtro)
-    );
-    this.totalPaginas = Math.ceil(filtrados.length / this.cantidadMostrar);
-    this.posts = this.getPostsPaginados(filtrados);
-  }
-
-
-
-
+  // --- Publicar post ---
   abrirModalNuevoPost(): void {
     this.modalNuevoPost = true;
   }
@@ -129,41 +132,39 @@ cerrarModalDetallePost(): void {
       title: '',
       description: '',
       image: '',
-      userName: this.useStateService.getUsername() || ''
+      userName: this.useStateService.getUsername() || 'anon'
     };
   }
 
   publicarPost(): void {
-    if (!this.nuevoPost.title.trim() || !this.nuevoPost.description.trim()) {
+    const { title, description } = this.nuevoPost;
+    if (!title.trim() || !description.trim()) {
       alert('Completa el título y la descripción');
       return;
     }
-    this.popupService.loader('Publicando...', 'Esto puede tardar un poco');
-    // Agregamos un delay de 2.3 segundos
-    this.postService.createPost(this.nuevoPost).pipe(delay(2300)).subscribe({
-      next: (post) => {
-        this.posts.unshift(post);
-        this.cargarPosts();
-        // aqui agregar popupservice
-        this.popupService.close();
 
+    this.popupService.loader('Publicando...', 'Esto puede tardar un poco');
+    this.postService.createPost(this.nuevoPost).pipe(delay(2300)).subscribe({
+      next: () => {
+        this.popupService.close();
         this.popupService.showMessage('Publicación subida', '¡Tu publicación ha sido subida exitosamente!', 'success');
         this.cerrarModalNuevoPost();
+        this.cargarPosts();
       },
-      error: (err) => {
+      error: err => {
         this.popupService.showMessage('Error de publicación', 'ERROR: ' + err.error, 'error');
       }
-
     });
   }
 
+  // --- Comentarios ---
   abrirModalComentarios(post: Post): void {
     this.postSeleccionado = post;
     this.comentarios = post.comments || [];
     this.modalComentariosVisible = true;
     this.nuevoComentario = '';
     this.mostrandoRespuestas = false;
-    this.respuestas = []; // limpiar por si acaso
+    this.respuestas = [];
   }
 
   cerrarModalComentarios(): void {
@@ -189,7 +190,7 @@ cerrarModalDetallePost(): void {
         this.nuevoComentario = '';
         this.cargarPosts();
         setTimeout(() => {
-          const actualizado = this.posts.find(p => p.id === this.postSeleccionado?.id);
+          const actualizado = this.allPosts.find(p => p.id === this.postSeleccionado?.id);
           if (actualizado) {
             this.postSeleccionado = actualizado;
             this.comentarios = actualizado.comments || [];
@@ -199,22 +200,15 @@ cerrarModalDetallePost(): void {
     });
   }
 
+  // --- Respuestas ---
   verRespuestas(comentario: any): void {
     this.comentarioSeleccionado = comentario;
-    this.respuestas = [];
+    this.mostrandoRespuestas = true;
     this.responseCommentsService.getAllResponseComments().subscribe({
-      next: (res) => {
-        this.respuestas = res.filter(r => r.commentId == comentario.id); // ⚠️ usa == por si acaso son string vs number
-        this.mostrandoRespuestas = true;
+      next: respuestas => {
+        this.respuestas = respuestas.filter(r => r.commentId === comentario.id);
       }
     });
-  }
-
-  volverAComentarios(): void {
-    this.mostrandoRespuestas = false;
-    this.comentarioSeleccionado = null;
-    this.nuevaRespuesta = '';
-    this.respuestas = [];
   }
 
   enviarRespuesta(): void {
@@ -227,20 +221,42 @@ cerrarModalDetallePost(): void {
     };
 
     this.responseCommentsService.createResponseComment(respuesta).subscribe({
-      next: (nuevaRespuesta) => {
-        this.respuestas.push(nuevaRespuesta);
-        if (this.comentarioSeleccionado.responseComments) {
-          this.comentarioSeleccionado.responseComments.push(nuevaRespuesta);
-        } else {
-          this.comentarioSeleccionado.responseComments = [nuevaRespuesta];
-        }
+      next: nueva => {
+        this.respuestas.push(nueva);
+        this.comentarioSeleccionado.responseComments = [
+          ...(this.comentarioSeleccionado.responseComments || []),
+          nueva
+        ];
         this.nuevaRespuesta = '';
       },
-      error: (err) => {
-        console.error("Error al enviar respuesta:", err);
-        alert("❌ Hubo un problema al guardar tu respuesta");
+      error: err => {
+        console.error('Error al enviar respuesta:', err);
+        alert('❌ Hubo un problema al guardar tu respuesta');
       }
     });
   }
 
+  volverAComentarios(): void {
+    this.mostrandoRespuestas = false;
+    this.comentarioSeleccionado = null;
+    this.nuevaRespuesta = '';
+    this.respuestas = [];
+  }
+
+  // --- Detalle post ---
+  abrirModalDetallePost(post: Post): void {
+    this.postDetalleSeleccionado = post;
+    this.modalDetallePostVisible = true;
+  }
+
+  cerrarModalDetallePost(): void {
+    this.modalDetallePostVisible = false;
+    this.postDetalleSeleccionado = null;
+  }
+
+  contarTotalRespuestas(post: Post): number {
+    return post.comments?.reduce((total, comment: any) => {
+      return total + (comment.responseComments?.length || 0);
+    }, 0) || 0;
+  }
 }

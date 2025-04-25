@@ -815,4 +815,71 @@ button {
     color: #3A7D44;
   }
 }
+.numeros-pagina {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  margin-top: 1rem;
+
+  button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #F8F5E9;
+    color: #3A7D44;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &.activa {
+      background-color: #9DC08B;
+      color: white;
+    }
+
+    &:hover {
+      background-color: #DF6D14;
+      color: #fff;
+    }
+  }
+}
+.buscador-posts-con-reset {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .buscador-posts {
+    flex: 1; // hace que el input tome el ancho completo disponible
+  }
+
+  .btn-reset-filtros {
+    background: #3A7D44;
+    color: #fff;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 1rem;
+    height: 15%;
+    width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+
+    i {
+      font-size: 1.1rem;
+    }
+
+    &:hover {
+      background-color: #DF6D14;
+      transform: scale(1.05);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(223, 109, 20, 0.4);
+    }
+  }
+}
+
 

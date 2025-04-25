@@ -3,18 +3,24 @@
 
   <!-- ACCIONES -->
   <div class="acciones-posts">
-    <div class="buscador-posts">
-      <i class="bi bi-search"></i>
-      <input
-  type="text"
-  placeholder="Buscar publicaciones..."
-  [(ngModel)]="filtroBusqueda"
-  (input)="filtrarPosts()"/>
+    <div class="buscador-posts-con-reset">
+      <div class="buscador-posts">
+        <i class="bi bi-search"></i>
+        <input
+          type="text"
+          placeholder="Buscar publicaciones..."
+          [(ngModel)]="filtroBusqueda"
+          (input)="filtrarPosts()"/>
+      </div>
+      <button class="btn-reset-filtros" (click)="resetearFiltros()" title="Restablecer filtros">
+        <i class="bi bi-arrow-clockwise"></i>
+      </button>
     </div>
+
     <div class="selector-cantidad">
       <i class="bi bi-list-ol"></i>
       <label for="cantidadSelect">Mostrar:</label>
-      <select id="cantidadSelect" [(ngModel)]="cantidadMostrar" (change)="filtrarPosts()">
+      <select id="cantidadSelect" [(ngModel)]="cantidadMostrar" (change)="onCantidadChange()">
         <option *ngFor="let c of cantidadesDisponibles" [value]="c">{{ c }}</option>
       </select>
     </div>
@@ -72,6 +78,15 @@
     Siguiente <i class="bi bi-arrow-right-circle-fill"></i>
   </button>
 </div>
+<!-- Botones de página -->
+<div class="numeros-pagina">
+  <button *ngFor="let pagina of paginas"
+          (click)="irAPagina(pagina)"
+          [class.activa]="pagina === paginaActual">
+    {{ pagina }}
+  </button>
+</div>
+
 <!-- MODAL DETALLE POST -->
 <div *ngIf="modalDetallePostVisible && postDetalleSeleccionado" class="modal">
   <div class="modal-content">
