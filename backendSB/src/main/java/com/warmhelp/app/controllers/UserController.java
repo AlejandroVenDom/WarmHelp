@@ -1,13 +1,19 @@
 package com.warmhelp.app.controllers;
 
 import com.warmhelp.app.dtos.auth.*;
+import com.warmhelp.app.exceptions.UserAlreadyExistException;
+import com.warmhelp.app.exceptions.UserNotFoundException;
 import com.warmhelp.app.services.UserService;
 import com.warmhelp.app.models.User;
 import com.warmhelp.app.models.UserInfo;
+import com.warmhelp.app.services.UserServiceChat;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +23,9 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
+
+    @Autowired
+    private UserServiceChat userServiceChat;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -83,5 +92,30 @@ public class UserController {
         UserInfo updateUser = userService.updateUserInfo(id, request);
         return ResponseEntity.ok(updateUser);
     }
+    @GetMapping("/getall")
+    public ResponseEntity<List<User>> getall() throws IOException {
+        try{
+            return new ResponseEntity<List<User>>(userServiceChat.getall(), HttpStatus.OK);
+        }catch (UserNotFoundException e){
+            return new ResponseEntity("User not Found", HttpStatus.NOT_FOUND);
+        }
+    }
 
+    @PostMapping("/add")
+    public ResponseEntity<User> addUser(@RequestBody User user) throws IOException {
+        try{
+            return new ResponseEntity<User>(userServiceChat.addUser(user), HttpStatus.OK);
+        }catch (UserAlreadyExistException e){
+            return new ResponseEntity("User already exists", HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping("/getbyusername/{username}")
+    public ResponseEntity<User> getUserByUserName(@PathVariable String username) throws IOException {
+        try{
+            return new ResponseEntity<User>(userServiceChat.getUserByUserName(username), HttpStatus.OK);
+        }catch (UserNotFoundException e){
+            return new ResponseEntity("User not Found", HttpStatus.NOT_FOUND);
+        }
+    }
 }

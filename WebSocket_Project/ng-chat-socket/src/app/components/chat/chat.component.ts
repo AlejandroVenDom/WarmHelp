@@ -1,48 +1,40 @@
 import { Component, OnInit } from '@angular/core';
-import { ChatService } from '../../services/chat.service';
-import { ChatMessage } from '../../models/chat-message';
-import { ActivatedRoute } from '@angular/router';
+import { WebSocketService } from '../../services/web-socket.service';
 import { FormsModule } from '@angular/forms';
 import { NgFor } from '@angular/common';
-import { NgClass } from '@angular/common';
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [FormsModule, NgFor, NgClass],
+  imports: [ FormsModule, NgFor],
   templateUrl: './chat.component.html',
-  styleUrl: './chat.component.scss'
+  styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
-   
-  messageInput: string = '';
-  userId: string = '';
-  messageList: any[]= [];
+  messages: any[] = [];
+  newMessage: string = '';
 
-  constructor (private chatService: ChatService,
-    private route: ActivatedRoute // Permite capturar parametros desde la url
-  ){
-  }
+  constructor(private webSocketService: WebSocketService) {}
+
   ngOnInit(): void {
-    this.userId = this.route.snapshot.params["userId"];
-    this.chatService.joinRoom("ABC")    // Que se una a la sala llamada ABC
-    this.listenerMessage();
-  }
-  // Metodo para enviar el mensaje
-  sendMessage(){
-    const chatMessage = {
-      message: this.messageInput,
-      user: this.userId
-    } as ChatMessage
-    this.chatService.sendMessage("ABC", chatMessage);
-    this.messageInput = '';
+    // Conectar al WebSocket cuando el componente se inicializa
+    this.webSocketService.connect();
+
+    // Recibir los mensajes del WebSocket
+    this.webSocketService.getMessages().subscribe((message) => {
+      this.messages.push(message);
+      console.log('Nuevo mensaje recibido:', message);
+    });
   }
 
-  listenerMessage(){
-    this.chatService.getMessageSubject().subscribe((messages:any) => {
-      this.messageList = messages.map((item:any) =>( {
-        ...item,
-        message_side: item.user === this.userId ? 'sender': 'receiver'
-      }))
-    });
+  // Enviar un mensaje
+  sendMessage(): void {
+    const message = {
+      sender: 'juan', // Cambiar según el usuario
+      receiver: 'pedro', // O el ID del grupo si es un chat grupal
+      content: this.newMessage,
+      type: 'CHAT'
+    };
+    this.webSocketService.sendMessage(message);
+    this.newMessage = ''; // Limpiar el campo de entrada
   }
 }
