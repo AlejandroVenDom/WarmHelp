@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfessionalServiceInterface } from '../../services/interfaces/professional';
 import { ProfessionalService } from '../../services/professional.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tienda',
@@ -19,7 +20,10 @@ export class TiendaComponent implements OnInit {
   selectedService: ProfessionalServiceInterface | null = null;
   showModal = false;
 
-  constructor(private service: ProfessionalService) {}
+  constructor(
+    private service: ProfessionalService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadServicios();
@@ -32,6 +36,11 @@ export class TiendaComponent implements OnInit {
       this.filteredServices = [...this.servicios];
       this.setPriceRangeLimits();
     });
+  }
+  verPerfilPublico(username: string): void {
+    if (username) {
+      this.router.navigate(['/perfil-publico', username]);
+    }
   }
 
   setPriceRangeLimits() {

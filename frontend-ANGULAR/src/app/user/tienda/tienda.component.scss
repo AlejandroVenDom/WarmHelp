@@ -47,6 +47,19 @@ $color-text: #2B2B2B;
     background: darken($color-primary, 10%);
   }
 }
+.link-perfil {
+  color: #3A7D44;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s;
+  text-decoration: none;
+
+  &:hover {
+    color: black;
+    text-decoration: none;
+  }
+}
+
 
 .order-menu {
   position: absolute;
