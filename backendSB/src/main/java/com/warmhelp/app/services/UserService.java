@@ -312,4 +312,28 @@ public class UserService implements UserDetailsService {
                 checkTokenRequest.getUsername()
         );
     }
+    public PublicUserProfileResponse getPublicProfileByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+        UserInfo userInfo = userInfoRepository.findByUser(user)
+                .orElseThrow(() -> new IllegalArgumentException("Información del usuario no encontrada"));
+
+        PublicUserProfileResponse dto = new PublicUserProfileResponse();
+        dto.setUsername(user.getUsername());
+        dto.setFirst_name(userInfo.getFirst_name());
+        dto.setLast_name(userInfo.getLast_name());
+        dto.setEmail(userInfo.getEmail());
+        dto.setAddress(userInfo.getAddress());
+        dto.setNumber(userInfo.getNumber());
+        dto.setMySelf_description(userInfo.getMySelf_description());
+        dto.setRole(user.getRole().getRoleType().name());
+
+        dto.setPosts(userInfo.getPosts().stream().map(this::mapToPostsResponseDTO).toList());
+        dto.setProfessionalServices(userInfo.getProfessionalServices().stream().map(this::mapToProfessionalServicesResponseDTO).toList());
+        dto.setReviews(userInfo.getReviews().stream().map(this::mapToReviewResponseDTIO).toList());
+
+        return dto;
+    }
+
 }

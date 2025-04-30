@@ -13,6 +13,7 @@ import { roleGuard } from './services/auth/guards/role.guard';
 import { PerfilComponent } from './user/perfil/perfil.component';
 import { MisPublicacionesComponent } from './user/mis-publicaciones/mis-publicaciones.component';
 import { ChatGptComponent } from './user/chat-gpt/chat-gpt.component';
+import { PublicProfileComponent } from './user/public-profile/public-profile.component';
 
 const routes: Routes = [
   // users without authentication
@@ -20,6 +21,7 @@ const routes: Routes = [
     path: '', component:LayoutComponent, children:[
       { path: '',component: HomeNoAuthComponent},
       { path: 'perfil', component: PerfilComponent, canActivate: [authGuard] },
+      {path: 'perfil-publico/:username', component: PublicProfileComponent, canActivate: [authGuard]},
       { path: 'login', component: LoginComponent, canActivate: [publicGuard] },
       { path: 'register', component: RegisterComponent, canActivate: [publicGuard] },
       { path: 'posts', component: PostsComponent, canActivate: [authGuard] },

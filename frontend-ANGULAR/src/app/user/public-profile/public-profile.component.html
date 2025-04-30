@@ -1,0 +1,81 @@
+<div class="perfil-container" *ngIf="user">
+  <h2 class="title">Perfil de {{ user.first_name }} {{ user.last_name }}</h2>
+
+  <div class="perfil-grid">
+    <div class="perfil-card">
+      <div class="avatar-section">
+        <img src="/ken.gif" alt="Avatar" class="avatar">
+      </div>
+
+      <div class="info-section">
+        <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+        <p><i class="bi bi-person-fill"></i> {{ user.username }}</p>
+        <p><i class="bi bi-envelope-fill"></i> {{ user.email }}</p>
+        <!-- <p><i class="bi bi-telephone-fill"></i> {{ user.number }}</p> -->
+        <p><i class="bi bi-geo-alt-fill"></i> {{ user.address }}</p>
+        <p><i class="bi bi-award-fill"></i> {{ user.role }}</p>
+      </div>
+
+      <div class="descripcion">
+        <p>{{ user.mySelf_description }}</p>
+      </div>
+    </div>
+
+    <div class="resenas-card">
+      <div class="section-header">
+        <i class="bi bi-star-half"></i>
+        Reseñas recibidas
+      </div>
+      <div *ngIf="user.reviews?.length === 0">Este usuario aún no tiene reseñas.</div>
+      <div *ngFor="let review of user.reviews" class="resena">
+        <div class="resena-header">
+          <strong>{{ review.username }}</strong>
+          <span>{{ review.createdAt | date:'longDate' }}</span>
+        </div>
+        <p>{{ review.description }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="perfil-grid-secundaria">
+    <div class="posts-card">
+      <div class="section-header">
+        <i class="bi bi-journal-richtext"></i>
+        Publicaciones
+      </div>
+      <div *ngIf="user.posts?.length === 0">No hay publicaciones.</div>
+      <div *ngFor="let post of user.posts" class="post">
+        <img src="/ans.jpg" alt="Post">
+        <div class="contenido">
+          <h5>{{ post.title }}</h5>
+          <p class="fecha">{{ post.createdAt | date:'longDate' }}</p>
+          <p class="resumen">{{ post.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="user.role === 'PROFESSIONAL' || user.role === 'ADMIN'" class="servicios-card">
+      <div class="section-header">
+        <i class="bi bi-heart-pulse-fill"></i>
+        Servicios ofrecidos
+      </div>
+      <div *ngFor="let service of user.professionalServices" class="servicio">
+        <h5>{{ service.title }}</h5>
+        <p>{{ service.description }}</p>
+        <span class="precio">{{ service.price | currency:'EUR' }}</span>
+
+        <div *ngIf="service.reviews?.length > 0" class="reseñas mt-3">
+          <h6><i class="bi bi-star-fill"></i> Reseñas</h6>
+          <div *ngFor="let review of service.reviews" class="resena container gap-2">
+            <div class="resena-header">
+              <strong>{{ review.calification }}</strong><br>
+              <span>{{ review.username }} </span>
+              <span>{{ review.createdAt | date:'longDate' }}</span>
+            </div>
+            <p>{{ review.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

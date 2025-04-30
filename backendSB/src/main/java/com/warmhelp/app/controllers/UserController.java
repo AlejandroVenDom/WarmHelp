@@ -1,6 +1,7 @@
 package com.warmhelp.app.controllers;
 
 import com.warmhelp.app.dtos.auth.*;
+import com.warmhelp.app.dtosResponses.PublicUserProfileResponse;
 import com.warmhelp.app.exceptions.UserAlreadyExistException;
 import com.warmhelp.app.exceptions.UserNotFoundException;
 import com.warmhelp.app.services.UserService;
@@ -73,6 +74,16 @@ public class UserController {
         userService.changeUsername(id, updateUsernameRequest.getNewUsername());
         return ResponseEntity.ok("Username actualizado correctamente");
     }
+    @GetMapping("/public-profile/{username}")
+    public ResponseEntity<?> getPublicProfile(@PathVariable String username) {
+        try {
+            PublicUserProfileResponse profile = userService.getPublicProfileByUsername(username);
+            return ResponseEntity.ok(profile);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(404).body(Map.of("error", e.getMessage()));
+        }
+    }
+
 
     @PostMapping("/change-password")
     public ResponseEntity<?> changePwd(@RequestBody ChangePasswordRequest request){

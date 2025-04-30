@@ -7,6 +7,7 @@ import { ResponseCommentsService, ResponseCommentRequest } from '../../services/
 import { ResponseComment } from '../../services/interfaces/response-coment';
 import { PopupService } from '../../services/popup.service';
 import { delay } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-posts',
@@ -55,7 +56,8 @@ export class PostsComponent implements OnInit {
     private commentService: CommentService,
     private responseCommentsService: ResponseCommentsService,
     private useStateService: UseStateService,
-    private popupService: PopupService
+    private popupService: PopupService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -148,6 +150,11 @@ export class PostsComponent implements OnInit {
     localStorage.setItem('cantidadMostrar', String(this.cantidadMostrar));
     this.paginaActual = 1;
     this.actualizarLista();
+  }
+  verPerfilPublico(username: string): void {
+    if (username) {
+      this.router.navigate(['/perfil-publico', username]);
+    }
   }
 
 

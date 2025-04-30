@@ -1,0 +1,199 @@
+.perfil-container {
+  background: #F8F5E9;
+  padding: 3rem 1rem;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+}
+
+.title {
+  font-size: 2.6rem;
+  font-weight: bold;
+  background: linear-gradient(to right, #DF6D14, #3A7D44);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    height: 4px;
+    background: #9DC08B;
+    border-radius: 8px;
+  }
+}
+
+.perfil-grid, .perfil-grid-secundaria {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.perfil-card, .resenas-card, .posts-card, .servicios-card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.perfil-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  text-align: center;
+}
+
+.avatar-section .avatar {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid #9DC08B;
+}
+
+.info-section {
+  h3 {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #3A7D44;
+  }
+
+  p {
+    color: #3A7D44;
+
+    i {
+      color: #DF6D14;
+      margin-right: 6px;
+    }
+  }
+}
+
+.descripcion {
+  background: #f5f5ef;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-style: italic;
+  color: #3A7D44;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #3A7D44;
+  margin-bottom: 1rem;
+  position: relative;
+  text-transform: uppercase;
+
+  i {
+    color: #DF6D14;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 40%;
+    height: 3px;
+    background: #9DC08B;
+    border-radius: 10px;
+  }
+}
+
+.resena {
+  background: #F8F5E9;
+  padding: 1rem;
+  border-left: 5px solid #9DC08B;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+
+  .resena-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    color: #3A7D44;
+  }
+}
+
+.post {
+  background: #fbfaf4;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1.2rem;
+  display: flex;
+  gap: 1rem;
+
+  img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .contenido {
+    h5 {
+      color: #3A7D44;
+      font-size: 1.1rem;
+    }
+
+    .fecha {
+      font-size: 0.85rem;
+      color: #999;
+    }
+
+    .resumen {
+      color: #444;
+      font-size: 1rem;
+    }
+  }
+}
+
+.servicio {
+  background: #F8F5E9;
+  padding: 1rem 1.5rem;
+  border-left: 5px solid #9DC08B;
+  border-radius: 12px;
+  margin-bottom: 1.2rem;
+
+  h5 {
+    color: #3A7D44;
+    font-weight: bold;
+  }
+
+  .precio {
+    color: #DF6D14;
+    font-weight: bold;
+  }
+}
+
+@media (max-width: 768px) {
+  .perfil-grid, .perfil-grid-secundaria {
+    grid-template-columns: 1fr;
+  }
+
+  .post {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+}
