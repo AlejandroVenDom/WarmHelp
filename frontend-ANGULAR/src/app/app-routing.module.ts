@@ -12,6 +12,7 @@ import { authGuard } from './services/auth/guards/auth.guard';
 import { roleGuard } from './services/auth/guards/role.guard';
 import { PerfilComponent } from './user/perfil/perfil.component';
 import { MisPublicacionesComponent } from './user/mis-publicaciones/mis-publicaciones.component';
+import { ChatGptComponent } from './user/chat-gpt/chat-gpt.component';
 
 const routes: Routes = [
   // users without authentication
@@ -25,6 +26,7 @@ const routes: Routes = [
       { path: 'tienda', component: TiendaComponent , canActivate: [authGuard] },
       { path: 'servicioscr', component: BackofficeAdminComponent , canActivate: [roleGuard] },
       { path: 'mis-publicaciones', component: MisPublicacionesComponent , canActivate: [authGuard] },
+      { path: 'chat-gpt', component: ChatGptComponent , canActivate: [authGuard]}
     ],
   },
 

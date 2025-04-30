@@ -14,7 +14,7 @@ $color-text: #2B2B2B;
   flex-direction: column;
   align-items: center;
   width: 99%;
-  height: 90%;
+  height: 95%;
   margin: auto;
   margin-top: 1%;
   margin-bottom: 1%;
@@ -438,6 +438,27 @@ $color-text: #2B2B2B;
     &:hover {
       color: darkred;
     }
+  }
+}
+.no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: $color-text;
+  margin-top: 40px;
+  text-align: center;
+
+  i {
+    font-size: 4rem;
+    color: $color-secondary;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 1.2rem;
+    color: $color-primary;
+    font-weight: 600;
   }
 }
 

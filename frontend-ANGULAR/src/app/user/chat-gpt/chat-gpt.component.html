@@ -1,0 +1,38 @@
+<div class="chat-wrapper">
+  <div class="chat-header-controls">
+    <button (click)="clearHistory()" class="btn-clear-history" title="Limpiar historial">
+      <i class="bi bi-trash3-fill"></i> Limpiar historial
+    </button>
+  </div>
+  <div class="chat-header">
+    <i class="bi bi-chat-dots-fill"></i>
+    <h2>Chat con <span class="brand">warmHelpAI</span></h2>
+  </div>
+
+  <div class="chat-messages" id="messages">
+    <div *ngIf="messages.length === 0 && !loading" class="empty-chat">
+      <i class="bi bi-pencil-square"></i> ¡Empieza escribiendo tu primera pregunta!
+    </div>
+
+    <div *ngFor="let msg of messages" class="chat-message" [ngClass]="msg.type">
+      <div class="bubble">
+        <span class="label" *ngIf="msg.type === 'user'">Tú</span>
+        <span class="label" *ngIf="msg.type === 'gpt'">WarmHelpAI</span>
+        <p>{{ msg.content }}</p>
+      </div>
+    </div>
+
+    <div *ngIf="loading" class="loading">
+      <i class="bi bi-stars"></i> WarmHelpAI está pensando...
+    </div>
+  </div>
+
+
+  <form (submit)="sendQuestion()" class="chat-input">
+    <input type="text" [(ngModel)]="question" name="question" placeholder="Escribe tu pregunta..." required>
+    <button type="submit" title="Enviar">
+      <i class="bi bi-send-fill"></i>
+    </button>
+  </form>
+</div>
+

@@ -34,20 +34,10 @@ export class BackofficeAdminComponent implements OnInit {
   loadMyServices() {
     const currentUser = this.userState.getUsername();
     this.service.getAll().subscribe(response => {
-      this.servicios = response
-        .map((s: any) => ({
-          id: s.id,
-          title: s.title,
-          description: s.description,
-          image: s.image,
-          price: s.price,
-          tax: s.tax,
-          currencyType: s.currency,
-          userName: s.username
-        }))
-        .filter(s => s.userName === currentUser);
+      this.servicios = response.filter(s => s.userName === currentUser);
     });
   }
+
 
 
   openModal() {

@@ -284,14 +284,18 @@
   background-color: #F8F5E9;
   padding: 2rem;
   border-radius: 20px;
-  width: 90%;
-  max-width: 520px;
+  width: 100%;
+  max-width: 820px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
   color: #3A7D44;
   font-family: 'Segoe UI', sans-serif;
   position: relative;
   animation: fadeIn 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
+
 
 .modal-content h3 {
   margin-top: 0;
@@ -704,31 +708,33 @@ button {
   margin-top: 1rem;
   width: 100%;
 }
+.detalle-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  width: 100%;
+}
 
 .detalle-description {
-  max-width: 660px;
-  width: 100%;
-  font-size: 1.05rem;
-  line-height: 1.8;
-  color: #2F2F2F;
-  background-color: #ffffff;
-  padding: 1.8rem 2rem;
+  background-color: #fff;
+  padding: 2rem;
   border-radius: 16px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+  color: #333;
+  line-height: 1.8;
+  font-size: 1.1rem;
+  max-width: 660px;
   text-align: justify;
-  white-space: pre-wrap;
   word-break: break-word;
-  overflow-wrap: break-word;
 }
 
 .detalle-img {
   max-width: 660px;
   width: 100%;
-  max-height: 320px;
-  object-fit: cover;
   border-radius: 16px;
-  margin-bottom: 1rem;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  object-fit: cover;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
 }
   // Responsive
   @media (max-width: 768px) {

@@ -17,6 +17,7 @@ import { PerfilComponent } from './user/perfil/perfil.component';
 import { TiendaComponent } from './user/tienda/tienda.component';
 import { CommonModule } from '@angular/common';
 import { MisPublicacionesComponent } from './user/mis-publicaciones/mis-publicaciones.component';
+import { ChatGptComponent } from './user/chat-gpt/chat-gpt.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { MisPublicacionesComponent } from './user/mis-publicaciones/mis-publicac
     PerfilComponent,
     TiendaComponent,
     PostsComponent,
-    MisPublicacionesComponent
+    MisPublicacionesComponent,
+    ChatGptComponent
   ],
   imports: [
     BrowserModule,

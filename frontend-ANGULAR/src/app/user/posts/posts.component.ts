@@ -61,18 +61,40 @@ export class PostsComponent implements OnInit {
   ngOnInit(): void {
     this.nuevoPost.userName = this.useStateService.getUsername() || 'anon';
     this.cargarPosts();
+
+    document.addEventListener('keydown', this.detectarEscape.bind(this));
   }
+
+  ngOnDestroy(): void {
+    document.removeEventListener('keydown', this.detectarEscape.bind(this));
+  }
+
+  detectarEscape(event: KeyboardEvent): void {
+    if (event.key === 'Escape') {
+      this.cerrarModalDetallePost();
+      this.cerrarModalNuevoPost();
+      this.cerrarModalComentarios();
+    }
+  }
+  cerrarModalAlFondo(event: MouseEvent): void {
+    // Puedes reutilizar esta función para cerrar cualquier modal activo
+    this.cerrarModalDetallePost();
+    this.cerrarModalNuevoPost();
+    this.cerrarModalComentarios();
+  }
+
 
   // --- Manejo de posts ---
   cargarPosts(): void {
-    this.postService.getAllPosts().subscribe({
-      next: posts => {
-        this.allPosts = posts.reverse();
-        this.resetearFiltros();
-      },
-      error: err => console.error('Error al cargar posts:', err)
-    });
-  }
+  this.postService.getAllPosts().subscribe({
+    next: posts => {
+      this.allPosts = posts.reverse();
+      setTimeout(() => this.resetearFiltros(), 0); // ✅ solución clave
+    },
+    error: err => console.error('Error al cargar posts:', err)
+  });
+}
+
 
   actualizarLista(): void {
     const filtro = this.filtroBusqueda.toLowerCase().trim();
@@ -91,7 +113,6 @@ export class PostsComponent implements OnInit {
 
   resetearFiltros(): void {
     this.filtroBusqueda = '';
-    this.cantidadMostrar = 10;
     this.paginaActual = 1;
     this.actualizarLista();
   }
@@ -120,6 +141,7 @@ export class PostsComponent implements OnInit {
       this.actualizarLista();
     }
   }
+
 
   // --- Publicar post ---
   abrirModalNuevoPost(): void {

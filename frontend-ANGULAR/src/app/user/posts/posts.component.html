@@ -47,7 +47,7 @@
       <p>{{ post.description }}</p>
       <img *ngIf="post.image" [src]="post.image" class="post-image" />
       <div class="actions">
-        <div class="action-item" title="Me gusta">
+        <div class="action-item" title="Me gusta" (click)="abrirModalComentarios(post); $event.stopPropagation()">
           <i class="bi bi-hand-thumbs-up-fill"></i>
           <span>0</span>
         </div>
@@ -88,22 +88,25 @@
 </div>
 
 <!-- MODAL DETALLE POST -->
-<div *ngIf="modalDetallePostVisible && postDetalleSeleccionado" class="modal">
-  <div class="modal-content">
+<div *ngIf="modalDetallePostVisible && postDetalleSeleccionado" class="modal"
+     (click)="cerrarModalAlFondo($event)">
+  <div class="modal-content" (click)="$event.stopPropagation()">
     <span class="close-btn" (click)="cerrarModalDetallePost()">
       <i class="bi bi-x-lg"></i>
     </span>
-<br>
-    <h3>{{ postDetalleSeleccionado.title }}</h3>
-    <p><strong>Fecha:</strong> {{ postDetalleSeleccionado.createdAt | date:'long' }}</p>
+
+    <h3 class="modal-titulo">{{ postDetalleSeleccionado.title }}</h3>
+    <p class="modal-fecha"><strong>Fecha:</strong> {{ postDetalleSeleccionado.createdAt | date:'long' }}</p>
 
     <div class="detalle-wrapper">
-      <div class="detalle-description">
-        {{ postDetalleSeleccionado.description }}
+      <div class="detalle-content">
+        <div class="detalle-description">
+          {{ postDetalleSeleccionado.description }}
+        </div>
+        <img *ngIf="postDetalleSeleccionado.image" [src]="postDetalleSeleccionado.image" class="detalle-img" />
       </div>
+    </div>
 
-    <img *ngIf="postDetalleSeleccionado.image" [src]="postDetalleSeleccionado.image" class="detalle-img" />
-</div>
     <div class="actions">
       <div class="action-item">
         <i class="bi bi-chat-dots-fill"></i>
@@ -114,12 +117,13 @@
         {{ contarTotalRespuestas(postDetalleSeleccionado) }} respuesta(s)
       </div>
     </div>
-<br>
+
     <button class="btn-comentar" (click)="abrirModalComentarios(postDetalleSeleccionado)">
       <i class="bi bi-chat-left-dots"></i> Ver comentarios
     </button>
   </div>
 </div>
+
 
   <!-- MODAL NUEVO POST -->
   <div *ngIf="modalNuevoPost" class="modal">

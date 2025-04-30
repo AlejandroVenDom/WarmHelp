@@ -1,7 +1,8 @@
+<main class="main-content">
 <header class="header">
   <div class="col-6 text-center" routerLink="/">
     <a class="text-decoration-none d-block" rel="noopener">
-      <img style="max-width: 115px" src="/logot.png" alt="logo">
+      <img src="/logot.png" alt="logo">
     </a>
   </div>
 
@@ -9,22 +10,20 @@
   <i [ngClass]="menuOpen ? 'bi bi-x-lg close-menu' : 'bi bi-list menu-toggle'" (click)="toggleMenu()"></i>
 
   <nav class="nav-container" [ngClass]="{ 'active': menuOpen }">
-    <!-- Mostrar solo si el usuario está logueado -->
     <ng-container *ngIf="isLoggedIn">
       <a routerLink="/posts" (click)="closeMenu()">Publicaciones</a>
-      <a routerLink="/chat" (click)="closeMenu()">AI <i class="bi bi-x-diamond-fill"></i></a>
+      <a routerLink="/chat-gpt" (click)="closeMenu()">AI <i class="bi bi-x-diamond-fill"></i></a>
       <a *ngIf="hasAdminOrProfessionalRole()" routerLink="/servicioscr" (click)="closeMenu()">Mis Servicios</a>
       <a routerLink="/tienda" (click)="closeMenu()">Tienda</a>
     </ng-container>
 
-    <!-- Si está logueado -->
     <div class="user-info" *ngIf="isLoggedIn" routerLink="/perfil" (click)="closeMenu()" style="cursor: pointer;">
       <span>¡Hola, <span class="username">{{ username }}</span>!</span>
     </div>
 
-    <!-- Si NO está logueado -->
     <button *ngIf="!isLoggedIn" type="button" class="btn-login" routerLink="/login" (click)="closeMenu()">
       <i class="bi bi-person"></i> Iniciar sesión
     </button>
   </nav>
 </header>
+</main>

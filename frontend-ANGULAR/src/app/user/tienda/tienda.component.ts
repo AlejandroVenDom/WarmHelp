@@ -27,17 +27,12 @@ export class TiendaComponent implements OnInit {
 
   loadServicios() {
     this.service.getAll().subscribe(servicios => {
-      console.log("📦 Servicios recibidos del backend:", servicios); // <-- esto
-      this.servicios = servicios.map(s => ({
-        ...s,
-        currencyType: s.currencyType,
-        userName: s.userName
-      }));
+      console.log("📦 Servicios recibidos del backend:", servicios);
+      this.servicios = servicios;
       this.filteredServices = [...this.servicios];
       this.setPriceRangeLimits();
     });
   }
-
 
   setPriceRangeLimits() {
     const prices = this.servicios.map(s => s.price);

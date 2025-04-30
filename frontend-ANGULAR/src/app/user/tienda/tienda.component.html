@@ -22,14 +22,18 @@
 
   <!-- Grid de servicios -->
   <div class="product-grid">
+    <div class="no-results" *ngIf="filteredServices.length === 0">
+      <i class="bi bi-emoji-frown"></i>
+      <p>No hay servicios que coincidan con tu búsqueda.</p>
+    </div>
     <div *ngFor="let servicio of filteredServices" class="product-card" (click)="openModal(servicio)">
       <div class="product-info">
-        <img [src]="servicio.image || 'https://via.placeholder.com/200'" alt="Imagen del servicio" class="cart-img">
+        <img [src]="servicio.image || '/ans.jpg'" alt="Imagen del servicio" class="cart-img">
         <h3>{{ servicio.title }}</h3>
         <p class="product-description">{{ servicio.description.length > 15 ? (servicio.description | slice:0:15) + '...' : servicio.description }}</p>
-        <p class="price">Precio: {{ servicio.price }} {{ servicio.currencyType }}</p>
-        <p class="price">Tax: {{ servicio.tax }}%</p>
-        <p>Publicado por: <strong>{{ servicio.username || 'Desconocido' }}</strong></p>
+        <p class="price">Precio:  {{ servicio.price }} {{ servicio.currencyType }}</p>
+        <p class="price">Impuesto: {{ servicio.tax }} {{ servicio.currencyType }}</p>
+        <p>Publicado por: <strong>{{ servicio.userName || 'Desconocido' }}</strong></p>
       </div>
     </div>
   </div>
@@ -41,11 +45,12 @@
     <span class="icon-cancel" (click)="closeModal()">
       <i class="bi bi-x-circle"></i>
     </span>
-    <img [src]="selectedService?.image || 'https://via.placeholder.com/300'" alt="Imagen del servicio" class="cart-img">
+    <img [src]="selectedService?.image || '/ans.jpg'" alt="Imagen del servicio" class="cart-img">
     <h3>{{ selectedService?.title }}</h3>
     <p><strong>Descripción:</strong> {{ selectedService?.description }}</p>
     <p><strong>Precio:</strong> {{ selectedService?.price }} {{ selectedService?.currencyType }}</p>
-    <p><strong>Tax:</strong> {{ selectedService?.tax }}%</p>
-    <p><strong>Publicado por:</strong> {{ selectedService?.username || 'Desconocido' }}</p>
+    <p><strong>Impuesto:</strong> {{ selectedService?.tax }} {{ selectedService?.currencyType }}</p>
+    <p><strong>Publicado por:</strong> {{ selectedService?.userName || 'Desconocido' }}</p>
   </div>
 </div>
+

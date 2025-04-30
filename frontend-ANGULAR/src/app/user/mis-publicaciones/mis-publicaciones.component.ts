@@ -34,8 +34,11 @@ export class MisPublicacionesComponent implements OnInit {
   cargarMisPosts(): void {
     const username = this.stateService.getUsername();
     this.postService.getAllPosts().subscribe(posts => {
-      this.misPosts = posts.filter(post => post.username === username);
-      this.postsFiltrados = [...this.misPosts];
+      this.misPosts = posts
+  .filter(post => post.username === username)
+  .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+this.postsFiltrados = [...this.misPosts];
     });
   }
 

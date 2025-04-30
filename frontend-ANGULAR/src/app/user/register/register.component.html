@@ -6,7 +6,7 @@
     <div class="register-header">
       <h2 class="register-title">Registrarme</h2>
     </div>
-  
+
     <form method="post" [formGroup]="registerForm" (ngSubmit)="submit()">
       <div class="form-grid">
         <!-- Campo de Usuario -->
@@ -17,7 +17,7 @@
             <input class="register-input" type="text" placeholder="Introduce tu nombre de usuario de WarmHelp..." formControlName="username" />
           </div>
         </div>
-  
+
         <!-- Campo de Contraseña -->
         <div class="register-field">
           <label class="register-label">Contraseña</label>
@@ -27,7 +27,7 @@
             <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'" (click)="togglePasswordVisibility()"></i>
           </div>
         </div>
-  
+
         <!-- Selección de Rol -->
         <div class="register-field">
           <label class="register-label">¿Qué tipo de cuenta deseas crear?</label>
@@ -35,11 +35,11 @@
             <optgroup label="Seleccione una opción">
             <option value="" disabled selected>Selecciona una opción</option>
               <option value="CLIENT">Usuario WarmHelp - Busca y contrata servicios</option>
-              <option value="SELLER">Vendedor profesional de servicios - Ofrece tus servicios</option>
+              <option value="PROFESSIONAL">Vendedor profesional de servicios - Ofrece tus servicios</option>
             </optgroup>
           </select>
         </div>
-  
+
         <!-- Campo de Nombre -->
         <div class="register-field">
           <label class="register-label">Nombre</label>
@@ -48,7 +48,7 @@
             <input class="register-input" type="text" placeholder="Introduce tu nombre..." formControlName="first_name" />
           </div>
         </div>
-  
+
         <!-- Campo de Apellidos -->
         <div class="register-field">
           <label class="register-label">Apellidos</label>
@@ -57,7 +57,7 @@
             <input class="register-input" type="text" placeholder="Introduce tus apellidos..." formControlName="last_name" />
           </div>
         </div>
-  
+
         <!-- Campo de Dirección -->
         <div class="register-field">
           <label class="register-label">Dirección</label>
@@ -66,7 +66,7 @@
             <input class="register-input" type="text" placeholder="Dirección Postal" formControlName="address" />
           </div>
         </div>
-  
+
         <!-- Campo de Teléfono -->
         <div class="register-field">
           <label class="register-label">Número de Teléfono</label>
@@ -75,7 +75,7 @@
             <input class="register-input" type="text" placeholder="+34 123 456 789" formControlName="number" />
           </div>
         </div>
-  
+
         <!-- Campo de Email -->
         <div class="register-field">
           <label class="register-label">Email</label>
@@ -84,17 +84,17 @@
             <input class="register-input" type="email" placeholder="****@gmail.com" formControlName="email" />
           </div>
         </div>
-  
+
         <!-- Campo de Descripción -->
         <div class="register-field" style="grid-column: span 2;">
           <label class="register-label"><i class="bi bi-info-circle icon"></i> Presentación personal</label>
           <div class="input-container">
-            <textarea class="register-input" rows="5" style="width: 100%; border-radius: 10px; border-color: #3A7D44;" 
+            <textarea class="register-input" rows="5" style="width: 100%; border-radius: 10px; border-color: #3A7D44;"
             placeholder="  Agrega una breve descripción sobre ti..." formControlName="mySelf_description"></textarea>
           </div>
         </div>
       </div>
-  
+
       <!-- Botón de Registro -->
       <div class="register-footer">
         <button type="submit" class="register-btn" [disabled]="registerForm.invalid">Finalizar registro</button>
@@ -102,4 +102,3 @@
     </form>
   </div>
 
-  

@@ -1,10 +1,14 @@
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 90px; // Altura fija
   background-color: #F8F5E9;
   padding: 1rem 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: relative;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
   z-index: 1000;
 
@@ -79,7 +83,6 @@
     }
   }
 
-  // Modo responsivo
   @media (max-width: 768px) {
     .menu-toggle,
     .close-menu {
@@ -114,4 +117,9 @@
       }
     }
   }
+}
+
+// 🧩 Margen para no tapar contenido al estar fixed
+main, .page-container, router-outlet + * {
+  margin-top: 110px;
 }
