@@ -131,9 +131,12 @@ export class PostsComponent implements OnInit {
 
   resetearFiltros(): void {
     this.filtroBusqueda = '';
+    this.cantidadMostrar = 10;
+    localStorage.setItem('cantidadMostrar', '10');
     this.paginaActual = 1;
     this.actualizarLista();
   }
+
 
   filtrarPosts(): void {
     this.paginaActual = 1;
@@ -188,7 +191,7 @@ export class PostsComponent implements OnInit {
     }
 
     this.popupService.loader('Publicando...', 'Esto puede tardar un poco');
-    this.postService.createPost(this.nuevoPost).pipe(delay(2300)).subscribe({
+    this.postService.createPost(this.nuevoPost).pipe(delay(200)).subscribe({
       next: () => {
         this.popupService.close();
         this.popupService.showMessage('Publicación subida', '¡Tu publicación ha sido subida exitosamente!', 'success');
