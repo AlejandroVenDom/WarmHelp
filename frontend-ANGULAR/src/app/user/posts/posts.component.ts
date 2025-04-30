@@ -20,7 +20,7 @@ export class PostsComponent implements OnInit {
   posts: Post[] = [];
   filtroBusqueda = '';
   cantidadMostrar = 10;
-  cantidadesDisponibles = [5, 10, 15, 20, 30, 40, 50];
+  cantidadesDisponibles = [6, 10, 16, 20, 30, 40, 50];
   paginaActual = 1;
   totalPaginas = 1;
   paginas: number[] = [];
@@ -59,6 +59,7 @@ export class PostsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.cantidadMostrar = Number(localStorage.getItem('cantidadMostrar')) || 10;
     this.nuevoPost.userName = this.useStateService.getUsername() || 'anon';
     this.cargarPosts();
 
@@ -85,19 +86,25 @@ export class PostsComponent implements OnInit {
 
 
   // --- Manejo de posts ---
-  cargarPosts(): void {
-  this.postService.getAllPosts().subscribe({
-    next: posts => {
-      this.allPosts = posts.reverse();
-      setTimeout(() => this.resetearFiltros(), 0); // ✅ solución clave
-    },
-    error: err => console.error('Error al cargar posts:', err)
-  });
-}
+  cargarPosts(preservarPagina: boolean = false): void {
+    this.postService.getAllPosts().subscribe({
+      next: posts => {
+        this.allPosts = posts.reverse(); // Nunca recortes aquí
+        if (!preservarPagina) {
+          this.paginaActual = 1;
+        }
+        this.actualizarLista();
+      },
+      error: err => console.error('Error al cargar posts:', err)
+    });
+  }
+
+
 
 
   actualizarLista(): void {
     const filtro = this.filtroBusqueda.toLowerCase().trim();
+
     const postsFiltrados = this.allPosts.filter(p =>
       p.title.toLowerCase().includes(filtro) ||
       p.description.toLowerCase().includes(filtro) ||
@@ -107,9 +114,20 @@ export class PostsComponent implements OnInit {
     this.totalPaginas = Math.max(1, Math.ceil(postsFiltrados.length / this.cantidadMostrar));
     this.paginas = Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
 
+    // Evitar desbordamiento de página
+    if (this.paginaActual > this.totalPaginas) {
+      this.paginaActual = this.totalPaginas;
+    }
+
     const inicio = (this.paginaActual - 1) * this.cantidadMostrar;
-    this.posts = postsFiltrados.slice(inicio, inicio + this.cantidadMostrar);
+    const fin = inicio + this.cantidadMostrar;
+
+    // ✅ Aquí solo se actualiza lo visible
+    this.posts = postsFiltrados.slice(inicio, fin);
   }
+
+
+
 
   resetearFiltros(): void {
     this.filtroBusqueda = '';
@@ -123,9 +141,13 @@ export class PostsComponent implements OnInit {
   }
 
   onCantidadChange(): void {
+    this.cantidadMostrar = +this.cantidadMostrar; // fuerza a número
+    localStorage.setItem('cantidadMostrar', String(this.cantidadMostrar));
     this.paginaActual = 1;
     this.actualizarLista();
   }
+
+
 
   cambiarPagina(valor: number): void {
     const nuevaPagina = this.paginaActual + valor;
@@ -210,7 +232,7 @@ export class PostsComponent implements OnInit {
     this.commentService.createComment(comentario).subscribe({
       next: () => {
         this.nuevoComentario = '';
-        this.cargarPosts();
+        this.cargarPosts(true); // <- Aquí se mantiene la página actual
         setTimeout(() => {
           const actualizado = this.allPosts.find(p => p.id === this.postSeleccionado?.id);
           if (actualizado) {
