@@ -158,7 +158,7 @@
 
   <!-- Segunda fila: Posts -->
   <div class="perfil-grid-secundaria">
-    <div class="posts-card">
+    <div class="posts-card"  routerLink="/mis-publicaciones">
       <div class="section-header">
         <i class="bi bi-journal-richtext"></i>
         Mis Publicaciones
@@ -190,12 +190,12 @@
     <div *ngIf="role === 'PROFESSIONAL' || role === 'ADMIN'" class="servicios-card">
       <div class="section-header">
         <i class="bi bi-heart-pulse-fill"></i>
-        Servicios ofrecidos
+        Mis  Servicios
       </div>
 
 
       <!-- Recorrer los servicios profesionales -->
-      <div *ngFor="let service of professionalServices" class="servicio" >
+      <div *ngFor="let service of professionalServices" class="servicio" routerLink="/servicioscr">
         <h5>{{ service.title }}</h5>
         <p>{{ service.description }}</p>
         <span class="precio">{{ service.price | currency:'EUR' }}</span><br>
