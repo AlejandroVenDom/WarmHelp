@@ -1,6 +1,7 @@
 package com.warmhelp.app.controllers;
 
 import com.warmhelp.app.dtos.auth.IncidentsRequest;
+import com.warmhelp.app.dtosResponses.IncidentResponseDTO;
 import com.warmhelp.app.models.Incident;
 import com.warmhelp.app.services.IncidentService;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +20,14 @@ public class IncidentsController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Incident>> getAllIncidents(){
+    public ResponseEntity<List<IncidentResponseDTO>> getAllIncidents(){
         return ResponseEntity.ok(this.incidentService.getAllIncidents());
     }
 
     @PostMapping("/registerIncident")
     public ResponseEntity<?> registerIncident(@RequestBody IncidentsRequest incidentsRequest){
         try {
-            Incident incident = this.incidentService.createIncident(incidentsRequest);
+            IncidentResponseDTO incident = this.incidentService.createIncident(incidentsRequest);
             return ResponseEntity.ok(incident);
         }
         catch (IllegalArgumentException e){

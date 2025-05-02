@@ -7,20 +7,30 @@ public class IncidentResponseDTO {
     private String title;
     private String description;
     private String type;
+    private String state;
     private String userName;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
 
-    public IncidentResponseDTO(Long id, String title, String description, String type, String userName, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
+    public IncidentResponseDTO(Long id, String title, String description, String type, String state, String userName, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.type = type;
+        this.state = state;
         this.userName = userName;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public Long getId() {
