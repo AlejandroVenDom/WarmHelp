@@ -351,7 +351,7 @@ public class UserService implements UserDetailsService {
         dto.setPosts(userInfo.getPosts().stream().map(this::mapToPostsResponseDTO).toList());
         dto.setProfessionalServices(userInfo.getProfessionalServices().stream().map(this::mapToProfessionalServicesResponseDTO).toList());
         dto.setReviews(userInfo.getReviews().stream().map(this::mapToReviewResponseDTIO).toList());
-        dto.setIncidents(userInfo.getIncidents().stream().map(this::mapToProfessionalIncidentsDTO).toList());
+        //dto.setIncidents(userInfo.getIncidents().stream().map(this::mapToProfessionalIncidentsDTO).toList());
 
         return dto;
     }
