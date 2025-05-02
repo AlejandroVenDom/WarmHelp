@@ -227,12 +227,35 @@ public class UserService implements UserDetailsService {
         );
     }
 
+    private ReportPostDTO mapToReportPostsResponseDTO(ReportPost reportPost){
+        return new ReportPostDTO(
+                reportPost.getId(),
+                reportPost.getDescription(),
+                reportPost.getType().getReportType().name(),
+                reportPost.getState().getReportState().name(),
+                reportPost.getUserInfo().getUser().getUsername(),
+                reportPost.getPost().getId(),
+                reportPost.getPost().getTitle(),
+                reportPost.getDescription(),
+                reportPost.getCreatedAt(),
+                reportPost.getUpdatedAt(),
+                reportPost.getDeletedAt()
+        );
+    }
+
+
     // RESPONSE OF LOGIN FOR POSTS
     private PostsResponseDTO mapToPostsResponseDTO(Posts posts){
         List<CommentsResponseDTO> commentsResponseDTOS = posts.getComments()
                 .stream()
                 .map(this::mapToCommentsResponseDTO)
                 .toList();
+
+        List<ReportPostDTO> reportPostDTOS = posts.getReportPosts()
+                .stream()
+                .map(this::mapToReportPostsResponseDTO)
+                .toList();
+
         return new PostsResponseDTO(
                 posts.getId(),
                 posts.getTitle(),
@@ -240,6 +263,7 @@ public class UserService implements UserDetailsService {
                 posts.getDescription(),
                 posts.getImage(),
                 commentsResponseDTOS,
+                reportPostDTOS,
                 posts.getCreatedAt(),
                 posts.getUpdatedAt(),
                 posts.getDeletedAt()
@@ -318,7 +342,11 @@ public class UserService implements UserDetailsService {
                 .toList();
         loginData.setIncidents(incidentResponseDTOS);
 
-
+        List<ReportPostDTO> reportPostDTOS = userInfo.getReportPosts()
+                .stream()
+                .map(this::mapToReportPostsResponseDTO)
+                .toList();
+        loginData.setReportPostDTOS(reportPostDTOS);
 
         return loginData;
     }

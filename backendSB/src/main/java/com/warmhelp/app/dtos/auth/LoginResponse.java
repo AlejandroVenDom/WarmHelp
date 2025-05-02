@@ -34,8 +34,15 @@ public class LoginResponse {
         private List<ReviewResponseDTO> reviews;
         private List<ResponseCommentsResponseDTO> responseComments;
         private List<IncidentResponseDTO> incidents;
+        private List<ReportPostDTO> reportPostDTOS;
 
+    public List<ReportPostDTO> getReportPostDTOS() {
+        return reportPostDTOS;
+    }
 
+    public void setReportPostDTOS(List<ReportPostDTO> reportPostDTOS) {
+        this.reportPostDTOS = reportPostDTOS;
+    }
 
     public Long getId() {
         return id;

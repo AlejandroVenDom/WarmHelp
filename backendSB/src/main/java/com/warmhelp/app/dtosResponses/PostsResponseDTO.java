@@ -10,20 +10,30 @@ public class PostsResponseDTO {
     private String description;
     private String image;
     private List<CommentsResponseDTO> comments;
+    private List<ReportPostDTO> reports;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
 
-    public PostsResponseDTO(long id, String title, String username, String description, String image, List<CommentsResponseDTO> comments, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
+    public PostsResponseDTO(long id, String title, String username, String description, String image, List<CommentsResponseDTO> comments, List<ReportPostDTO> reports, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
         this.id = id;
         this.title = title;
         this.username = username;
         this.description = description;
         this.image = image;
         this.comments = comments;
+        this.reports = reports;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
+    }
+
+    public List<ReportPostDTO> getReports() {
+        return reports;
+    }
+
+    public void setReports(List<ReportPostDTO> reports) {
+        this.reports = reports;
     }
 
     public String getTitle() {

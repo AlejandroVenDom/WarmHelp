@@ -3,6 +3,7 @@ package com.warmhelp.app.services;
 import com.warmhelp.app.dtos.auth.PostsRequest;
 import com.warmhelp.app.dtosResponses.CommentsResponseDTO;
 import com.warmhelp.app.dtosResponses.PostsResponseDTO;
+import com.warmhelp.app.dtosResponses.ReportPostDTO;
 import com.warmhelp.app.dtosResponses.ResponseCommentsResponseDTO;
 import com.warmhelp.app.models.Posts;
 import com.warmhelp.app.models.User;
@@ -56,6 +57,22 @@ public class PostsService {
 
             }).collect(Collectors.toList());
 
+            List<ReportPostDTO> reports = post.getReportPosts().stream().map(reportPost ->
+                    new ReportPostDTO(
+                            reportPost.getId(),
+                            reportPost.getDescription(),
+                            reportPost.getType().getReportType().name(),
+                            reportPost.getState().getReportState().name(),
+                            reportPost.getUserInfo().getUser().getUsername(),
+                            reportPost.getPost().getId(),
+                            reportPost.getPost().getTitle(),
+                            reportPost.getPost().getDescription(),
+                            reportPost.getCreatedAt(),
+                            reportPost.getUpdatedAt(),
+                            reportPost.getDeletedAt()
+                    )).collect(Collectors.toList());
+
+
             return new PostsResponseDTO(
                     post.getId(),
                     post.getTitle(),
@@ -63,6 +80,7 @@ public class PostsService {
                     post.getDescription(),
                     post.getImage(),
                     commentsResponseDTOS,
+                    reports,
                     post.getCreatedAt(),
                     post.getUpdatedAt(),
                     post.getDeletedAt()
