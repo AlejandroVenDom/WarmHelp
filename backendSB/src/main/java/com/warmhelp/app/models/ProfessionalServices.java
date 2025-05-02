@@ -62,6 +62,18 @@ public class ProfessionalServices {
     @JsonManagedReference
     private List<Reviews> reviews = new ArrayList<>();
 
+    @OneToMany(mappedBy = "professionalServices", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<ReportService> reports = new ArrayList<>();
+
+    public List<ReportService> getReports() {
+        return reports;
+    }
+
+    public void setReports(List<ReportService> reports) {
+        this.reports = reports;
+    }
+
     public Long getId() {
         return id;
     }

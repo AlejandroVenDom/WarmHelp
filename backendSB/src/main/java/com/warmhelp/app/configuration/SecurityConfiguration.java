@@ -80,7 +80,9 @@ public class SecurityConfiguration {
                                 "/incidents",
                                 "/incidents/registerIncident",
                                 "/reports-posts",
-                                "/reports-posts/register-report-post"
+                                "/reports-posts/register-report-post",
+                                "/reports-services",
+                                "/reports-services/register-report-service"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

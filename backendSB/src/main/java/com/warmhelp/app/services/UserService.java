@@ -227,6 +227,7 @@ public class UserService implements UserDetailsService {
         );
     }
 
+    // REPONSE OF LOGIN FOR REPORTS POSTS
     private ReportPostDTO mapToReportPostsResponseDTO(ReportPost reportPost){
         return new ReportPostDTO(
                 reportPost.getId(),
@@ -240,6 +241,23 @@ public class UserService implements UserDetailsService {
                 reportPost.getCreatedAt(),
                 reportPost.getUpdatedAt(),
                 reportPost.getDeletedAt()
+        );
+    }
+
+    // RESPONSE OF LOGIN FOR REPORTS SERVICES
+    private ReportServiceResponseDTO mapToReportServicesResponseDTO(ReportService reportService){
+        return new ReportServiceResponseDTO(
+                reportService.getId(),
+                reportService.getDescription(),
+                reportService.getType().getReportType().name(),
+                reportService.getState().getReportState().name(),
+                reportService.getUserInfo().getUser().getUsername(),
+                reportService.getProfessionalServices().getId(),
+                reportService.getProfessionalServices().getTitle(),
+                reportService.getProfessionalServices().getDescription(),
+                reportService.getCreatedAt(),
+                reportService.getUpdatedAt(),
+                reportService.getDeletedAt()
         );
     }
 
@@ -347,6 +365,13 @@ public class UserService implements UserDetailsService {
                 .map(this::mapToReportPostsResponseDTO)
                 .toList();
         loginData.setReportPostDTOS(reportPostDTOS);
+
+        List<ReportServiceResponseDTO> reportServiceResponseDTOS = userInfo.getReportServices()
+                .stream()
+                .map(this::mapToReportServicesResponseDTO)
+                .toList();
+
+        loginData.setReportServiceResponseDTOS(reportServiceResponseDTOS);
 
         return loginData;
     }
