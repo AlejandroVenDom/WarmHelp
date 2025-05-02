@@ -1,1 +1,47 @@
-<p>users-admin works!</p>
+<div class="users-admin-container">
+  <h2 class="titulo-seccion">
+    <i class="bi bi-people-fill"></i> Administración de Usuarios
+  </h2>
+
+  <form [formGroup]="userForm" (ngSubmit)="submit()" class="formulario">
+    <div class="form-grid">
+      <input formControlName="username" placeholder="Nombre de usuario" />
+      <input formControlName="email" placeholder="Correo electrónico" />
+      <input formControlName="first_name" placeholder="Nombre" />
+      <input formControlName="last_name" placeholder="Apellido" />
+      <input formControlName="address" placeholder="Dirección" />
+      <input formControlName="number" placeholder="Teléfono" />
+      <select formControlName="roleType">
+        <option value="CLIENT">CLIENT</option>
+        <option value="PROFESSIONAL">PROFESSIONAL</option>
+        <option value="ADMIN">ADMIN</option>
+      </select>
+      <textarea formControlName="mySelf_description" rows="3" placeholder="Sobre mí..."></textarea>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-guardar">{{ isEditing ? 'Guardar Cambios' : 'Crear Usuario' }}</button>
+      <button type="button" class="btn-cancelar" (click)="cancelEdit()">Cancelar</button>
+    </div>
+  </form>
+
+  <div class="users-grid">
+    <div *ngFor="let user of users" class="user-card">
+      <h4><i class="bi bi-person-badge-fill"></i> {{ user.username }}</h4>
+      <p><i class="bi bi-envelope"></i> {{ user.email }}</p>
+      <p><i class="bi bi-person-lines-fill"></i> {{ user.first_name }} {{ user.last_name }}</p>
+      <p><i class="bi bi-geo-alt-fill"></i> {{ user.address }}</p>
+      <p><i class="bi bi-phone-fill"></i> {{ user.number }}</p>
+      <p><i class="bi bi-award-fill"></i> Rol: {{ user.roleType }}</p>
+
+      <div class="btn-actions">
+        <button class="btn-editar" (click)="startEdit(user)">
+          <i class="bi bi-pencil-fill"></i> Editar
+        </button>
+        <button class="btn-eliminar" (click)="deleteUser(1)">
+          <i class="bi bi-trash-fill"></i> Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
