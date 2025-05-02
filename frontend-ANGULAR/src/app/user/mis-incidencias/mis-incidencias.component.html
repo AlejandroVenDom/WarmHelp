@@ -1,25 +1,32 @@
+<div class="mis-incidencias-container">
+  <h2 class="titulo-seccion"><i class="bi bi-bug-fill"></i> Mis Incidencias</h2>
 
-<div class="incidencias-container">
-  <h2>Mis Incidencias</h2>
-
-  <div class="formulario">
-    <input [(ngModel)]="nuevaIncidencia.title" placeholder="Título" />
-    <textarea [(ngModel)]="nuevaIncidencia.description" placeholder="Descripción"></textarea>
+  <div class="formulario-incidencia">
+    <input [(ngModel)]="nuevaIncidencia.title" placeholder="Título de la incidencia" />
+    <textarea [(ngModel)]="nuevaIncidencia.description" rows="3" placeholder="Describe tu problema o situación..."></textarea>
     <select [(ngModel)]="nuevaIncidencia.type">
       <option *ngFor="let t of tipos" [value]="t">
         {{ getNombreTipo(t) }}
       </option>
     </select>
-    <button (click)="registrarIncidencia()">Reportar</button>
+    <button (click)="registrarIncidencia()"><i class="bi bi-send-fill"></i> Enviar</button>
   </div>
 
-  <div class="lista">
+  <div class="lista-incidencias">
     <div *ngFor="let i of incidencias" class="incidencia-card">
-      <h4>{{ i.title }}</h4>
-      <p>{{ i.description }}</p>
-      <span><strong>Tipo:</strong> {{ getNombreTipo(i.type) }}</span><br>
-      <span><strong>Estado:</strong> {{ getNombreEstado(i.state) }}</span><br>
-      <span><strong>Fecha:</strong> {{ i.createdAt | date:'short' }}</span>
+      <div class="incidencia-header">
+        <h4><i class="bi bi-clipboard2-fill"></i> {{ i.title }}</h4>
+        <span class="estado" [ngClass]="i.state.toLowerCase()">
+          {{ getNombreEstado(i.state) }}
+        </span>
+      </div>
+
+      <p class="descripcion">{{ i.description }}</p>
+
+      <div class="info-extra">
+        <p><i class="bi bi-tag-fill"></i> Tipo: <strong>{{ getNombreTipo(i.type) }}</strong></p>
+        <p><i class="bi bi-calendar-event"></i> Fecha: <strong>{{ i.createdAt | date:'short' }}</strong></p>
+      </div>
     </div>
   </div>
 </div>
