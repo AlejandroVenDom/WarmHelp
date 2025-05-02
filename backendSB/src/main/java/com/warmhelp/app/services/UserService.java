@@ -2,6 +2,7 @@ package com.warmhelp.app.services;
 
 import com.warmhelp.app.dtos.auth.*;
 import com.warmhelp.app.dtosResponses.*;
+import com.warmhelp.app.enums.IncidentState;
 import com.warmhelp.app.models.*;
 import com.warmhelp.app.repositories.*;
 import com.warmhelp.app.security.JwtUtil;
@@ -28,27 +29,22 @@ public class UserService implements UserDetailsService {
     private final PostsRepository postsRepository;
     private final CommentsRepository commentsRepository;
     private final ResponseCommentsRespository responseCommentsRespository;
+    private final IncidentRepository incidentRepository;
+    private final IncidentStateRepository incidentStateRepository;
 
-    public UserService(UserRepository userRepository,
-                       UserInfoRepository userInfoRepository,
-                       PostsRepository postsRepository,
-                       RoleRepository roleRepository,
-                       AuthenticationManager authenticationManager,
-                       PasswordEncoder passwordEncoder,
-                       JwtUtil jwtUtil,
-                       CommentsRepository commentsRepository,
-                       ResponseCommentsRespository responseCommentsRespository) {
+    public UserService(UserRepository userRepository, UserInfoRepository userInfoRepository, RoleRepository roleRepository, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, JwtUtil jwtUtil, PostsRepository postsRepository, CommentsRepository commentsRepository, ResponseCommentsRespository responseCommentsRespository, IncidentRepository incidentRepository, IncidentStateRepository incidentStateRepository) {
         this.userRepository = userRepository;
-        this.responseCommentsRespository = responseCommentsRespository;
-        this.commentsRepository = commentsRepository;
         this.userInfoRepository = userInfoRepository;
         this.roleRepository = roleRepository;
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
         this.postsRepository = postsRepository;
+        this.commentsRepository = commentsRepository;
+        this.responseCommentsRespository = responseCommentsRespository;
+        this.incidentRepository = incidentRepository;
+        this.incidentStateRepository = incidentStateRepository;
     }
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -186,6 +182,22 @@ public class UserService implements UserDetailsService {
         );
     }
 
+    // RESPONSE OF LOGIN FOR RESPONSE INCIDENTS
+    private IncidentResponseDTO mapToProfessionalIncidentsDTO(Incident incident){
+
+        return new IncidentResponseDTO(
+                incident.getId(),
+                incident.getTitle(),
+                incident.getDescription(),
+                incident.getType().getIncidentType().name(),
+                incident.getState().getIncidentState().name(),
+                incident.getUserInfo().getUser().getUsername(),
+                incident.getCreatedAt(),
+                incident.getUpdatedAt(),
+                incident.getDeletedAt()
+        );
+    }
+
     // RESPONSE OF LOGIN FOR RESPONSE COMMENTS
     private ResponseCommentsResponseDTO mapToResponseCommentsDTO(ResponseComments rc){
         return new ResponseCommentsResponseDTO(
@@ -300,6 +312,12 @@ public class UserService implements UserDetailsService {
                 .toList();
         loginData.setReviews(reviewResponseDTOS);
 
+        List<IncidentResponseDTO> incidentResponseDTOS = userInfo.getIncidents()
+                .stream()
+                .map(this::mapToProfessionalIncidentsDTO)
+                .toList();
+        loginData.setIncidents(incidentResponseDTOS);
+
 
 
         return loginData;
@@ -312,6 +330,7 @@ public class UserService implements UserDetailsService {
                 checkTokenRequest.getUsername()
         );
     }
+
     public PublicUserProfileResponse getPublicProfileByUsername(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
@@ -332,6 +351,7 @@ public class UserService implements UserDetailsService {
         dto.setPosts(userInfo.getPosts().stream().map(this::mapToPostsResponseDTO).toList());
         dto.setProfessionalServices(userInfo.getProfessionalServices().stream().map(this::mapToProfessionalServicesResponseDTO).toList());
         dto.setReviews(userInfo.getReviews().stream().map(this::mapToReviewResponseDTIO).toList());
+        dto.setIncidents(userInfo.getIncidents().stream().map(this::mapToProfessionalIncidentsDTO).toList());
 
         return dto;
     }

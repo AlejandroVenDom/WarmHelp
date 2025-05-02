@@ -15,6 +15,7 @@ public class PublicUserProfileResponse {
     private List<PostsResponseDTO> posts;
     private List<ProfessionalServiceResponseDTO> professionalServices;
     private List<ReviewResponseDTO> reviews;
+    private List<IncidentResponseDTO> incidents;
 
     // --- Getters y Setters ---
     public String getUsername() {
@@ -95,6 +96,14 @@ public class PublicUserProfileResponse {
 
     public void setProfessionalServices(List<ProfessionalServiceResponseDTO> professionalServices) {
         this.professionalServices = professionalServices;
+    }
+
+    public List<IncidentResponseDTO> getIncidents() {
+        return incidents;
+    }
+
+    public void setIncidents(List<IncidentResponseDTO> incidents) {
+        this.incidents = incidents;
     }
 
     public List<ReviewResponseDTO> getReviews() {

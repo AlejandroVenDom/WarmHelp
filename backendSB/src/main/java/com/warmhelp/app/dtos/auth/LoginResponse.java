@@ -33,6 +33,9 @@ public class LoginResponse {
         private List<ProfessionalServiceResponseDTO> professionalServices;
         private List<ReviewResponseDTO> reviews;
         private List<ResponseCommentsResponseDTO> responseComments;
+        private List<IncidentResponseDTO> incidents;
+
+
 
     public Long getId() {
         return id;
@@ -88,6 +91,14 @@ public class LoginResponse {
 
     public void setFirst_name(String first_name) {
         this.first_name = first_name;
+    }
+
+    public List<IncidentResponseDTO> getIncidents() {
+        return incidents;
+    }
+
+    public void setIncidents(List<IncidentResponseDTO> incidents) {
+        this.incidents = incidents;
     }
 
     public String getLast_name() {
