@@ -19,6 +19,7 @@ export class TiendaComponent implements OnInit {
   priceRangeMax = 1000;
   selectedService: ProfessionalServiceInterface | null = null;
   showModal = false;
+  mostrarBotonScroll = false;
 
   constructor(
     private service: ProfessionalService,
@@ -27,6 +28,16 @@ export class TiendaComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadServicios();
+    window.addEventListener('scroll', this.verificarScroll.bind(this));
+  }
+  ngOnDestroy(): void {
+    window.removeEventListener('scroll', this.verificarScroll.bind(this));
+  }
+  verificarScroll(): void {
+    this.mostrarBotonScroll = window.scrollY > 300;
+  }
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   loadServicios() {

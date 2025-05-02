@@ -29,6 +29,7 @@ export class PerfilComponent implements OnInit {
   showOldPassword: boolean = false;
   showNewPassword: boolean = false;
   showRepeatPassword: boolean = false;
+  mostrarBotonScroll = false;
 
   // Cambio de contraseña
   oldPassword: string = '';
@@ -72,6 +73,16 @@ export class PerfilComponent implements OnInit {
     this.responseComments = this.useStateService.getResponseComments();
     this.professionalServices = this.useStateService.getProfessionalServices();
     this.reviews = this.useStateService.getReviews();
+    window.addEventListener('scroll', this.verificarScroll.bind(this));
+  }
+  ngOnDestroy(): void {
+    window.removeEventListener('scroll', this.verificarScroll.bind(this));
+  }
+  verificarScroll(): void {
+    this.mostrarBotonScroll = window.scrollY > 300;
+  }
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   togglePasswordFields() {
