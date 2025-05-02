@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ReportServiceInterface } from '../interfaces/report';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,7 @@ export class UseStateService {
     reviews: any[];
     responseComments: any[];
     incidents: any[];
+    reports: any[];
     role: string;
   }): void {
     sessionStorage.setItem(this.USER_KEY, JSON.stringify(userData));
@@ -31,6 +33,10 @@ export class UseStateService {
   getUserId(): number | null {
     const session = this.getSession();
     return session ? session.id : null;
+  }
+  getReports(): ReportServiceInterface[] {
+    const session = this.getSession();
+    return session ? session.reportServiceResponseDTOS || [] : [];
   }
   getIncidents(): any[] {
     const session = this.getSession();

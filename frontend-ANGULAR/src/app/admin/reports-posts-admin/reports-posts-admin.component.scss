@@ -1,0 +1,120 @@
+.admin-reports-container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 3rem 1.5rem;
+  font-family: 'Segoe UI', sans-serif;
+  color: #3A7D44;
+
+  .titulo-seccion {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #3A7D44;
+
+    i {
+      color: #DF6D14;
+    }
+  }
+
+  .admin-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .reporte-card {
+    background: #F8F5E9;
+    border-left: 6px solid #DF6D14;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: translateY(-4px);
+    }
+
+    .reporte-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h4 {
+        font-size: 1.3rem;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #3A7D44;
+      }
+
+      .estado {
+        font-size: 0.85rem;
+        font-weight: 600;
+        padding: 6px 12px;
+        border-radius: 20px;
+        text-transform: uppercase;
+        background: #eee;
+        color: #3A7D44;
+
+        &.pending {
+          background-color: #FFD580;
+          color: #8a4b00;
+        }
+
+        &.completed {
+          background-color: #9DC08B;
+          color: white;
+        }
+
+        &.rejected {
+          background-color: #e57373;
+          color: white;
+        }
+      }
+    }
+
+    .descripcion {
+      margin: 1rem 0;
+      font-style: italic;
+      color: #444;
+    }
+
+    .info-extra {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+
+      p {
+        margin: 0;
+        font-size: 0.95rem;
+
+        i {
+          margin-right: 6px;
+          color: #DF6D14;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-reports-container {
+    padding: 2rem 1rem;
+
+    .titulo-seccion {
+      font-size: 1.6rem;
+    }
+
+    .reporte-card {
+      padding: 1rem;
+    }
+
+    .info-extra {
+      flex-direction: column;
+    }
+  }
+}

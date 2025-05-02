@@ -12,6 +12,8 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    margin-top: 2%;
+    margin-bottom: 2%;
     color: #3A7D44;
 
     i {
@@ -166,5 +168,43 @@
     .info-extra {
       flex-direction: column;
     }
+  }
+}
+.formulario-reporte-servicio {
+  @extend .formulario-incidencia;
+  background-color: #fbfaf4;
+
+  select {
+    background-color: white;
+    font-weight: 500;
+  }
+
+  button {
+    background-color: #3A7D44;
+
+    &:hover {
+      background-color: darken(#3A7D44, 10%);
+    }
+  }
+}
+
+.lista-incidencias .incidencia-card {
+  border-left: 6px solid #DF6D14 !important;
+
+  .incidencia-header h4 i {
+    color: #DF6D14;
+  }
+
+  .estado.pending {
+    background-color: #FFD580;
+    color: #8a4b00;
+  }
+  .estado.in_progress {
+    background-color: #FFB347;
+    color: white;
+  }
+  .estado.completed {
+    background-color: #9DC08B;
+    color: white;
   }
 }

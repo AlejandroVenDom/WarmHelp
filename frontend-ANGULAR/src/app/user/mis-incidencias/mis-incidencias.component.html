@@ -1,32 +1,87 @@
 <div class="mis-incidencias-container">
-  <h2 class="titulo-seccion"><i class="bi bi-bug-fill"></i> Mis Incidencias</h2>
 
-  <div class="formulario-incidencia">
-    <input [(ngModel)]="nuevaIncidencia.title" placeholder="Título de la incidencia" />
-    <textarea [(ngModel)]="nuevaIncidencia.description" rows="3" placeholder="Describe tu problema o situación..."></textarea>
-    <select [(ngModel)]="nuevaIncidencia.type">
-      <option *ngFor="let t of tipos" [value]="t">
-        {{ getNombreTipo(t) }}
-      </option>
-    </select>
-    <button (click)="registrarIncidencia()"><i class="bi bi-send-fill"></i> Enviar</button>
-  </div>
+  <!-- Sección: Registrar Incidencia -->
+  <h2 class="titulo-seccion">
+    <i class="bi bi-bug-fill"></i> Registrar Incidencia
+    <i class="bi"
+       [ngClass]="mostrarIncidencias ? 'bi-eye-slash' : 'bi-eye'"
+       style="cursor: pointer; margin-left: auto;"
+       (click)="mostrarIncidencias = !mostrarIncidencias"></i>
+  </h2>
 
-  <div class="lista-incidencias">
-    <div *ngFor="let i of incidencias" class="incidencia-card">
-      <div class="incidencia-header">
-        <h4><i class="bi bi-clipboard2-fill"></i> {{ i.title }}</h4>
-        <span class="estado" [ngClass]="i.state.toLowerCase()">
-          {{ getNombreEstado(i.state) }}
-        </span>
-      </div>
+  <div *ngIf="mostrarIncidencias">
+    <div class="formulario-incidencia">
+      <input [(ngModel)]="nuevaIncidencia.title" placeholder="Título de la incidencia" />
+      <textarea [(ngModel)]="nuevaIncidencia.description" rows="3" placeholder="Describe tu problema o situación..."></textarea>
+      <select [(ngModel)]="nuevaIncidencia.type">
+        <option *ngFor="let t of tipos" [value]="t">
+          {{ getNombreTipo(t) }}
+        </option>
+      </select>
+      <button (click)="registrarIncidencia()"><i class="bi bi-send-fill"></i> Enviar</button>
+    </div>
 
-      <p class="descripcion">{{ i.description }}</p>
-
-      <div class="info-extra">
-        <p><i class="bi bi-tag-fill"></i> Tipo: <strong>{{ getNombreTipo(i.type) }}</strong></p>
-        <p><i class="bi bi-calendar-event"></i> Fecha: <strong>{{ i.createdAt | date:'short' }}</strong></p>
+    <div class="lista-incidencias">
+      <div *ngFor="let i of incidencias" class="incidencia-card">
+        <div class="incidencia-header">
+          <h4><i class="bi bi-clipboard2-fill"></i> {{ i.title }}</h4>
+          <span class="estado" [ngClass]="i.state.toLowerCase()">
+            {{ getNombreEstado(i.state) }}
+          </span>
+        </div>
+        <p class="descripcion">{{ i.description }}</p>
+        <div class="info-extra">
+          <p><i class="bi bi-tag-fill"></i> Tipo: <strong>{{ getNombreTipo(i.type) }}</strong></p>
+          <p><i class="bi bi-calendar-event"></i> Fecha: <strong>{{ i.createdAt | date:'short' }}</strong></p>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- Sección: Reportes de Servicios -->
+  <h2 class="titulo-seccion">
+    <i class="bi bi-wrench-adjustable-circle-fill"></i> Historial de Reportes de Servicios
+    <i class="bi"
+       [ngClass]="mostrarReportesServicio ? 'bi-eye-slash' : 'bi-eye'"
+       style="cursor: pointer; margin-left: auto;"
+       (click)="mostrarReportesServicio = !mostrarReportesServicio"></i>
+  </h2>
+
+  <div *ngIf="mostrarReportesServicio" class="lista-incidencias">
+    <div *ngFor="let r of reportesServicio" class="incidencia-card">
+      <div class="incidencia-header">
+        <h4><i class="bi bi-tools"></i> {{ r.serviceTitle }}</h4>
+        <span class="estado" [ngClass]="r.state.toLowerCase()">{{ getNombreEstado(r.state) }}</span>
+      </div>
+      <p class="descripcion">{{ r.description }}</p>
+      <div class="info-extra">
+        <p><i class="bi bi-tag-fill"></i> Tipo: <strong>{{ getNombreTipoReporte(r.type) }}</strong></p>
+        <p><i class="bi bi-calendar-event"></i> Fecha: <strong>{{ r.createdAt | date:'short' }}</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sección: Reportes de Publicaciones -->
+  <h2 class="titulo-seccion">
+    <i class="bi bi-flag-fill"></i> Historial de Reportes de Publicaciones
+    <i class="bi"
+       [ngClass]="mostrarReportesPost ? 'bi-eye-slash' : 'bi-eye'"
+       style="cursor: pointer; margin-left: auto;"
+       (click)="mostrarReportesPost = !mostrarReportesPost"></i>
+  </h2>
+
+  <div *ngIf="mostrarReportesPost" class="lista-incidencias">
+    <div *ngFor="let r of reportesPost" class="incidencia-card">
+      <div class="incidencia-header">
+        <h4><i class="bi bi-file-text-fill"></i> {{ r.postTitle }}</h4>
+        <span class="estado" [ngClass]="r.state.toLowerCase()">{{ getNombreEstado(r.state) }}</span>
+      </div>
+      <p class="descripcion">{{ r.description }}</p>
+      <div class="info-extra">
+        <p><i class="bi bi-tag-fill"></i> Tipo: <strong>{{ getNombreTipoReporte(r.type) }}</strong></p>
+        <p><i class="bi bi-calendar-event"></i> Fecha: <strong>{{ r.createdAt | date:'short' }}</strong></p>
+      </div>
+    </div>
+  </div>
+
 </div>

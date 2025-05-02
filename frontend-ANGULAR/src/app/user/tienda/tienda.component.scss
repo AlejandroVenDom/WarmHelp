@@ -528,3 +528,63 @@ $color-text: #2B2B2B;
     opacity: 1;
   }
 }
+.icon-report {
+  position: absolute;
+  top: 10px;
+  right: 50px;
+  color: $color-accent;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.2);
+    color: darken($color-accent, 10%);
+  }
+}
+
+.report-modal {
+  textarea,
+  select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid $color-secondary;
+    border-radius: 10px;
+    font-size: 1rem;
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+    }
+  }
+
+  h4 {
+    color: $color-accent;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-reporte {
+    background-color: $color-accent;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    i {
+      margin-right: 6px;
+    }
+
+    &:hover {
+      background-color: darken($color-accent, 10%);
+    }
+  }
+}
+

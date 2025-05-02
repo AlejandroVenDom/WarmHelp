@@ -30,6 +30,8 @@ import { UsersAdminComponent } from './admin/users-admin/users-admin.component';
 import { ServiciosAdminComponent } from './admin/servicios-admin/servicios-admin.component';
 import { ComentariosAdminComponent } from './admin/comentarios-admin/comentarios-admin.component';
 import { ControlPanelComponent } from './admin/control-panel/control-panel.component';
+import { ReportsAdminComponent } from './admin/reports-admin/reports-admin.component';
+import { ReportsPostsAdminComponent } from './admin/reports-posts-admin/reports-posts-admin.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,9 @@ import { ControlPanelComponent } from './admin/control-panel/control-panel.compo
     UsersAdminComponent,
     ServiciosAdminComponent,
     ComentariosAdminComponent,
-    ControlPanelComponent
+    ControlPanelComponent,
+    ReportsAdminComponent,
+    ReportsPostsAdminComponent
 
   ],
   imports: [

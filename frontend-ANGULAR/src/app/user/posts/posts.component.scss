@@ -275,6 +275,8 @@
   .botones-acciones {
     display: flex;
     gap: 12px;
+    flex-wrap: wrap;
+  justify-content: center;
 
     .btn-secundario {
       display: flex;
@@ -828,14 +830,15 @@ button {
 }
 
 .contenedor-paginacion {
-  max-width: 100%;
   width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: column;     // Apila los elementos verticalmente
+  align-items: center;        // Centra horizontalmente
   justify-content: center;
   margin: 4rem auto 2rem auto;
+  text-align: center;         // Centra el texto "Página X de Y"
 }
+
 
 
 .paginacion {
@@ -1006,3 +1009,4 @@ button {
     opacity: 1;
   }
 }
+.btn-report-post { position: absolute; top: 10px; right: 10px; background: #DF6D14; color: white; border: none; border-radius: 50%; padding: 8px; cursor: pointer; font-size: 1.1rem; z-index: 5; transition: background 0.3s ease; &:hover { background: darken(#DF6D14, 10%); } i { color: white; } }

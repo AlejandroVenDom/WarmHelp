@@ -8,6 +8,7 @@ import { ResponseComment } from '../../services/interfaces/response-coment';
 import { PopupService } from '../../services/popup.service';
 import { delay } from 'rxjs';
 import { Router } from '@angular/router';
+import { ReportService } from '../../services/report/report.service';
 
 @Component({
   selector: 'app-posts',
@@ -44,6 +45,24 @@ export class PostsComponent implements OnInit {
   nuevoComentario = '';
   nuevaRespuesta = '';
 
+  modalReportePostVisible = false;
+  postReporteSeleccionado: Post | null = null;
+  nuevoReportePost = {
+  description: '',
+  type: 'FALSE_INFORMATION',
+  postId: 0
+};
+
+tiposReporte: string[] = [
+  'BULLYING_OR_HARASSMENT',
+  'SUICIDE_SELF_INJURY_OR_EATING_DISORDERS',
+  'VIOLENCE',
+  'ILLEGAL_SALES',
+  'NUDITY_OR_SEXUAL_ACTIVITY',
+  'SCAMS_FRAUD_OR_SPAM',
+  'FALSE_INFORMATION'
+];
+
   // Nuevo post
   nuevoPost = {
     title: '',
@@ -58,7 +77,8 @@ export class PostsComponent implements OnInit {
     private responseCommentsService: ResponseCommentsService,
     private useStateService: UseStateService,
     private popupService: PopupService,
-    private router: Router
+    private router: Router,
+    private reportService: ReportService // 👈 Añadir esta línea
   ) {}
 
   ngOnInit(): void {
@@ -79,6 +99,59 @@ export class PostsComponent implements OnInit {
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+  abrirModalReportePost(post: Post): void {
+    this.postReporteSeleccionado = post;
+    this.nuevoReportePost = {
+      description: '',
+      type: 'FALSE_INFORMATION',
+      postId: post.id
+    };
+    this.modalReportePostVisible = true;
+  }
+
+  cerrarModalReportePost(): void {
+    this.modalReportePostVisible = false;
+    this.postReporteSeleccionado = null;
+    this.nuevoReportePost = {
+      description: '',
+      type: 'FALSE_INFORMATION',
+      postId: 0
+    };
+  }
+
+  getNombreTipoReporte(tipo: string): string {
+    const map: Record<string, string> = {
+      BULLYING_OR_HARASSMENT: 'Acoso',
+      SUICIDE_SELF_INJURY_OR_EATING_DISORDERS: 'Conducta riesgosa',
+      VIOLENCE: 'Violencia',
+      ILLEGAL_SALES: 'Ventas ilegales',
+      NUDITY_OR_SEXUAL_ACTIVITY: 'Contenido sexual',
+      SCAMS_FRAUD_OR_SPAM: 'Estafa o fraude',
+      FALSE_INFORMATION: 'Información falsa'
+    };
+    return map[tipo] || tipo;
+  }
+
+  enviarReportePost(): void {
+    const username = this.useStateService.getUsername();
+    if (!username) return;
+
+    const payload = {
+      ...this.nuevoReportePost,
+      userName: username
+    };
+
+    this.reportService.createPostReport(payload).subscribe({
+      next: () => {
+        this.popupService.showMessage('Reporte enviado', 'Gracias por tu reporte, lo revisaremos.', 'success');
+        this.cerrarModalReportePost();
+      },
+      error: err => {
+        this.popupService.showMessage('Error', 'No se pudo enviar el reporte', 'error');
+      }
+    });
+  }
+
 
   detectarEscape(event: KeyboardEvent): void {
     if (event.key === 'Escape') {

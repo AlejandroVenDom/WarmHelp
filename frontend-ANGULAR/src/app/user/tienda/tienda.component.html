@@ -31,7 +31,7 @@
         <img [src]="servicio.image || '/ans.jpg'" alt="Imagen del servicio" class="cart-img">
         <h3>{{ servicio.title }}</h3>
         <p class="product-description">{{ servicio.description.length > 15 ? (servicio.description | slice:0:15) + '...' : servicio.description }}</p>
-        <p class="price">Precio:  {{ servicio.price }} {{ servicio.currencyType }}</p>
+        <p class="price">Precio: {{ servicio.price }} {{ servicio.currencyType }}</p>
         <p class="price">Impuesto: {{ servicio.tax }} {{ servicio.currencyType }}</p>
         <p>
           Publicado por:
@@ -42,20 +42,24 @@
       </div>
     </div>
   </div>
-  <button *ngIf="mostrarBotonScroll"
-        class="scroll-top-btn fade-in"
-        (click)="scrollToTop()"
-        title="Volver arriba">
-  <i class="bi bi-arrow-up-circle-fill"></i>
-</button>
+
+  <button *ngIf="mostrarBotonScroll" class="scroll-top-btn fade-in" (click)="scrollToTop()" title="Volver arriba">
+    <i class="bi bi-arrow-up-circle-fill"></i>
+  </button>
 </div>
 
-<!-- Modal -->
+<!-- Modal de detalles del servicio -->
 <div class="modal-overlay" *ngIf="showModal">
   <div class="modal-content">
     <span class="icon-cancel" (click)="closeModal()">
       <i class="bi bi-x-circle"></i>
     </span>
+
+    <!-- Botón de reporte arriba a la derecha -->
+    <span class="icon-report" (click)="showReportModal = true">
+      <i class="bi bi-flag-fill"></i>
+    </span>
+
     <img [src]="selectedService?.image || '/ans.jpg'" alt="Imagen del servicio" class="cart-img">
     <h3>{{ selectedService?.title }}</h3>
     <p><strong>Descripción:</strong> {{ selectedService?.description }}</p>
@@ -65,3 +69,21 @@
   </div>
 </div>
 
+<!-- Modal de reporte separado -->
+<div class="modal-overlay" *ngIf="showReportModal">
+  <div class="modal-content report-modal">
+    <span class="icon-cancel" (click)="showReportModal = false">
+      <i class="bi bi-x-circle"></i>
+    </span>
+    <h4><i class="bi bi-flag-fill"></i> Reportar este servicio</h4>
+    <textarea [(ngModel)]="nuevoReporte.description" rows="3" placeholder="Describe el problema..."></textarea>
+    <select [(ngModel)]="nuevoReporte.type">
+      <option *ngFor="let tipo of tiposReporte" [value]="tipo">
+        {{ getNombreTipoReporte(tipo) }}
+      </option>
+    </select>
+    <button class="btn-reporte" (click)="enviarReporteServicio()">
+      <i class="bi bi-send-exclamation-fill"></i> Enviar Reporte
+    </button>
+  </div>
+</div>

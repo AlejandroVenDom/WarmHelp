@@ -26,6 +26,8 @@ import { ServiciosAdminComponent } from './admin/servicios-admin/servicios-admin
 import { ComentariosAdminComponent } from './admin/comentarios-admin/comentarios-admin.component';
 import { ControlEvent } from '@angular/forms';
 import { ControlPanelComponent } from './admin/control-panel/control-panel.component';
+import { ReportsAdminComponent } from './admin/reports-admin/reports-admin.component';
+import { ReportsPostsAdminComponent } from './admin/reports-posts-admin/reports-posts-admin.component';
 
 const routes: Routes = [
   // users without authentication
@@ -54,7 +56,9 @@ const routes: Routes = [
       { path: 'users-admin', component: UsersAdminComponent},
       { path: 'posts-admin', component: PostsAdminComponent},
       { path: 'servicios-admin', component: ServiciosAdminComponent},
-      { path: 'comentarios-admin', component: ComentariosAdminComponent}
+      { path: 'comentarios-admin', component: ComentariosAdminComponent},
+      { path: 'reports-admin', component: ReportsAdminComponent},
+      { path: 'reports-posts-admin', component: ReportsPostsAdminComponent}
     ]
   },
   {path: "**", component: PageNotFoundComponent},

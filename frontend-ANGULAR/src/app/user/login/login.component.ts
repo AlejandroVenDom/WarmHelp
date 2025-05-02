@@ -50,61 +50,58 @@ export class LoginComponent {
 
     this.popupService.loader('Iniciando sesión', 'Por favor espera...');
 
-    this.credentialsService
-      .login(this.loginForm.value as LoginInterface)
-      .subscribe({
-        next: (data) => {
-          setTimeout(() => {
-            this.tokenService.saveTokens(data.token, '234325423423');
+    this.credentialsService.login(this.loginForm.value as LoginInterface).subscribe({
+      next: (data) => {
+        setTimeout(() => {
+          this.tokenService.saveTokens(data.token, '234325423423');
 
-            this.useStateService.save({
-              id: data.id,
-              username: data.username,
-              role: data.role,
-              first_name: data.first_name,
-              last_name: data.last_name,
-              address: data.address,
-              number: data.number,
-              email: data.email,
-              mySelf_description: data.mySelf_description,
-              comments: data.comments,
-              posts: data.posts,
-              professionalServices: data.professionalServices,
-              reviews: data.reviews,
-              responseComments: data.responseComments,
-              incidents: data.incidents
-            });
+          this.useStateService.save({
+            id: data.id,
+            username: data.username,
+            role: data.role,
+            first_name: data.first_name,
+            last_name: data.last_name,
+            address: data.address,
+            number: data.number,
+            email: data.email,
+            mySelf_description: data.mySelf_description,
+            comments: data.comments,
+            posts: data.posts,
+            professionalServices: data.professionalServices,
+            reviews: data.reviews,
+            responseComments: data.responseComments,
+            incidents: data.incidents,
+            reports: data.reports
+          });
 
-            console.log(data);
-
-            this.popupService.close();
-            this.popupService.showMessage(
-              'Bienvenido',
-              `Hola ${data.first_name} ${data.last_name}!`,
-              'success'
-            );
-
-            this.router.navigate(['/perfil']);
-          }, 1000);
-        },
-        error: (err) => {
           this.popupService.close();
-
-          let message = '';
-          if (err.error === 'Invalid password') {
-            message = 'Contraseña incorrecta. Inténtelo nuevamente.';
-          } else if (err.error === 'User not found') {
-            message = 'El usuario no existe. Verifica tus datos o regístrate.';
-          } else {
-            message = err.error || 'Ha ocurrido un error inesperado. Intenta más tarde.';
-          }
-
           this.popupService.showMessage(
-            'Error de inicio de sesión',
-            message,
-            'error'
+            'Bienvenido',
+            `Hola ${data.first_name} ${data.last_name}!`,
+            'success'
           );
-        },
-      });
+
+          this.router.navigate(['/perfil']);
+        }, 1000);
+      },
+      error: (err) => {
+        this.popupService.close();
+
+        let message = '';
+        if (err.error === 'Invalid password') {
+          message = 'Contraseña incorrecta. Inténtelo nuevamente.';
+        } else if (err.error === 'User not found') {
+          message = 'El usuario no existe. Verifica tus datos o regístrate.';
+        } else {
+          message = err.error || 'Ha ocurrido un error inesperado. Intenta más tarde.';
+        }
+
+        this.popupService.showMessage(
+          'Error de inicio de sesión',
+          message,
+          'error'
+        );
+      },
+    });
   }
 }

@@ -37,7 +37,14 @@
 </div>
 <!-- LISTA DE POSTS -->
 <div class="posts-grid">
-  <div class="card-post" *ngFor="let post of posts" (click)="abrirModalDetallePost(post)">
+  <div class="card-post" *ngFor="let post of posts">
+    <!-- Botón fuera del click general -->
+    <button class="btn-report-post" title="Reportar publicación"
+            (click)="abrirModalReportePost(post); $event.stopPropagation()">
+      <i class="bi bi-flag-fill"></i>
+    </button>
+
+    <div (click)="abrirModalDetallePost(post)">
     <!-- Contenido del post -->
     <div class="user-info" (click)="verPerfilPublico(post.username); $event.stopPropagation()">
       <img src="/ans.jpg" class="avatar" />
@@ -247,3 +254,26 @@
   <i class="bi bi-arrow-up-circle-fill"></i>
 </button>
 </div>
+<!-- MODAL REPORTAR POST -->
+<div *ngIf="modalReportePostVisible && postReporteSeleccionado" class="modal" (click)="cerrarModalReportePost()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <span class="close-btn" (click)="cerrarModalReportePost()">
+      <i class="bi bi-x-lg"></i>
+    </span>
+    <h3><i class="bi bi-flag-fill"></i> Reportar publicación</h3>
+    <p><strong>Título:</strong> {{ postReporteSeleccionado.title }}</p>
+    <p><strong>Descripción:</strong> {{ postReporteSeleccionado.description }}</p>
+
+    <textarea [(ngModel)]="nuevoReportePost.description" rows="3" placeholder="Describe el problema..."></textarea>
+    <select [(ngModel)]="nuevoReportePost.type">
+      <option *ngFor="let tipo of tiposReporte" [value]="tipo">
+        {{ getNombreTipoReporte(tipo) }}
+      </option>
+    </select>
+
+    <button class="btn-publicar-modal" (click)="enviarReportePost()">
+      <i class="bi bi-send-exclamation-fill"></i> Enviar Reporte
+    </button>
+  </div>
+</div>
+
