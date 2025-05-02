@@ -76,7 +76,9 @@ public class SecurityConfiguration {
                                 "/reviews",
                                 "/reviews/registerReview",
                                 "/chat",
-                                "/chat/**"
+                                "/chat/**",
+                                "/incidents",
+                                "/incidents/registerIncident"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
