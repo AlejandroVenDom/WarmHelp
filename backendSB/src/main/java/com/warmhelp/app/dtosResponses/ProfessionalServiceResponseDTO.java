@@ -15,11 +15,12 @@ public class ProfessionalServiceResponseDTO {
     private String username;
     private String currency;
     private List<ReviewResponseDTO> reviews;
+    private List<ReportServiceResponseDTO> reports;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
 
-    public ProfessionalServiceResponseDTO(long id, String title, String description, BigDecimal price, Double tax, String username, String currency, List<ReviewResponseDTO> reviews, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
+    public ProfessionalServiceResponseDTO(long id, String title, String description, BigDecimal price, Double tax, String username, String currency, List<ReviewResponseDTO> reviews, List<ReportServiceResponseDTO> reports, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -28,9 +29,18 @@ public class ProfessionalServiceResponseDTO {
         this.username = username;
         this.currency = currency;
         this.reviews = reviews;
+        this.reports = reports;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
+    }
+
+    public List<ReportServiceResponseDTO> getReports() {
+        return reports;
+    }
+
+    public void setReports(List<ReportServiceResponseDTO> reports) {
+        this.reports = reports;
     }
 
     public long getId() {

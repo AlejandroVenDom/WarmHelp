@@ -2,14 +2,12 @@ package com.warmhelp.app.services;
 
 import com.warmhelp.app.dtos.auth.ProfessionalServicesRequest;
 import com.warmhelp.app.dtosResponses.ProfessionalServiceResponseDTO;
+import com.warmhelp.app.dtosResponses.ReportServiceResponseDTO;
 import com.warmhelp.app.dtosResponses.ReviewResponseDTO;
 import com.warmhelp.app.models.Currency;
 import com.warmhelp.app.models.ProfessionalServices;
 import com.warmhelp.app.models.UserInfo;
-import com.warmhelp.app.repositories.CurrencyRepository;
-import com.warmhelp.app.repositories.ProfessionalServicesRepository;
-import com.warmhelp.app.repositories.UserInfoRepository;
-import com.warmhelp.app.repositories.UserRepository;
+import com.warmhelp.app.repositories.*;
 
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -23,12 +21,14 @@ public class ProfessionalServicesService {
     private final UserRepository userRepository;
     private final UserInfoRepository userInfoRepository;
     private final CurrencyRepository currencyRepository;
+    private final ReportServicesRepository reportServicesRepository;
 
-    public ProfessionalServicesService(CurrencyRepository currencyRepository,ProfessionalServicesRepository professionalServicesRepository, UserRepository userRepository, UserInfoRepository userInfoRepository) {
+    public ProfessionalServicesService(ProfessionalServicesRepository professionalServicesRepository, UserRepository userRepository, UserInfoRepository userInfoRepository, CurrencyRepository currencyRepository, ReportServicesRepository reportServicesRepository) {
         this.professionalServicesRepository = professionalServicesRepository;
         this.userRepository = userRepository;
         this.userInfoRepository = userInfoRepository;
         this.currencyRepository = currencyRepository;
+        this.reportServicesRepository = reportServicesRepository;
     }
 
     public List<ProfessionalServiceResponseDTO> getAllProfessionalServices(){
@@ -47,6 +47,22 @@ public class ProfessionalServicesService {
                             )
                     ).toList();
 
+                    List<ReportServiceResponseDTO> reports = service.getReports().stream().map(report ->
+                            new ReportServiceResponseDTO(
+                                    report.getId(),
+                                    report.getDescription(),
+                                    report.getType().getReportType().name(),
+                                    report.getState() != null ? report.getState().getReportState().name() : null,
+                                    report.getUserInfo().getUser().getUsername(),
+                                    service.getId(),
+                                    service.getTitle(),
+                                    service.getDescription(),
+                                    report.getCreatedAt(),
+                                    report.getUpdatedAt(),
+                                    report.getDeletedAt()
+                            )
+                    ).toList();
+
                 return new ProfessionalServiceResponseDTO(
                         service.getId(),
                         service.getTitle(),
@@ -56,6 +72,7 @@ public class ProfessionalServicesService {
                         service.getUserInfo().getUser().getUsername(),
                         service.getCurrency().getCurrencyType().name(),
                         reviews,
+                        reports,
                         service.getCreatedAt(),
                         service.getUpdatedAt(),
                         service.getDeletedAt()
@@ -96,6 +113,7 @@ public class ProfessionalServicesService {
                 saveService.getTax(),
                 userInfo.getUser().getUsername(),
                 saveService.getCurrency().getCurrencyType().name(),
+                List.of(),
                 List.of(),
                 saveService.getCreatedAt(),
                 saveService.getUpdatedAt(),

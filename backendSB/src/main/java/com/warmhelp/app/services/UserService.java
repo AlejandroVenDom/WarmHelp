@@ -167,6 +167,12 @@ public class UserService implements UserDetailsService {
                 .stream()
                 .map(this::mapToReviewResponseDTIO)
                 .toList();
+
+        List<ReportServiceResponseDTO> reportServiceResponseDTOS = professionalServices.getReports()
+                .stream()
+                .map(this::mapToReportServicesResponseDTO)
+                .toList();
+
         return new ProfessionalServiceResponseDTO(
                 professionalServices.getId(),
                 professionalServices.getTitle(),
@@ -176,6 +182,7 @@ public class UserService implements UserDetailsService {
                 professionalServices.getUserInfo().getUser().getUsername(),
                 professionalServices.getCurrency().getCurrencyType().name(),
                 reviewResponseDTOS,
+                reportServiceResponseDTOS,
                 professionalServices.getCreatedAt(),
                 professionalServices.getUpdatedAt(),
                 professionalServices.getDeletedAt()
