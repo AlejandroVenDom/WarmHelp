@@ -25,6 +25,7 @@ export class PostsComponent implements OnInit {
   paginaActual = 1;
   totalPaginas = 1;
   paginas: number[] = [];
+  mostrarBotonScroll = false;
 
   // Estado de modales
   modalNuevoPost = false;
@@ -64,12 +65,19 @@ export class PostsComponent implements OnInit {
     this.cantidadMostrar = Number(localStorage.getItem('cantidadMostrar')) || 10;
     this.nuevoPost.userName = this.useStateService.getUsername() || 'anon';
     this.cargarPosts();
-
+    window.addEventListener('scroll', this.verificarScroll.bind(this));
     document.addEventListener('keydown', this.detectarEscape.bind(this));
   }
 
   ngOnDestroy(): void {
     document.removeEventListener('keydown', this.detectarEscape.bind(this));
+    window.removeEventListener('scroll', this.verificarScroll.bind(this));
+  }
+  verificarScroll(): void {
+    this.mostrarBotonScroll = window.scrollY > 300;
+  }
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   detectarEscape(event: KeyboardEvent): void {

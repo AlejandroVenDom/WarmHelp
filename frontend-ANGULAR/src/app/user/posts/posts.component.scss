@@ -802,7 +802,8 @@ button {
 
 .detalle-img {
   max-width: 660px;
-  width: 100%;
+  width: 70%;
+  height: 70%;
   border-radius: 16px;
   object-fit: cover;
   box-shadow: 0 6px 20px rgba(0,0,0,0.1);
@@ -970,5 +971,38 @@ button {
       outline: none;
       box-shadow: 0 0 0 3px rgba(223, 109, 20, 0.4);
     }
+  }
+}
+.scroll-top-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #3A7D44;
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 50%;
+  font-size: 1.8rem;
+  z-index: 999;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  margin-bottom: 7%;
+  cursor: pointer;
+  opacity: 0;
+  animation: fadeIn 0.4s forwards;
+  transition: transform 0.2s ease;
+
+  i {
+    color: #F8F5E9;
+  }
+
+  &:hover {
+    transform: scale(1.15);
+    background-color: #2a5c34;
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
   }
 }
