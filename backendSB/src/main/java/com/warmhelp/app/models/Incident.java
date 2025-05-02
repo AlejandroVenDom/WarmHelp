@@ -26,12 +26,13 @@ public class Incident {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    @Enumerated(EnumType.STRING)
-    private IncidentState state; // PENDIENTE, EN PROGRESO, RESUELTA , CERRADA
+    @ManyToOne
+    @JoinColumn(name = "incidentStateClass_id", nullable = true)
+    private IncidentStateClass state;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private IncidentType type; // TECNICA, FINANCIERA, OTRO
+    @ManyToOne
+    @JoinColumn(name = "incidentTypeClass_id", nullable = false)
+    private IncidentTypeClass type;
 
     @CreationTimestamp
     @Column(nullable = false)
@@ -71,19 +72,19 @@ public class Incident {
         this.description = description;
     }
 
-    public IncidentState getState() {
+    public IncidentStateClass getState() {
         return state;
     }
 
-    public void setState(IncidentState state) {
+    public void setState(IncidentStateClass state) {
         this.state = state;
     }
 
-    public IncidentType getType() {
+    public IncidentTypeClass getType() {
         return type;
     }
 
-    public void setType(IncidentType type) {
+    public void setType(IncidentTypeClass type) {
         this.type = type;
     }
 
