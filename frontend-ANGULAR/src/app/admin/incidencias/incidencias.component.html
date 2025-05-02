@@ -1,15 +1,22 @@
-<!-- src/app/pages/admin-incidencias/admin-incidencias.component.html -->
 <div class="admin-incidencias-container">
-  <h2>Panel de Incidencias</h2>
+  <h2 class="titulo-seccion">
+    <i class="bi bi-exclamation-triangle-fill"></i> Panel de Incidencias
+  </h2>
 
   <div class="admin-lista">
     <div *ngFor="let i of incidencias" class="incidencia-card">
-      <h4>{{ i.title }}</h4>
-      <p>{{ i.description }}</p>
-      <p><strong>Usuario:</strong> {{ i.userName }}</p>
-      <p><strong>Tipo:</strong> {{ i.type }}</p>
-      <p><strong>Estado:</strong> {{ i.state }}</p>
-      <p><strong>Fecha:</strong> {{ i.createdAt | date:'short' }}</p>
+      <div class="incidencia-header">
+        <h4><i class="bi bi-flag-fill"></i> {{ i.title }}</h4>
+        <span class="estado" [ngClass]="i.state.toLowerCase()">{{ i.state }}</span>
+      </div>
+
+      <p class="descripcion">{{ i.description }}</p>
+
+      <div class="info-extra">
+        <p><i class="bi bi-person-fill"></i> <strong>Usuario:</strong> {{ i.userName }}</p>
+        <p><i class="bi bi-tag-fill"></i> <strong>Tipo:</strong> {{ i.type }}</p>
+        <p><i class="bi bi-calendar-event-fill"></i> <strong>Fecha:</strong> {{ i.createdAt | date:'short' }}</p>
+      </div>
     </div>
   </div>
 </div>

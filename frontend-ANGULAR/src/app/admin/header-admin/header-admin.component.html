@@ -5,32 +5,43 @@
   <span class="header-title">Admin Panel</span>
 </header>
 
-<!-- Sidebar deslizable -->
 <aside class="admin-sidebar" [class.open]="sidebarOpen">
   <div class="sidebar-header">
     <div class="logo-container" routerLink="/app/control-panel">
       <img src="/logot.png" alt="WarmHelp logo" class="logo" />
     </div>
-
   </div>
 
   <nav class="nav-links">
-    <a routerLink="/app/control-panel" routerLinkActive="active" (click)="closeSidebar()">Control Panel</a>
-    <a routerLink="/app/incidencias-admin" routerLinkActive="active" (click)="closeSidebar()">Incidencias</a>
-    <!-- <a routerLink="/posts" routerLinkActive="active" (click)="closeSidebar()">Publicaciones</a>
-    <a routerLink="/tienda" routerLinkActive="active" (click)="closeSidebar()">Tienda</a> -->
-    <a routerLink="/app/likes-admin" routerLinkActive="active" (click)="closeSidebar()">Likes</a>
-    <a routerLink="/app/posts-admin" routerLinkActive="active" (click)="closeSidebar()">Posts</a>
-    <a routerLink="/app/users-admin" routerLinkActive="active" (click)="closeSidebar()">Usuarios</a>
-    <a routerLink="/app/servicios-admin" routerLinkActive="active" (click)="closeSidebar()">Servicios</a>
-    <a routerLink="/app/comentarios-admin" routerLinkActive="active" (click)="closeSidebar()">Comentarios</a>
-    <a routerLink="/" routerLinkActive="active" (click)="closeSidebar()">Pagina Principal</a>
+    <a routerLink="/app/control-panel" routerLinkActive="active" (click)="closeSidebar()">
+      <i class="bi bi-speedometer2"></i> Panel de control
+    </a>
+    <a routerLink="/app/incidencias-admin" routerLinkActive="active" (click)="closeSidebar()">
+      <i class="bi bi-exclamation-triangle-fill"></i> Incidencias
+    </a>
+    <a routerLink="/app/likes-admin" routerLinkActive="active" (click)="closeSidebar()">
+      <i class="bi bi-hand-thumbs-up-fill"></i> Likes
+    </a>
+    <a routerLink="/app/posts-admin" routerLinkActive="active" (click)="closeSidebar()">
+      <i class="bi bi-journal-text"></i> Posts
+    </a>
+    <a routerLink="/app/users-admin" routerLinkActive="active" (click)="closeSidebar()">
+      <i class="bi bi-people-fill"></i> Usuarios
+    </a>
+    <a routerLink="/app/servicios-admin" routerLinkActive="active" (click)="closeSidebar()">
+      <i class="bi bi-bag-check-fill"></i> Servicios
+    </a>
+    <a routerLink="/app/comentarios-admin" routerLinkActive="active" (click)="closeSidebar()">
+      <i class="bi bi-chat-left-dots-fill"></i> Comentarios
+    </a>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeSidebar()">
+      <i class="bi bi-house-door-fill"></i> Página Principal
+    </a>
   </nav>
 
-  <div class="user-info" routerLink="/perfil" routerLinkActive="active" (click)="closeSidebar()">
-    <span>{{ username }}</span>
+  <div class="user-info" routerLink="/perfil" (click)="closeSidebar()">
+    <i class="bi bi-person-circle me-1"></i> {{ username }}
   </div>
 </aside>
 
-<!-- Fondo oscuro al abrir el menú -->
 <div class="overlay" *ngIf="sidebarOpen" (click)="closeSidebar()"></div>
