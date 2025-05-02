@@ -12,6 +12,7 @@ import { ProfessionalService } from '../../services/professional.service';
 export class BackofficeAdminComponent implements OnInit {
   servicios: ProfessionalServiceInterface[] = [];
   showModal: boolean = false;
+  mostrarBotonScroll = false;
   nuevoServicio: ProfessionalServiceInterface = {
     title: '',
     description: '',
@@ -29,6 +30,16 @@ export class BackofficeAdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadMyServices();
+    window.addEventListener('scroll', this.verificarScroll.bind(this));
+  }
+  ngOnDestroy(): void {
+    window.removeEventListener('scroll', this.verificarScroll.bind(this));
+  }
+  verificarScroll(): void {
+    this.mostrarBotonScroll = window.scrollY > 100;
+  }
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   loadMyServices() {

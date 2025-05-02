@@ -187,7 +187,7 @@
     </div>
 
     <!-- SOLO si el usuario es PROFESSIONAL -->
-    <div *ngIf="role === 'PROFESSIONAL' || role === 'ADMIN'" class="servicios-card">
+    <div *ngIf="role === 'PROFESSIONAL' || role === 'ADMIN'" class="servicios-card" routerLink="/servicioscr">
       <div class="section-header">
         <i class="bi bi-heart-pulse-fill"></i>
         Mis  Servicios
@@ -195,7 +195,7 @@
 
 
       <!-- Recorrer los servicios profesionales -->
-      <div *ngFor="let service of professionalServices" class="servicio" routerLink="/servicioscr">
+      <div *ngFor="let service of professionalServices" class="servicio">
         <h5>{{ service.title }}</h5>
         <p>{{ service.description }}</p>
         <span class="precio">{{ service.price | currency:'EUR' }}</span><br>

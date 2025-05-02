@@ -13,6 +13,7 @@ export class MisPublicacionesComponent implements OnInit {
   misPosts: Post[] = [];
   postsFiltrados: Post[] = [];
   modalNuevoPost = false;
+  mostrarBotonScroll = false;
   nuevoPost = {
     title: '',
     description: '',
@@ -29,6 +30,16 @@ export class MisPublicacionesComponent implements OnInit {
   ngOnInit(): void {
     this.nuevoPost.userName = this.stateService.getUsername() || '';
     this.cargarMisPosts();
+    window.addEventListener('scroll', this.verificarScroll.bind(this));
+  }
+  ngOnDestroy(): void {
+    window.removeEventListener('scroll', this.verificarScroll.bind(this));
+  }
+  verificarScroll(): void {
+    this.mostrarBotonScroll = window.scrollY > 300;
+  }
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   cargarMisPosts(): void {
