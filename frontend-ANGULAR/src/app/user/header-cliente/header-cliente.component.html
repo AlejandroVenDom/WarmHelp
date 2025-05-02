@@ -11,9 +11,12 @@
 
   <nav class="nav-container" [ngClass]="{ 'active': menuOpen }">
     <ng-container *ngIf="isLoggedIn">
+      <a *ngIf="role === 'ADMIN'" routerLink="/app/control-panel" (click)="closeMenu()">Admin Panel</a>
       <a routerLink="/posts" (click)="closeMenu()">Publicaciones</a>
       <a routerLink="/chat-gpt" (click)="closeMenu()">AI <i class="bi bi-x-diamond-fill"></i></a>
+      <a routerLink="/mis-incidencias" (click)="closeMenu()"> Mis Incidencias</a>
       <a *ngIf="hasAdminOrProfessionalRole()" routerLink="/servicioscr" (click)="closeMenu()">Mis Servicios</a>
+
       <a routerLink="/tienda" (click)="closeMenu()">Tienda</a>
     </ng-container>
 

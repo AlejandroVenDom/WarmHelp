@@ -1,17 +1,18 @@
-import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivate, CanActivateFn, Router } from '@angular/router';
 import { UseStateService } from '../use-state.service';
+import { inject } from '@angular/core';
 
-export const roleGuard: CanActivateFn = () => {
+export const adminGuard: CanActivateFn = () => {
   const router = inject(Router);
   const sessionService = inject(UseStateService);
   const role = sessionService.getTypeRole();
 
-  // Solo permitir PROFESSIONAL o ADMIN
-  if (role === 'PROFESSIONAL' || role === 'ADMIN') {
+  // Solo permitir ADMIN
+  if (role === 'ADMIN') {
     return true;
   }
 
+  // Redirigir si no es admin
   router.navigate(['/**']);
   return false;
 };

@@ -1,0 +1,15 @@
+<!-- src/app/pages/admin-incidencias/admin-incidencias.component.html -->
+<div class="admin-incidencias-container">
+  <h2>Panel de Incidencias</h2>
+
+  <div class="admin-lista">
+    <div *ngFor="let i of incidencias" class="incidencia-card">
+      <h4>{{ i.title }}</h4>
+      <p>{{ i.description }}</p>
+      <p><strong>Usuario:</strong> {{ i.userName }}</p>
+      <p><strong>Tipo:</strong> {{ i.type }}</p>
+      <p><strong>Estado:</strong> {{ i.state }}</p>
+      <p><strong>Fecha:</strong> {{ i.createdAt | date:'short' }}</p>
+    </div>
+  </div>
+</div>

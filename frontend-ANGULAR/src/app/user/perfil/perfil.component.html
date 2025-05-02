@@ -134,9 +134,14 @@
 </div>
 
       </div>
-      <button class="btn-logout" (click)="logout()">
-        <i class="bi bi-box-arrow-right"></i> Salir
-      </button>
+      <div class="admin-logout-group">
+        <button class="btn-logout" *ngIf="role === 'ADMIN'" routerLink="/app/control-panel">
+          <i class="bi bi-box-arrow-right"></i> Admin Panel
+        </button>
+        <button class="btn-logout" (click)="logout()">
+          <i class="bi bi-box-arrow-right"></i> Salir
+        </button>
+      </div>
     </div>
 
     <!-- Derecha: Comentarios -->

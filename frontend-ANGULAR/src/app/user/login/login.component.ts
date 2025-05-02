@@ -71,7 +71,8 @@ export class LoginComponent {
               posts: data.posts,
               professionalServices: data.professionalServices,
               reviews: data.reviews,
-              responseComments: data.responseComments
+              responseComments: data.responseComments,
+              incidents: data.incidents
             });
 
             console.log(data);

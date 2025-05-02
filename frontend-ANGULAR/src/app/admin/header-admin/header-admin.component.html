@@ -1,0 +1,36 @@
+<header class="header-admin" [class.menu-open]="sidebarOpen">
+  <button class="toggle-button" (click)="toggleSidebar()">
+    <i class="bi" [ngClass]="sidebarOpen ? 'bi-x-lg' : 'bi-list'"></i>
+  </button>
+  <span class="header-title">Admin Panel</span>
+</header>
+
+<!-- Sidebar deslizable -->
+<aside class="admin-sidebar" [class.open]="sidebarOpen">
+  <div class="sidebar-header">
+    <div class="logo-container" routerLink="/app/control-panel">
+      <img src="/logot.png" alt="WarmHelp logo" class="logo" />
+    </div>
+
+  </div>
+
+  <nav class="nav-links">
+    <a routerLink="/app/control-panel" routerLinkActive="active" (click)="closeSidebar()">Control Panel</a>
+    <a routerLink="/app/incidencias-admin" routerLinkActive="active" (click)="closeSidebar()">Incidencias</a>
+    <!-- <a routerLink="/posts" routerLinkActive="active" (click)="closeSidebar()">Publicaciones</a>
+    <a routerLink="/tienda" routerLinkActive="active" (click)="closeSidebar()">Tienda</a> -->
+    <a routerLink="/app/likes-admin" routerLinkActive="active" (click)="closeSidebar()">Likes</a>
+    <a routerLink="/app/posts-admin" routerLinkActive="active" (click)="closeSidebar()">Posts</a>
+    <a routerLink="/app/users-admin" routerLinkActive="active" (click)="closeSidebar()">Usuarios</a>
+    <a routerLink="/app/servicios-admin" routerLinkActive="active" (click)="closeSidebar()">Servicios</a>
+    <a routerLink="/app/comentarios-admin" routerLinkActive="active" (click)="closeSidebar()">Comentarios</a>
+    <a routerLink="/" routerLinkActive="active" (click)="closeSidebar()">Pagina Principal</a>
+  </nav>
+
+  <div class="user-info" routerLink="/perfil" routerLinkActive="active" (click)="closeSidebar()">
+    <span>{{ username }}</span>
+  </div>
+</aside>
+
+<!-- Fondo oscuro al abrir el menú -->
+<div class="overlay" *ngIf="sidebarOpen" (click)="closeSidebar()"></div>

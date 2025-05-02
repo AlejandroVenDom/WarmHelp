@@ -23,6 +23,7 @@ export class UseStateService {
     professionalServices: any[];
     reviews: any[];
     responseComments: any[];
+    incidents: any[];
     role: string;
   }): void {
     sessionStorage.setItem(this.USER_KEY, JSON.stringify(userData));
@@ -30,6 +31,10 @@ export class UseStateService {
   getUserId(): number | null {
     const session = this.getSession();
     return session ? session.id : null;
+  }
+  getIncidents(): any[] {
+    const session = this.getSession();
+    return session ? session.incidents || [] : [];
   }
 
   getUsername(): string | null {

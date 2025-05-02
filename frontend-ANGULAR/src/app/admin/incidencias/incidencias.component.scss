@@ -1,0 +1,43 @@
+/* Puedes ponerlo en ambos .component.scss */
+.incidencias-container, .admin-incidencias-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 2rem;
+
+  input, textarea, select {
+    padding: 10px;
+    border: 2px solid #9DC08B;
+    border-radius: 10px;
+    font-size: 1rem;
+  }
+
+  button {
+    background-color: #DF6D14;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #b75710;
+    }
+  }
+}
+
+.incidencia-card {
+  background: #f8f5e9;
+  padding: 1rem;
+  border-left: 4px solid #3A7D44;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}

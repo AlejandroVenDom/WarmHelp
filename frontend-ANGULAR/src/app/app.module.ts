@@ -19,6 +19,17 @@ import { CommonModule } from '@angular/common';
 import { MisPublicacionesComponent } from './user/mis-publicaciones/mis-publicaciones.component';
 import { ChatGptComponent } from './user/chat-gpt/chat-gpt.component';
 import { PublicProfileComponent } from './user/public-profile/public-profile.component';
+import { MisIncidenciasComponent } from './user/mis-incidencias/mis-incidencias.component';
+import { IncidenciasComponent } from './admin/incidencias/incidencias.component';
+import { PageNotFoundComponent } from './user/page-not-found/page-not-found.component';
+import { LayoutAdminComponent } from './admin/layout-admin/layout-admin.component';
+import { HeaderAdminComponent } from './admin/header-admin/header-admin.component';
+import { LikesAdminComponent } from './admin/likes-admin/likes-admin.component';
+import { PostsAdminComponent } from './admin/posts-admin/posts-admin.component';
+import { UsersAdminComponent } from './admin/users-admin/users-admin.component';
+import { ServiciosAdminComponent } from './admin/servicios-admin/servicios-admin.component';
+import { ComentariosAdminComponent } from './admin/comentarios-admin/comentarios-admin.component';
+import { ControlPanelComponent } from './admin/control-panel/control-panel.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +46,19 @@ import { PublicProfileComponent } from './user/public-profile/public-profile.com
     PostsComponent,
     MisPublicacionesComponent,
     ChatGptComponent,
-    PublicProfileComponent
+    PublicProfileComponent,
+    MisIncidenciasComponent,
+    IncidenciasComponent,
+    PageNotFoundComponent,
+    LayoutAdminComponent,
+    HeaderAdminComponent,
+    LikesAdminComponent,
+    PostsAdminComponent,
+    UsersAdminComponent,
+    ServiciosAdminComponent,
+    ComentariosAdminComponent,
+    ControlPanelComponent
+
   ],
   imports: [
     BrowserModule,

@@ -14,6 +14,18 @@ import { PerfilComponent } from './user/perfil/perfil.component';
 import { MisPublicacionesComponent } from './user/mis-publicaciones/mis-publicaciones.component';
 import { ChatGptComponent } from './user/chat-gpt/chat-gpt.component';
 import { PublicProfileComponent } from './user/public-profile/public-profile.component';
+import { MisIncidenciasComponent } from './user/mis-incidencias/mis-incidencias.component';
+import { IncidenciasComponent } from './admin/incidencias/incidencias.component';
+import { PageNotFoundComponent } from './user/page-not-found/page-not-found.component';
+import { LayoutAdminComponent } from './admin/layout-admin/layout-admin.component';
+import { adminGuard } from './services/auth/guards/admin.guard';
+import { LikesAdminComponent } from './admin/likes-admin/likes-admin.component';
+import { PostsAdminComponent } from './admin/posts-admin/posts-admin.component';
+import { UsersAdminComponent } from './admin/users-admin/users-admin.component';
+import { ServiciosAdminComponent } from './admin/servicios-admin/servicios-admin.component';
+import { ComentariosAdminComponent } from './admin/comentarios-admin/comentarios-admin.component';
+import { ControlEvent } from '@angular/forms';
+import { ControlPanelComponent } from './admin/control-panel/control-panel.component';
 
 const routes: Routes = [
   // users without authentication
@@ -26,13 +38,26 @@ const routes: Routes = [
       { path: 'register', component: RegisterComponent, canActivate: [publicGuard] },
       { path: 'posts', component: PostsComponent, canActivate: [authGuard] },
       { path: 'tienda', component: TiendaComponent , canActivate: [authGuard] },
-      { path: 'servicioscr', component: BackofficeAdminComponent , canActivate: [roleGuard] },
       { path: 'mis-publicaciones', component: MisPublicacionesComponent , canActivate: [authGuard] },
-      { path: 'chat-gpt', component: ChatGptComponent , canActivate: [authGuard]}
-    ],
+      { path: 'mis-incidencias', component: MisIncidenciasComponent, canActivate: [authGuard]},
+      { path: 'chat-gpt', component: ChatGptComponent , canActivate: [authGuard]},
+      { path: 'servicioscr', component: BackofficeAdminComponent}
+    ]
   },
-
-  // users with authentication
+    // admins
+  {
+    path: "app", canActivate:[adminGuard],  component: LayoutAdminComponent, children: [ // -> www.ejemplo.com/app
+      {path: "", redirectTo: "admin-control-panel", pathMatch: "full"}, // -> www.ejemplo.com/app
+      {path: 'control-panel', component: ControlPanelComponent},
+      { path: 'incidencias-admin', component: IncidenciasComponent},
+      { path: 'likes-admin', component: LikesAdminComponent},
+      { path: 'users-admin', component: UsersAdminComponent},
+      { path: 'posts-admin', component: PostsAdminComponent},
+      { path: 'servicios-admin', component: ServiciosAdminComponent},
+      { path: 'comentarios-admin', component: ComentariosAdminComponent}
+    ]
+  },
+  {path: "**", component: PageNotFoundComponent},
 ];
 
 

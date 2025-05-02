@@ -1,0 +1,67 @@
+.error-container {
+  height: 100vh;
+  background-color: #F8F5E9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  text-align: center;
+
+
+  @media (max-width: 768px) {
+    background-size: 80px;
+  }
+}
+
+.error-content {
+  background: white;
+  padding: 3rem 2rem;
+  border-radius: 24px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+  font-family: 'Segoe UI', sans-serif;
+
+  h1 {
+    font-size: 6rem;
+    color: #DF6D14;
+    margin-bottom: 0.5rem;
+    font-weight: 900;
+  }
+
+  h2 {
+    color: #3A7D44;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+
+  p {
+    color: #6b705c;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .btn-volver {
+    background-color: #9DC08B;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+
+    i {
+      font-size: 1.2rem;
+    }
+
+    &:hover {
+      background-color: darken(#9DC08B, 10%);
+    }
+  }
+}

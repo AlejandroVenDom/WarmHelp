@@ -1,0 +1,120 @@
+.header-admin {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 70px;
+  width: 100%;
+  background-color: #F8F5E9;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  z-index: 9999;
+  transition: padding-left 0.3s ease;
+
+  &.menu-open {
+    padding-left: 260px; // ancho del sidebar + margen
+  }
+
+  .toggle-button {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: #3A7D44;
+    cursor: pointer;
+  }
+
+  .header-title {
+    margin-left: 1rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #3A7D44;
+  }
+}
+
+.admin-sidebar {
+  position: fixed;
+  top: 0;
+  left: -260px;
+  width: 260px;
+  height: 100vh;
+  background-color: #F8F5E9;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: left 0.3s ease;
+  z-index: 10000;
+
+  &.open {
+    left: 0;
+  }
+
+  .sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .logo {
+      max-width: 110px;
+    }
+
+    .close-sidebar-btn {
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: #3A7D44;
+      cursor: pointer;
+    }
+  }
+
+  .nav-links {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+
+    a {
+      text-decoration: none;
+      color: #3A7D44;
+      font-weight: 600;
+      transition: 0.3s;
+
+      &:hover,
+      &.active {
+        color: #DF6D14;
+      }
+    }
+  }
+
+  .user-info {
+    text-align: center;
+    font-weight: 600;
+    color: #3A7D44;
+    border-top: 1px solid #ddd;
+    padding-top: 1rem;
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.15);
+  z-index: 9998;
+}
+
+// Empuja el contenido si está abierto
+main,
+.page-container,
+router-outlet + * {
+  margin-top: 80px;
+  transition: margin-left 0.3s ease;
+
+  .menu-open & {
+    margin-left: 260px;
+  }
+}

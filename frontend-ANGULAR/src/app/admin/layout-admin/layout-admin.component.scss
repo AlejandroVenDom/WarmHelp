@@ -1,0 +1,16 @@
+.admin-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.admin-content {
+  flex: 1;
+  padding-top: 70px; // altura del header
+  padding-left: 0;
+  transition: padding-left 0.3s ease;
+
+  &.menu-open {
+    padding-left: 260px; // ancho del sidebar
+  }
+}

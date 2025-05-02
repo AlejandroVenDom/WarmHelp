@@ -161,6 +161,8 @@
   border: 2px solid #DF6D14;
   background: transparent;
   color: #DF6D14;
+  width: 200px;
+  height: 50px;
   border-radius: 12px;
   padding: 10px 20px;
   font-weight: 600;
@@ -565,5 +567,16 @@
 @keyframes fadeIn {
   to {
     opacity: 1;
+  }
+}
+.admin-logout-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1rem;
+
+  .btn-logout {
+    margin-top: 0; // eliminar el margen individual si ya lo tiene
   }
 }

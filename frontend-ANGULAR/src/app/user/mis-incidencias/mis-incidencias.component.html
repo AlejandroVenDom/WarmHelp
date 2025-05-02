@@ -1,0 +1,25 @@
+
+<div class="incidencias-container">
+  <h2>Mis Incidencias</h2>
+
+  <div class="formulario">
+    <input [(ngModel)]="nuevaIncidencia.title" placeholder="Título" />
+    <textarea [(ngModel)]="nuevaIncidencia.description" placeholder="Descripción"></textarea>
+    <select [(ngModel)]="nuevaIncidencia.type">
+      <option *ngFor="let t of tipos" [value]="t">
+        {{ getNombreTipo(t) }}
+      </option>
+    </select>
+    <button (click)="registrarIncidencia()">Reportar</button>
+  </div>
+
+  <div class="lista">
+    <div *ngFor="let i of incidencias" class="incidencia-card">
+      <h4>{{ i.title }}</h4>
+      <p>{{ i.description }}</p>
+      <span><strong>Tipo:</strong> {{ getNombreTipo(i.type) }}</span><br>
+      <span><strong>Estado:</strong> {{ getNombreEstado(i.state) }}</span><br>
+      <span><strong>Fecha:</strong> {{ i.createdAt | date:'short' }}</span>
+    </div>
+  </div>
+</div>
