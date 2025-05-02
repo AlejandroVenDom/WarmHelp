@@ -1,0 +1,11 @@
+package com.warmhelp.app.enums;
+
+public enum ReportType {
+    BULLYING_OR_HARASSMENT,
+    SUICIDE_SELF_INJURY_OR_EATING_DISORDERS,
+    VIOLENCE,
+    ILLEGAL_SALES,
+    NUDITY_OR_SEXUAL_ACTIVITY,
+    SCAMS_FRAUD_OR_SPAM,
+    FALSE_INFORMATION
+}
