@@ -1,5 +1,8 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { UseStateService } from '../../services/auth/use-state.service';
+import { Router } from '@angular/router';
+import { TokenService } from '../../services/auth/token.service';
+import { PopupService } from '../../services/popup.service';
 
 @Component({
   selector: 'app-header-admin',
@@ -13,7 +16,10 @@ export class HeaderAdminComponent implements OnInit {
   username: string | null = '';
 
   constructor(
-    private useStateService: UseStateService
+    private useStateService: UseStateService,
+    private tokenService: TokenService,
+    private popupService: PopupService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +50,27 @@ export class HeaderAdminComponent implements OnInit {
     const toggle = document.querySelector('.toggle-button');
     if (this.sidebarOpen && nav && !nav.contains(event.target as Node) && !toggle?.contains(event.target as Node)) {
       this.closeSidebar();
+    }
+  }
+  async logout() {
+    const confirmLogout = await this.popupService.showConfirmation(
+      'Cerrar Sesión',
+      '¿Estás seguro de que deseas cerrar sesión?',
+      'Sí, cerrar sesión',
+      'No, permanecer en la sesión'
+    );
+
+    if (confirmLogout) {
+      this.popupService.loader('Cerrando sesión...', 'Por favor espera');
+      this.tokenService.removeToken();
+      this.useStateService.removeSession();
+
+      setTimeout(() => {
+        this.router.navigate(['/login']);
+        this.popupService.close();
+      }, 750);
+    } else {
+      this.popupService.showMessage('Cancelado', 'Tu sesión sigue activa', 'info');
     }
   }
 }
