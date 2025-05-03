@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { UseStateService } from '../../services/auth/use-state.service';
 import { PopupService } from '../../services/popup.service';
 import { ReportService } from '../../services/report/report.service';
+import { CartService } from '../../services/auth/cart.service';
 
 @Component({
   selector: 'app-tienda',
@@ -41,8 +42,9 @@ export class TiendaComponent implements OnInit {
 
 
   constructor(
-    private service: ProfessionalService,
+  private service: ProfessionalService,
   private router: Router,
+  private cartService: CartService,
   private reportService: ReportService,
   private useStateService: UseStateService,
   private popupService: PopupService
@@ -75,6 +77,20 @@ export class TiendaComponent implements OnInit {
       this.router.navigate(['/perfil-publico', username]);
     }
   }
+  addToCart(servicio: ProfessionalServiceInterface): void {
+    this.cartService.addToCart({
+      id: servicio.id!,
+      title: servicio.title,
+      image: servicio.image || '/ans.jpg',
+      price: servicio.price,
+      tax: servicio.tax,
+      currencyType: servicio.currencyType
+    }, 1);
+  }
+  toggleCart(): void {
+    this.cartService.toggleCart();
+  }
+
 
   setPriceRangeLimits() {
     const prices = this.servicios.map(s => s.price);

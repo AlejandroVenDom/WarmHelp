@@ -32,6 +32,7 @@ import { ComentariosAdminComponent } from './admin/comentarios-admin/comentarios
 import { ControlPanelComponent } from './admin/control-panel/control-panel.component';
 import { ReportsAdminComponent } from './admin/reports-admin/reports-admin.component';
 import { ReportsPostsAdminComponent } from './admin/reports-posts-admin/reports-posts-admin.component';
+import { CartComponent } from './user/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { ReportsPostsAdminComponent } from './admin/reports-posts-admin/reports-
     ComentariosAdminComponent,
     ControlPanelComponent,
     ReportsAdminComponent,
-    ReportsPostsAdminComponent
+    ReportsPostsAdminComponent,
+    CartComponent
 
   ],
   imports: [

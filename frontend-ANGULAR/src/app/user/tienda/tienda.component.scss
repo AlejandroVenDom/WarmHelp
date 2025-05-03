@@ -587,4 +587,22 @@ $color-text: #2B2B2B;
     }
   }
 }
+.btn-order {
+  background: #3A7D44;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+
+  i {
+    margin-right: 8px;
+  }
+
+  &:hover {
+    background: darken(#3A7D44, 10%);
+  }
+}
 

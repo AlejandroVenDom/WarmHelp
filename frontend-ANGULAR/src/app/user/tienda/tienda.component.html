@@ -18,6 +18,12 @@
     </div>
 
     <button class="reset-btn" (click)="resetFilters()">Restablecer</button>
+    <!-- Botón de carrito -->
+    <button class="btn-order" (click)="toggleCart()">
+      <i class="bi bi-cart4"></i> Carrito
+    </button>
+
+
   </div>
 
   <!-- Grid de servicios -->
@@ -40,6 +46,9 @@
           </span>
         </p>
       </div>
+      <button class="btn-add-cart" (click)="addToCart(servicio); $event.stopPropagation()">
+        <i class="bi bi-cart-plus"></i>
+      </button>
     </div>
   </div>
 
@@ -87,3 +96,4 @@
     </button>
   </div>
 </div>
+<app-cart></app-cart>
