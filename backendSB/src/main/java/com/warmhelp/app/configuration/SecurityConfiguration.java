@@ -77,6 +77,7 @@ public class SecurityConfiguration {
                                 "/reviews/registerReview",
                                 "/chat",
                                 "/chat/**",
+                                "/v1/sendMessage",
                                 "/incidents",
                                 "/incidents/registerIncident",
                                 "/reports-posts",
