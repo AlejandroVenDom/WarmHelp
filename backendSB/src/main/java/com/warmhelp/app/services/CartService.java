@@ -52,7 +52,11 @@ public class CartService {
                         )
                     ).collect(Collectors.toList());
 
-            BigDecimal totalPrice = cart.getTotalPrice();
+            BigDecimal totalPrice = itemResponseDTOS.stream()
+                    .map(CartItemResponseDTO::getTotalPrice)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+
             String userName = cart.getUserInfo().getUser().getUsername();
 
             return new CartsResponse(
