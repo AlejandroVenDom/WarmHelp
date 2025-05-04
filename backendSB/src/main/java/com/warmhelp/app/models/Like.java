@@ -20,6 +20,7 @@ public class Like {
 
     @ManyToOne
     @JoinColumn(name = "userInfo_id", nullable = false)
+    @JsonBackReference
     private UserInfo userInfo;
 
     @ManyToOne

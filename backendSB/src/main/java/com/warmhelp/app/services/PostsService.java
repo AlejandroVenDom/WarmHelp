@@ -1,6 +1,7 @@
 package com.warmhelp.app.services;
 
 import com.warmhelp.app.dtos.auth.PostsRequest;
+import com.warmhelp.app.dtos.auth.UpdatePostRequest;
 import com.warmhelp.app.dtosResponses.*;
 import com.warmhelp.app.models.Like;
 import com.warmhelp.app.models.Posts;
@@ -124,5 +125,23 @@ public class PostsService {
         return this.postsRepository.save(post);
     }
 
+    @Transactional
+    public Posts updatePost(Long id, UpdatePostRequest request){
+        Posts post = postsRepository.findById(id).orElseThrow(()->new IllegalArgumentException("post not found"));
+        if(!post.getTitle().equals(request.getTitle())){
+            post.setTitle(request.getTitle());
+        }
+
+        if (!post.getDescription().equals(request.getDescription())){
+            post.setDescription(request.getDescription());
+        }
+
+        if (request.getImage() != null && !request.getImage().equals(post.getImage())) {
+            post.setImage(request.getImage());
+        }
+
+        postsRepository.save(post);
+        return post;
+    }
 
 }

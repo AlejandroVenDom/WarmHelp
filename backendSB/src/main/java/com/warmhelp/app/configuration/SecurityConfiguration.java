@@ -67,6 +67,7 @@ public class SecurityConfiguration {
                                 "/users/**",
                                 "/posts",
                                 "/posts/registerPost",
+                                "/posts/*/update",
                                 "/comments",
                                 "/comments/registerComment",
                                 "/responseComments",
