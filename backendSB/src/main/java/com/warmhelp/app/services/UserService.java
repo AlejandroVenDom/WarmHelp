@@ -390,8 +390,14 @@ public class UserService implements UserDetailsService {
                 .stream()
                 .map(this::mapToReportServicesResponseDTO)
                 .toList();
-
         loginData.setReportServiceResponseDTOS(reportServiceResponseDTOS);
+
+        List<Likes_Posts_ResponseDTO> likesPostsResponseDTOS = userInfo.getLikesPosts()
+                .stream()
+                .map(this::mapToLikesPostsDTO)
+                .toList();
+        loginData.setLikesPostsResponseDTOS(likesPostsResponseDTOS);
+
 
         return loginData;
     }

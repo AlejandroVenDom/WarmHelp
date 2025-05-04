@@ -36,6 +36,16 @@ public class LoginResponse {
         private List<IncidentResponseDTO> incidents;
         private List<ReportPostDTO> reportPostDTOS;
         private List<ReportServiceResponseDTO> reportServiceResponseDTOS;
+        private List<Likes_Posts_ResponseDTO> likesPostsResponseDTOS;
+
+
+    public List<Likes_Posts_ResponseDTO> getLikesPostsResponseDTOS() {
+        return likesPostsResponseDTOS;
+    }
+
+    public void setLikesPostsResponseDTOS(List<Likes_Posts_ResponseDTO> likesPostsResponseDTOS) {
+        this.likesPostsResponseDTOS = likesPostsResponseDTOS;
+    }
 
     public List<ReportServiceResponseDTO> getReportServiceResponseDTOS() {
         return reportServiceResponseDTOS;
