@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UseStateService } from '../../services/auth/use-state.service';
 import { Post } from '../../services/interfaces/post';
 import { PostService } from '../../services/posts/post.service';
+import { PopupService } from '../../services/popup.service';
 
 @Component({
   selector: 'app-mis-publicaciones',
@@ -9,7 +10,7 @@ import { PostService } from '../../services/posts/post.service';
   templateUrl: './mis-publicaciones.component.html',
   styleUrl: './mis-publicaciones.component.scss'
 })
-export class MisPublicacionesComponent implements OnInit {
+export class MisPublicacionesComponent implements OnInit, OnDestroy {
   misPosts: Post[] = [];
   postsFiltrados: Post[] = [];
   postEditando: Post | null = null;
@@ -21,6 +22,7 @@ export class MisPublicacionesComponent implements OnInit {
   paginaActual = 1;
   totalPaginas = 1;
   paginas: number[] = [];
+  eliminandoId: number | null = null;
 
   nuevoPost = {
     title: '',
@@ -31,7 +33,8 @@ export class MisPublicacionesComponent implements OnInit {
 
   constructor(
     private postService: PostService,
-    private stateService: UseStateService
+    private stateService: UseStateService,
+    private popupService: PopupService
   ) {}
 
   ngOnInit(): void {
@@ -51,17 +54,37 @@ export class MisPublicacionesComponent implements OnInit {
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
   eliminarPost(id: number): void {
+    const existe = this.misPosts.find(p => p.id === id);
+    if (!existe) {
+      this.popupService.showMessage('Ya eliminado', 'Esta publicación ya no existe', 'warning');
+      return;
+    }
+
     if (!confirm('¿Estás seguro de eliminar esta publicación?')) return;
+
+    this.eliminandoId = id;
 
     this.postService.softDeletePost(id).subscribe({
       next: () => {
-        // Elimina localmente de la lista
+        this.eliminandoId = null;
         this.misPosts = this.misPosts.filter(p => p.id !== id);
         this.actualizarLista();
+        this.popupService.showMessage('Publicación eliminada', 'Se eliminó correctamente', 'success');
       },
-      error: () => {
-        alert('No se pudo eliminar la publicación');
+      error: (err) => {
+        this.eliminandoId = null;
+
+        if (err.status === 204 || err.status === 200) {
+          this.misPosts = this.misPosts.filter(p => p.id !== id);
+          this.actualizarLista();
+          this.popupService.showMessage('Publicación eliminada', 'Se eliminó correctamente', 'success');
+        } else if (err.status === 404) {
+          this.popupService.showMessage('No encontrada', 'Esta publicación ya no existe', 'warning');
+        } else {
+          this.popupService.showMessage('Error', 'No se pudo eliminar la publicación', 'error');
+        }
       }
     });
   }
@@ -86,7 +109,9 @@ export class MisPublicacionesComponent implements OnInit {
     this.totalPaginas = Math.max(1, Math.ceil(filtrados.length / this.cantidadMostrar));
     this.paginas = Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
 
-    if (this.paginaActual > this.totalPaginas) this.paginaActual = this.totalPaginas;
+    if (this.paginaActual > this.totalPaginas) {
+      this.paginaActual = this.totalPaginas || 1;
+    }
 
     const inicio = (this.paginaActual - 1) * this.cantidadMostrar;
     const fin = inicio + this.cantidadMostrar;
@@ -136,6 +161,7 @@ export class MisPublicacionesComponent implements OnInit {
       this.misPosts.unshift(post);
       this.actualizarLista();
       this.cerrarModalNuevoPost();
+      this.popupService.showMessage('¡Publicación creada!', 'Tu post fue publicado correctamente.', 'success');
     });
   }
 
@@ -158,6 +184,7 @@ export class MisPublicacionesComponent implements OnInit {
       if (index > -1) this.misPosts[index] = this.postEditando!;
       this.actualizarLista();
       this.cancelarEdicion();
+      this.popupService.showMessage('Actualizado', 'Tu publicación fue modificada', 'success');
     });
   }
 }

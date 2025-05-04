@@ -22,6 +22,7 @@ export class PostsAdminComponent implements OnInit {
   paginaActual = 1;
   totalPaginas = 1;
   paginas: number[] = [];
+  eliminandoId: number | null = null;
 
   constructor(
     private postService: PostService,
@@ -55,24 +56,51 @@ export class PostsAdminComponent implements OnInit {
     this.totalPaginas = Math.ceil(filtrados.length / this.cantidadMostrar);
     this.paginas = Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
 
-    if (this.paginaActual > this.totalPaginas) this.paginaActual = 1;
+    // ✅ Asegura que la página actual siempre sea válida
+    if (this.paginaActual > this.totalPaginas) {
+      this.paginaActual = this.totalPaginas || 1;
+    }
 
     const start = (this.paginaActual - 1) * this.cantidadMostrar;
     const end = start + this.cantidadMostrar;
 
     this.posts = filtrados.slice(start, end);
   }
+
   eliminarPost(id: number): void {
+    const existe = this.allPosts.find(p => p.id === id);
+    if (!existe) {
+      this.popupService.showMessage('Ya eliminado', 'Este post ya no existe', 'warning');
+      return;
+    }
+
     if (!confirm('¿Estás seguro de eliminar este post?')) return;
+
+    this.eliminandoId = id;
+
     this.postService.softDeletePost(id).subscribe({
       next: () => {
+        this.eliminandoId = null;
+        this.allPosts = this.allPosts.filter(p => p.id !== id);
+        this.actualizarLista();
         this.popupService.showMessage('Post eliminado', 'Se eliminó correctamente', 'success');
-        this.cargarPosts();
       },
-      error: () => this.popupService.showMessage('Error', 'No se pudo eliminar el post', 'error')
+      error: (err) => {
+        this.eliminandoId = null;
+
+        // ⚠️ Maneja respuesta 200 o 204 mal interpretada por Angular
+        if (err.status === 200 || err.status === 204) {
+          this.allPosts = this.allPosts.filter(p => p.id !== id);
+          this.actualizarLista();
+          this.popupService.showMessage('Post eliminado', 'Se eliminó correctamente', 'success');
+        } else if (err.status === 404) {
+          this.popupService.showMessage('No encontrado', 'Este post ya no existe', 'warning');
+        } else {
+          this.popupService.showMessage('Error', 'No se pudo eliminar el post', 'error');
+        }
+      }
     });
   }
-
 
   filtrarPosts(): void {
     this.paginaActual = 1;

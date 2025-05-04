@@ -41,8 +41,12 @@
           <p><i class="bi bi-calendar-event-fill"></i> <strong>Fecha:</strong> {{ post.createdAt | date:'short' }}</p>
         </div>
         <div class="acciones">
-          <!-- <button class="btn-editar" (click)="iniciarEdicion(post)">Editar</button> -->
-          <button class="btn-eliminar" (click)="eliminarPost(post.id)">Eliminar</button>
+          <button class="btn-eliminar"
+        [disabled]="eliminandoId === post.id"
+        (click)="eliminarPost(post.id)">
+  <i *ngIf="eliminandoId === post.id" class="bi bi-hourglass-split"></i>
+  <span *ngIf="eliminandoId !== post.id">Eliminar</span>
+</button>
         </div>
       </ng-container>
     </div>
