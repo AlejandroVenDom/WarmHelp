@@ -33,4 +33,10 @@ export class ProfessionalService {
   registerService(service: ProfessionalServiceInterface): Observable<any> {
     return this.http.post(`${this.apiUrl}/registerService`, service);
   }
+  delete(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+  update(id: number, data: ProfessionalServiceInterface): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${id}/update`, data);
+  }
 }

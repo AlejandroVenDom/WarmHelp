@@ -3,9 +3,14 @@
     <i class="bi" [ngClass]="sidebarOpen ? 'bi-x-lg' : 'bi-list'"></i>
   </button>
   <span class="header-title">Admin Panel</span>
+  <div class="header-actions">
+    <a class="site-button" routerLink="/" title="Ir al sitio principal">
+      <i class="bi bi-house-door-fill"></i> Sitio
+    </a>
   <button class="logout-button" (click)="logout()">
     <i class="bi bi-box-arrow-right"></i> Salir
   </button>
+  </div>
 </header>
 
 <aside class="admin-sidebar" [class.open]="sidebarOpen">
@@ -32,9 +37,9 @@
       <i class="bi bi-flag-fill"></i> Reportes Posts
     </a>
 
-    <a routerLink="/app/likes-admin" routerLinkActive="active" (click)="closeSidebar()">
+    <!-- <a routerLink="/app/likes-admin" routerLinkActive="active" (click)="closeSidebar()">
       <i class="bi bi-hand-thumbs-up-fill"></i> Likes
-    </a>
+    </a> -->
 
     <a routerLink="/app/posts-admin" routerLinkActive="active" (click)="closeSidebar()">
       <i class="bi bi-file-text-fill"></i> Posts

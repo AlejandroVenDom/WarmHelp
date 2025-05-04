@@ -24,7 +24,7 @@ export class UsersAdminComponent implements OnInit {
   ) {
     this.userForm = this.fb.group({
       username: ['', Validators.required],
-      password: [''],
+      password: [''], // solo obligatorio en alta
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -53,8 +53,8 @@ export class UsersAdminComponent implements OnInit {
     this.isEditing = true;
     this.currentUserId = user.id;
     this.userForm.patchValue(user);
+    this.userForm.get('password')?.setValue('');
 
-    // Evitar que un admin cambie su propio rol
     if (this.loggedUserId === user.id) {
       this.userForm.get('roleType')?.disable();
     } else {
@@ -71,7 +71,6 @@ export class UsersAdminComponent implements OnInit {
 
   submit(): void {
     if (this.userForm.invalid) return;
-
     const formData = this.userForm.getRawValue();
 
     if (this.isEditing && this.currentUserId !== null) {

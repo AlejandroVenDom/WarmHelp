@@ -33,6 +33,7 @@ import { ControlPanelComponent } from './admin/control-panel/control-panel.compo
 import { ReportsAdminComponent } from './admin/reports-admin/reports-admin.component';
 import { ReportsPostsAdminComponent } from './admin/reports-posts-admin/reports-posts-admin.component';
 import { CartComponent } from './user/cart/cart.component';
+import { BaseChartDirective  } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -71,9 +72,11 @@ import { CartComponent } from './user/cart/cart.component';
     AppRoutingModule,
     NgbModule,
     CommonModule,
+    BaseChartDirective,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
