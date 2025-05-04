@@ -25,11 +25,11 @@ public class Cart {
     private UserInfo userInfo;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference("cart-cartItem")
     private List<CartItem> items = new ArrayList<>();
 
     @Column(nullable = false)
-    private BigDecimal totalPrice = BigDecimal.ZERO;
+    private BigDecimal totalPrice = BigDecimal.ZERO ;
 
     @CreationTimestamp
     @Column(nullable = false)
@@ -91,5 +91,6 @@ public class Cart {
         for (CartItem item : items){
             total = total.add(item.getTotalPrice());
         }
+        this.totalPrice = total;
     }
 }

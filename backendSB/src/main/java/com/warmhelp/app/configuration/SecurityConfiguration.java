@@ -92,7 +92,10 @@ public class SecurityConfiguration {
                                 "/likes",
                                 "/likes/toggle",
                                 "/likes/count",
-                                "/likes/isLiked"
+                                "/likes/isLiked",
+                                "/carts",
+                                "/carts/*/items",
+                                "/cart-items"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

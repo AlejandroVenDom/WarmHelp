@@ -18,12 +18,12 @@ public class CartItem {
 
     @ManyToOne
     @JoinColumn(name = "cart_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference("cart-cartItem")
     private Cart cart;
 
     @ManyToOne
     @JoinColumn(name = "professionalServices_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference("service-cartItem")
     private ProfessionalServices professionalServices;
 
     private int quantity;
@@ -31,12 +31,19 @@ public class CartItem {
     @Column(nullable = false)
     private BigDecimal price;
 
+    @Column(nullable = false)
+    private BigDecimal totalPrice;
+
     @CreationTimestamp
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 
     public Long getId() {
         return id;
@@ -95,6 +102,6 @@ public class CartItem {
     }
 
     public BigDecimal getTotalPrice(){
-        return price.multiply(BigDecimal.valueOf(quantity));
+        return price.multiply(new BigDecimal(quantity));
     }
 }

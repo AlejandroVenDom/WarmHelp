@@ -67,7 +67,7 @@ public class ProfessionalServices {
     private List<ReportService> reports = new ArrayList<>();
 
     @OneToMany(mappedBy = "professionalServices", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference("service-cartItem")
     private List<CartItem> cartItems  = new ArrayList<>();
 
     public List<CartItem> getCartItems() {
