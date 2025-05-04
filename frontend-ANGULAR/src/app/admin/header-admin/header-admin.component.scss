@@ -255,4 +255,55 @@ router-outlet + * {
     }
   }
 }
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  .site-button {
+    background: #9DC08B;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #6a994e;
+    }
+
+    i {
+      font-size: 1.2rem;
+    }
+  }
+
+  .logout-button {
+    background: #DF6D14;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #b95710;
+    }
+
+    i {
+      font-size: 1.2rem;
+    }
+  }
+}
 

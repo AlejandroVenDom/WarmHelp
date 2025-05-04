@@ -1,1 +1,57 @@
-<p>control-panel works!</p>
+<div class="dashboard-container">
+  <h2 class="titulo-seccion">Panel de Control</h2>
+
+  <div class="resumen-cards">
+    <div class="card resumen" routerLink="/app/servicios-admin">
+      <i class="bi bi-briefcase-fill icono"></i>
+      <strong>Servicios</strong>
+      <span>{{ totalServicios }}</span>
+    </div>
+    <div class="card resumen" routerLink="/app/posts-admin">
+      <i class="bi bi-pencil-square icono"></i>
+      <strong>Posts</strong>
+      <span>{{ totalPosts }}</span>
+    </div>
+    <div class="card resumen" routerLink="/app/incidencias-admin">
+      <i class="bi bi-exclamation-triangle-fill icono"></i>
+      <strong>Incidencias</strong>
+      <span>{{ totalIncidencias }}</span>
+    </div>
+    <div class="card resumen reportes-selector" (click)="abrirSelectorReportes = !abrirSelectorReportes">
+      <i class="bi bi-flag-fill icono"></i>
+      <strong>Reportes</strong>
+      <span>{{ totalReportes }}</span>
+      <div class="opciones-reportes" *ngIf="abrirSelectorReportes">
+        <button (click)="irARuta('/app/reports-posts-admin')">Reportes Posts</button>
+        <button (click)="irARuta('/app/reports-admin')">Reportes Servicios</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="graficos-grid-fixed">
+    <div class="grafico-card" *ngIf="serviciosPorMoneda?.datasets?.length">
+      <h4>Servicios por Moneda</h4>
+      <canvas baseChart [data]="serviciosPorMoneda" [type]="'pie'"></canvas>
+    </div>
+    <div class="grafico-card" *ngIf="postsPorSemana?.datasets?.length">
+      <h4>Posts por Semana</h4>
+      <canvas baseChart [data]="postsPorSemana" [type]="'bar'"></canvas>
+    </div>
+    <div class="grafico-card" *ngIf="incidenciasPorEstado?.datasets?.length">
+      <h4>Incidencias por Estado</h4>
+      <canvas baseChart [data]="incidenciasPorEstado" [type]="'bar'"></canvas>
+    </div>
+    <div class="grafico-card" *ngIf="incidenciasPorTipo?.datasets?.length">
+      <h4>Incidencias por Tipo</h4>
+      <canvas baseChart [data]="incidenciasPorTipo" [type]="'bar'"></canvas>
+    </div>
+    <div class="grafico-card" *ngIf="reportesPorTipo?.datasets?.length">
+      <h4>Reportes por Tipo</h4>
+      <canvas baseChart [data]="reportesPorTipo" [type]="'bar'"></canvas>
+    </div>
+    <div class="grafico-card" *ngIf="reportesPorEstado?.datasets?.length">
+      <h4>Reportes por Estado</h4>
+      <canvas baseChart [data]="reportesPorEstado" [type]="'bar'"></canvas>
+    </div>
+  </div>
+</div>
