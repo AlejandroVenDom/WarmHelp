@@ -74,6 +74,7 @@ public class SecurityConfiguration {
                                 "/responseComments/registerResponseComment",
                                 "/professionalServices",
                                 "/professionalServices/registerService",
+                                "/professionalServices/*/update",
                                 "/reviews",
                                 "/reviews/registerReview",
                                 "/chat",

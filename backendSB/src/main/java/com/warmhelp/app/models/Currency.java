@@ -34,4 +34,6 @@ public class Currency {
     public void setCurrencyType(CurrencyType currencyType) {
         this.currencyType = currencyType;
     }
+
+
 }

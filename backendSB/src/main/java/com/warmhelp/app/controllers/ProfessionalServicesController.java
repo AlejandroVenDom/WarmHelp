@@ -1,6 +1,7 @@
 package com.warmhelp.app.controllers;
 
 import com.warmhelp.app.dtos.auth.ProfessionalServicesRequest;
+import com.warmhelp.app.dtos.auth.UpdateServiceRequest;
 import com.warmhelp.app.dtosResponses.ProfessionalServiceResponseDTO;
 import com.warmhelp.app.models.ProfessionalServices;
 import com.warmhelp.app.services.ProfessionalServicesService;
@@ -33,6 +34,12 @@ public class ProfessionalServicesController {
         catch (IllegalArgumentException e){
             return ResponseEntity.status(401).body(e.getMessage());
         }
+    }
+
+    @PostMapping("/{id}/update")
+    public ResponseEntity<ProfessionalServices> updateService(@PathVariable Long id, @RequestBody UpdateServiceRequest request){
+        ProfessionalServices updateService = professionalServicesService.updateService(id, request);
+        return ResponseEntity.ok(updateService);
     }
 
 }

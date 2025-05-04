@@ -1,15 +1,19 @@
 package com.warmhelp.app.services;
 
 import com.warmhelp.app.dtos.auth.ProfessionalServicesRequest;
+import com.warmhelp.app.dtos.auth.UpdateServiceRequest;
 import com.warmhelp.app.dtosResponses.ProfessionalServiceResponseDTO;
 import com.warmhelp.app.dtosResponses.ReportServiceResponseDTO;
 import com.warmhelp.app.dtosResponses.ReviewResponseDTO;
+import com.warmhelp.app.enums.CurrencyType;
 import com.warmhelp.app.models.Currency;
 import com.warmhelp.app.models.ProfessionalServices;
 import com.warmhelp.app.models.UserInfo;
 import com.warmhelp.app.repositories.*;
 
 import java.util.Optional;
+
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -120,6 +124,49 @@ public class ProfessionalServicesService {
                 saveService.getDeletedAt()
         );
 
+    }
+
+    @Transactional
+    public ProfessionalServices updateService(Long id, UpdateServiceRequest request){
+        ProfessionalServices professionalServices = professionalServicesRepository.findById(id)
+                .orElseThrow(()->new IllegalArgumentException("service not found"));
+
+        if (!professionalServices.getTitle().equals(request.getTitle())){
+            professionalServices.setTitle(request.getTitle());
+        }
+
+        if (!professionalServices.getDescription().equals(request.getDescription())){
+            professionalServices.setDescription(request.getDescription());
+        }
+
+        if (professionalServices.getImage() != null && !professionalServices.getImage().equals(request.getImage())) {
+            professionalServices.setImage(request.getImage());
+        } else if (professionalServices.getImage() == null && request.getImage() != null) {
+            professionalServices.setImage(request.getImage());
+        }
+
+        CurrencyType currencyTypeFromRequest;
+        try {
+            currencyTypeFromRequest = CurrencyType.valueOf(request.getCurrency());  // Esto convierte el String a CurrencyType
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid currency type: " + request.getCurrency());
+        }
+
+        if (!professionalServices.getCurrency().getCurrencyType().equals(currencyTypeFromRequest)) {
+            Currency currency = currencyRepository.findByCurrencyType(currencyTypeFromRequest)
+                    .orElseThrow(() -> new IllegalArgumentException("Currency not found"));
+            professionalServices.setCurrency(currency);
+        }
+
+        if (!professionalServices.getPrice().equals(request.getPrice())){
+            professionalServices.setPrice(request.getPrice());
+        }
+        if (!professionalServices.getTax().equals(request.getTax())){
+            professionalServices.setTax(request.getTax());
+        }
+
+        professionalServicesRepository.save(professionalServices);
+        return professionalServices;
     }
 
 }
