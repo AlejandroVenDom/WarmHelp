@@ -83,7 +83,11 @@ public class SecurityConfiguration {
                                 "/reports-posts",
                                 "/reports-posts/register-report-post",
                                 "/reports-services",
-                                "/reports-services/register-report-service"
+                                "/reports-services/register-report-service",
+                                "/likes",
+                                "/likes/toggle",
+                                "/likes/count",
+                                "/likes/isLiked"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

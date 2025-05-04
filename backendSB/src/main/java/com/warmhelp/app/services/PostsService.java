@@ -1,10 +1,8 @@
 package com.warmhelp.app.services;
 
 import com.warmhelp.app.dtos.auth.PostsRequest;
-import com.warmhelp.app.dtosResponses.CommentsResponseDTO;
-import com.warmhelp.app.dtosResponses.PostsResponseDTO;
-import com.warmhelp.app.dtosResponses.ReportPostDTO;
-import com.warmhelp.app.dtosResponses.ResponseCommentsResponseDTO;
+import com.warmhelp.app.dtosResponses.*;
+import com.warmhelp.app.models.Like;
 import com.warmhelp.app.models.Posts;
 import com.warmhelp.app.models.User;
 import com.warmhelp.app.models.UserInfo;
@@ -72,6 +70,12 @@ public class PostsService {
                             reportPost.getDeletedAt()
                     )).collect(Collectors.toList());
 
+            List<Likes_Posts_ResponseDTO> likes_posts = post.getLikesPosts().stream().map(likes->
+                    new Likes_Posts_ResponseDTO(
+                            likes.getUserInfo().getUser().getUsername(),
+                            likes.getCreatedAt()
+                    )).collect(Collectors.toList());
+
 
             return new PostsResponseDTO(
                     post.getId(),
@@ -81,6 +85,7 @@ public class PostsService {
                     post.getImage(),
                     commentsResponseDTOS,
                     reports,
+                    likes_posts,
                     post.getCreatedAt(),
                     post.getUpdatedAt(),
                     post.getDeletedAt()

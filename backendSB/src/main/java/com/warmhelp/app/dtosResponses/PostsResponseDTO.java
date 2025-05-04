@@ -11,11 +11,12 @@ public class PostsResponseDTO {
     private String image;
     private List<CommentsResponseDTO> comments;
     private List<ReportPostDTO> reports;
+    private List<Likes_Posts_ResponseDTO> likes_posts;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
 
-    public PostsResponseDTO(long id, String title, String username, String description, String image, List<CommentsResponseDTO> comments, List<ReportPostDTO> reports, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
+    public PostsResponseDTO(long id, String title, String username, String description, String image, List<CommentsResponseDTO> comments, List<ReportPostDTO> reports, List<Likes_Posts_ResponseDTO> likes_posts, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
         this.id = id;
         this.title = title;
         this.username = username;
@@ -23,9 +24,18 @@ public class PostsResponseDTO {
         this.image = image;
         this.comments = comments;
         this.reports = reports;
+        this.likes_posts = likes_posts;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
+    }
+
+    public List<Likes_Posts_ResponseDTO> getLikes_posts() {
+        return likes_posts;
+    }
+
+    public void setLikes_posts(List<Likes_Posts_ResponseDTO> likes_posts) {
+        this.likes_posts = likes_posts;
     }
 
     public List<ReportPostDTO> getReports() {

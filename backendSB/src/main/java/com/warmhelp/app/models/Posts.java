@@ -60,8 +60,8 @@ public class Posts {
     @Column(nullable = true)
     private LocalDateTime deletedAt;
 
-    public int getLikesPosts() {
-        return likesPosts.size();
+    public List<Like> getLikesPosts() {
+        return likesPosts;
     }
 
     public void setLikesPosts(List<Like> likesPosts) {

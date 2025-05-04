@@ -268,6 +268,13 @@ public class UserService implements UserDetailsService {
         );
     }
 
+    private Likes_Posts_ResponseDTO mapToLikesPostsDTO(Like like){
+        return new Likes_Posts_ResponseDTO(
+                like.getUserInfo().getUser().getUsername(),
+                like.getCreatedAt()
+        );
+    }
+
 
     // RESPONSE OF LOGIN FOR POSTS
     private PostsResponseDTO mapToPostsResponseDTO(Posts posts){
@@ -281,6 +288,11 @@ public class UserService implements UserDetailsService {
                 .map(this::mapToReportPostsResponseDTO)
                 .toList();
 
+        List<Likes_Posts_ResponseDTO> likesPostsResponseDTOS = posts.getLikesPosts()
+                .stream()
+                .map(this::mapToLikesPostsDTO)
+                .toList();
+
         return new PostsResponseDTO(
                 posts.getId(),
                 posts.getTitle(),
@@ -289,6 +301,7 @@ public class UserService implements UserDetailsService {
                 posts.getImage(),
                 commentsResponseDTOS,
                 reportPostDTOS,
+                likesPostsResponseDTOS,
                 posts.getCreatedAt(),
                 posts.getUpdatedAt(),
                 posts.getDeletedAt()
