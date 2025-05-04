@@ -6,4 +6,9 @@ export interface Post {
   createdAt: string;
   username:string;
   comments: Comment[];
+  likes_posts: LikesPost[];
+}
+export interface LikesPost {
+  userName: string;
+  createdAt: string;
 }

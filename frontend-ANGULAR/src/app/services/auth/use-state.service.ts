@@ -26,6 +26,7 @@ export class UseStateService {
     responseComments: any[];
     incidents: any[];
     reports: any[];
+    likes: any[],
     role: string;
   }): void {
     sessionStorage.setItem(this.USER_KEY, JSON.stringify(userData));
@@ -42,7 +43,10 @@ export class UseStateService {
     const session = this.getSession();
     return session ? session.incidents || [] : [];
   }
-
+  getLikes(): any[] {
+    const session = this.getSession();
+    return session ? session.likes || [] : [];
+  }
   getUsername(): string | null {
     const session = this.getSession();
     return session ? session.username : null;

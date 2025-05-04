@@ -77,23 +77,32 @@
     <p><strong>Publicado por:</strong> {{ selectedService?.userName || 'Desconocido' }}</p>
   </div>
 </div>
-
-<!-- Modal de reporte separado -->
-<div class="modal-overlay" *ngIf="showReportModal">
-  <div class="modal-content report-modal">
-    <span class="icon-cancel" (click)="showReportModal = false">
-      <i class="bi bi-x-circle"></i>
+<!-- Modal de reporte premium -->
+<div class="overlay-reporte-servicio" *ngIf="showReportModal">
+  <div class="contenido-reporte-servicio" (click)="$event.stopPropagation()">
+    <span class="btn-cerrar-reporte" (click)="showReportModal = false" title="Cerrar">
+      <i class="bi bi-x-circle-fill"></i>
     </span>
-    <h4><i class="bi bi-flag-fill"></i> Reportar este servicio</h4>
-    <textarea [(ngModel)]="nuevoReporte.description" rows="3" placeholder="Describe el problema..."></textarea>
-    <select [(ngModel)]="nuevoReporte.type">
-      <option *ngFor="let tipo of tiposReporte" [value]="tipo">
-        {{ getNombreTipoReporte(tipo) }}
-      </option>
-    </select>
-    <button class="btn-reporte" (click)="enviarReporteServicio()">
+
+    <div class="encabezado-reporte-servicio">
+      <i class="bi bi-flag-fill icono-reporte"></i>
+      <h2>Reportar servicio</h2>
+    </div>
+
+    <textarea [(ngModel)]="nuevoReporte.description" rows="4" placeholder="Describe el problema..."></textarea>
+
+    <div class="grupo-select-reporte">
+      <select [(ngModel)]="nuevoReporte.type">
+        <option *ngFor="let tipo of tiposReporte" [value]="tipo">
+          {{ getNombreTipoReporte(tipo) }}
+        </option>
+      </select>
+    </div>
+
+    <button class="btn-enviar-reporte" (click)="enviarReporteServicio()">
       <i class="bi bi-send-exclamation-fill"></i> Enviar Reporte
     </button>
   </div>
 </div>
+
 <app-cart></app-cart>

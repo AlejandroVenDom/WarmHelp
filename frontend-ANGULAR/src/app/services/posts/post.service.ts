@@ -23,4 +23,12 @@ export class PostService {
   }): Observable<Post> {
     return this.http.post<Post>(`${this.apiUrl}/registerPost`, post);
   }
+  updatePost(id: number, post: { title: string; description: string; image?: string }): Observable<Post> {
+    return this.http.post<Post>(`${this.apiUrl}/${id}/update`, post);
+  }
+
+  softDeletePost(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
 }

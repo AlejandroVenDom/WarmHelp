@@ -1,10 +1,19 @@
 <div class="mis-publicaciones-container">
   <h2>MIS PUBLICACIONES</h2>
 
+  <!-- ACCIONES SUPERIORES -->
   <div class="acciones">
     <div class="buscador">
       <i class="bi bi-search"></i>
       <input type="text" [(ngModel)]="filtroBusqueda" (input)="filtrarPosts()" placeholder="Buscar en tus publicaciones..." />
+    </div>
+
+    <div class="selector-cantidad">
+      <i class="bi bi-list-ol"></i>
+      <label for="cantidadSelect">Mostrar:</label>
+      <select id="cantidadSelect" [(ngModel)]="cantidadMostrar" (change)="onCantidadChange()">
+        <option *ngFor="let c of cantidadesDisponibles" [value]="c">{{ c }}</option>
+      </select>
     </div>
 
     <div class="botones-acciones">
@@ -19,16 +28,56 @@
     </div>
   </div>
 
+  <!-- LISTA DE POSTS -->
   <div class="lista-posts">
     <div class="post-card" *ngFor="let post of postsFiltrados">
-      <h4>{{ post.title }}</h4>
-      <p>{{ post.description }}</p>
-      <img *ngIf="post.image" [src]="post.image" />
-      <span class="fecha">{{ post.createdAt | date: 'short' }}</span>
+      <ng-container *ngIf="postEditando && postEditando.id === post.id; else modoLectura">
+        <input [(ngModel)]="postEditando.title" placeholder="Título" />
+        <textarea [(ngModel)]="postEditando.description" rows="3" placeholder="Descripción"></textarea>
+        <input [(ngModel)]="postEditando.image" placeholder="URL de imagen" />
+
+        <div class="acciones">
+          <button class="btn-guardar" (click)="guardarCambios()">Guardar</button>
+          <button class="btn-cancelar" (click)="cancelarEdicion()">Cancelar</button>
+        </div>
+      </ng-container>
+
+      <ng-template #modoLectura>
+        <h4>{{ post.title }}</h4>
+        <p>{{ post.description }}</p>
+        <img *ngIf="post.image" [src]="post.image" />
+        <span class="fecha">{{ post.createdAt | date: 'short' }}</span>
+
+        <div class="acciones">
+          <button class="btn-editar" (click)="iniciarEdicion(post)">Editar</button>
+          <button class="btn-eliminar" (click)="eliminarPost(post.id)">Eliminar</button>
+        </div>
+      </ng-template>
     </div>
   </div>
 
-  <!-- Modal de publicación -->
+  <!-- PAGINACIÓN -->
+  <div class="contenedor-paginacion" *ngIf="totalPaginas > 1">
+    <div class="paginacion">
+      <button (click)="cambiarPagina(-1)" [disabled]="paginaActual === 1">
+        <i class="bi bi-arrow-left-circle-fill"></i> Anterior
+      </button>
+      <span>Página {{ paginaActual }} de {{ totalPaginas }}</span>
+      <button (click)="cambiarPagina(1)" [disabled]="paginaActual === totalPaginas">
+        Siguiente <i class="bi bi-arrow-right-circle-fill"></i>
+      </button>
+    </div>
+
+    <div class="numeros-pagina">
+      <button *ngFor="let pagina of paginas"
+              (click)="irAPagina(pagina)"
+              [class.activa]="pagina === paginaActual">
+        {{ pagina }}
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL NUEVA PUBLICACIÓN -->
   <div *ngIf="modalNuevoPost" class="modal">
     <div class="modal-content">
       <span class="close-btn" (click)="cerrarModalNuevoPost()">
@@ -52,10 +101,12 @@
       </button>
     </div>
   </div>
+
+  <!-- BOTÓN SCROLL TOP -->
   <button *ngIf="mostrarBotonScroll"
-        class="scroll-top-btn fade-in"
-        (click)="scrollToTop()"
-        title="Volver arriba">
-  <i class="bi bi-arrow-up-circle-fill"></i>
-</button>
+          class="scroll-top-btn fade-in"
+          (click)="scrollToTop()"
+          title="Volver arriba">
+    <i class="bi bi-arrow-up-circle-fill"></i>
+  </button>
 </div>
