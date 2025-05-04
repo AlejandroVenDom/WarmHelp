@@ -112,6 +112,10 @@ public class UserInfo {
     @JsonManagedReference
     private List<Like> likesPosts = new ArrayList<>();
 
+    @OneToMany(mappedBy = "userInfo", cascade = CascadeType.ALL, orphanRemoval = true )
+    @JsonManagedReference
+    private List<Cart> carts = new ArrayList<>();
+
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -119,6 +123,13 @@ public class UserInfo {
     @Column(nullable = true)
     private LocalDateTime deletedAt;
 
+    public List<Cart> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(List<Cart> carts) {
+        this.carts = carts;
+    }
 
     public List<ReportPost> getReportPosts() {
         return reportPosts;
