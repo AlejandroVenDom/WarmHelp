@@ -9,6 +9,7 @@ import { PopupService } from '../../services/popup.service';
 import { delay } from 'rxjs';
 import { Router } from '@angular/router';
 import { ReportService } from '../../services/report/report.service';
+import { LikeService } from '../../services/posts/like.service';
 
 @Component({
   selector: 'app-posts',
@@ -20,6 +21,8 @@ export class PostsComponent implements OnInit {
   // Estado de posts y paginación
   allPosts: Post[] = [];
   posts: Post[] = [];
+  likedPosts: Set<number> = new Set();
+  likesCount: { [postId: number]: number } = {};
   filtroBusqueda = '';
   cantidadMostrar = 10;
   cantidadesDisponibles = [6, 10, 16, 20, 30, 40, 50];
@@ -78,7 +81,8 @@ tiposReporte: string[] = [
     private useStateService: UseStateService,
     private popupService: PopupService,
     private router: Router,
-    private reportService: ReportService // 👈 Añadir esta línea
+    private reportService: ReportService,
+    private likeService: LikeService
   ) {}
 
   ngOnInit(): void {
@@ -172,19 +176,40 @@ tiposReporte: string[] = [
   cargarPosts(preservarPagina: boolean = false): void {
     this.postService.getAllPosts().subscribe({
       next: posts => {
-        this.allPosts = posts.reverse(); // Nunca recortes aquí
-        if (!preservarPagina) {
-          this.paginaActual = 1;
-        }
+        this.allPosts = posts.reverse();
+        const userId = this.useStateService.getUserId();
+        posts.forEach(post => {
+          this.likeService.countLikes(post.id).subscribe(count => {
+            this.likesCount[post.id] = count;
+          });
+
+          if (userId) {
+            this.likeService.isLiked(post.id, userId).subscribe(isLiked => {
+              if (isLiked) this.likedPosts.add(post.id);
+            });
+          }
+        });
+
+        if (!preservarPagina) this.paginaActual = 1;
         this.actualizarLista();
       },
       error: err => console.error('Error al cargar posts:', err)
     });
   }
 
+  toggleLike(postId: number): void {
+    const userId = this.useStateService.getUserId();
+    if (!userId) return;
 
-
-
+    this.likeService.toggleLike(postId, userId).subscribe(response => {
+      if (response.liked) {
+        this.likedPosts.add(postId);
+      } else {
+        this.likedPosts.delete(postId);
+      }
+      this.likesCount[postId] = response.totalLikes;
+    });
+  }
   actualizarLista(): void {
     const filtro = this.filtroBusqueda.toLowerCase().trim();
 

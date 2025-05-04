@@ -60,10 +60,11 @@
         <img *ngIf="post.image" [src]="post.image" class="post-image" />
       </div>
       <div class="actions">
-        <div class="action-item" title="Me gusta" (click)="abrirModalComentarios(post); $event.stopPropagation()">
-          <i class="bi bi-hand-thumbs-up-fill"></i>
-          <span>0</span>
-        </div>
+        <div class="action-item" title="Me gusta"
+     (click)="toggleLike(post.id); $event.stopPropagation()">
+  <i [class]="likedPosts.has(post.id) ? 'bi bi-hand-thumbs-up-fill' : 'bi bi-hand-thumbs-up'"></i>
+  <span>{{ likesCount[post.id] || 0 }}</span>
+</div>
         <div class="action-item" title="Comentarios" (click)="abrirModalComentarios(post); $event.stopPropagation()">
           <i class="bi bi-chat-dots-fill"></i>
           <span>{{ post.comments?.length || 0 }}</span>
@@ -83,7 +84,6 @@
   <p>No se encontraron publicaciones con el filtro actual.</p>
 </div>
 
-<!-- Paginación centrada (fuera del posts-grid y del ngFor) -->
 <div class="contenedor-paginacion" *ngIf="totalPaginas > 1">
   <div class="paginacion">
     <button (click)="cambiarPagina(-1)" [disabled]="paginaActual === 1">
@@ -107,9 +107,8 @@
 
 
 <!-- MODAL DETALLE POST -->
-<div *ngIf="modalDetallePostVisible && postDetalleSeleccionado" class="modal"
-     (click)="cerrarModalAlFondo($event)">
-  <div class="modal-content" (click)="$event.stopPropagation()">
+<div *ngIf="modalDetallePostVisible && postDetalleSeleccionado" class="modal" (click)="cerrarModalAlFondo($event)">
+  <div class="modal-content modal-detalle-post" (click)="$event.stopPropagation()">
     <span class="close-btn" (click)="cerrarModalDetallePost()">
       <i class="bi bi-x-lg"></i>
     </span>
@@ -126,14 +125,18 @@
       </div>
     </div>
 
-    <div class="actions">
+    <div class="detalle-acciones">
+      <div class="action-item">
+        <i class="bi bi-hand-thumbs-up-fill"></i>
+        <span>{{ likesCount[postDetalleSeleccionado.id] || 0 }} like(s)</span>
+      </div>
       <div class="action-item">
         <i class="bi bi-chat-dots-fill"></i>
-        {{ postDetalleSeleccionado.comments?.length || 0 }} comentario(s)
+        <span>{{ postDetalleSeleccionado.comments?.length || 0 }} comentario(s)</span>
       </div>
       <div class="action-item">
         <i class="bi bi-arrow-return-right"></i>
-        {{ contarTotalRespuestas(postDetalleSeleccionado) }} respuesta(s)
+        <span>{{ contarTotalRespuestas(postDetalleSeleccionado) }} respuesta(s)</span>
       </div>
     </div>
 
@@ -255,25 +258,40 @@
 </button>
 </div>
 <!-- MODAL REPORTAR POST -->
-<div *ngIf="modalReportePostVisible && postReporteSeleccionado" class="modal" (click)="cerrarModalReportePost()">
-  <div class="modal-content" (click)="$event.stopPropagation()">
-    <span class="close-btn" (click)="cerrarModalReportePost()">
+<div *ngIf="modalReportePostVisible && postReporteSeleccionado" class="modal-overlay" (click)="cerrarModalReportePost()">
+  <div class="modal-content report-modal animate-scale-in" (click)="$event.stopPropagation()">
+    <span class="close-btn" (click)="cerrarModalReportePost()" title="Cerrar">
       <i class="bi bi-x-lg"></i>
     </span>
-    <h3><i class="bi bi-flag-fill"></i> Reportar publicación</h3>
-    <p><strong>Título:</strong> {{ postReporteSeleccionado.title }}</p>
-    <p><strong>Descripción:</strong> {{ postReporteSeleccionado.description }}</p>
 
-    <textarea [(ngModel)]="nuevoReportePost.description" rows="3" placeholder="Describe el problema..."></textarea>
-    <select [(ngModel)]="nuevoReportePost.type">
-      <option *ngFor="let tipo of tiposReporte" [value]="tipo">
-        {{ getNombreTipoReporte(tipo) }}
-      </option>
-    </select>
+    <div class="modal-header">
+      <i class="bi bi-flag-fill icon-flag"></i>
+      <h2>Reportar publicación</h2>
+    </div>
 
-    <button class="btn-publicar-modal" (click)="enviarReportePost()">
+    <div class="modal-info">
+      <p><strong>Título:</strong> {{ postReporteSeleccionado.title }}</p>
+      <p><strong>Descripción:</strong> {{ postReporteSeleccionado.description }}</p>
+    </div>
+
+    <div class="form-group">
+      <label for="desc">Descripción del problema:</label>
+      <textarea id="desc" [(ngModel)]="nuevoReportePost.description" rows="4" placeholder="Ej. Contenido ofensivo, lenguaje inapropiado..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="tipo">Motivo del reporte:</label>
+      <select id="tipo" [(ngModel)]="nuevoReportePost.type">
+        <option *ngFor="let tipo of tiposReporte" [value]="tipo">
+          {{ getNombreTipoReporte(tipo) }}
+        </option>
+      </select>
+    </div>
+
+    <button class="btn-reporte" (click)="enviarReportePost()">
       <i class="bi bi-send-exclamation-fill"></i> Enviar Reporte
     </button>
   </div>
 </div>
+
 

@@ -150,6 +150,7 @@ export class TiendaComponent implements OnInit {
     this.reportService.create(payload).subscribe(() => {
       this.popupService.showMessage('Reporte enviado', 'Gracias por tu reporte, lo revisaremos.', 'success');
       this.nuevoReporte = { type: 'BULLYING_OR_HARASSMENT', description: '', serviceId: 0 };
+      this.showReportModal = false;
       this.closeModal();
     });
   }
