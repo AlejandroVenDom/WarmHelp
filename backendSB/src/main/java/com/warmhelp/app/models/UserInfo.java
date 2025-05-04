@@ -108,6 +108,10 @@ public class UserInfo {
     @JsonManagedReference
     private List<ReportService> reportServices = new ArrayList<>();
 
+    @OneToMany(mappedBy = "userInfo", cascade = CascadeType.ALL, orphanRemoval = true )
+    @JsonManagedReference
+    private List<Like> likesPosts = new ArrayList<>();
+
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -226,5 +230,13 @@ public class UserInfo {
 
     public void setIncidents(List<Incident> incidents) {
         this.incidents = incidents;
+    }
+
+    public List<Like> getLikesPosts() {
+        return likesPosts;
+    }
+
+    public void setLikesPosts(List<Like> likesPosts) {
+        this.likesPosts = likesPosts;
     }
 }

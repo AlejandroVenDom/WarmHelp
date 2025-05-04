@@ -45,6 +45,10 @@ public class Posts {
     @JsonManagedReference
     private List<ReportPost> reportPosts = new ArrayList<>();
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Like> likesPosts = new ArrayList<>();
+
     @CreationTimestamp
     @Column(nullable = false)
     private LocalDateTime createdAt;
@@ -56,6 +60,13 @@ public class Posts {
     @Column(nullable = true)
     private LocalDateTime deletedAt;
 
+    public int getLikesPosts() {
+        return likesPosts.size();
+    }
+
+    public void setLikesPosts(List<Like> likesPosts) {
+        this.likesPosts = likesPosts;
+    }
 
     public List<ReportPost> getReportPosts() {
         return reportPosts;
