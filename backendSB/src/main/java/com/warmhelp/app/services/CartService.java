@@ -1,6 +1,7 @@
 package com.warmhelp.app.services;
 
 import com.warmhelp.app.dtos.auth.CartRequestDTO;
+import com.warmhelp.app.dtosResponses.CartItemResponseDTO;
 import com.warmhelp.app.dtosResponses.CartsResponse;
 import com.warmhelp.app.models.Cart;
 import com.warmhelp.app.models.CartItem;
@@ -12,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,15 +31,34 @@ public class CartService {
 
     public List<CartsResponse> getAllCarts(){
         List<Cart> carts = cartRepository.findAll();
+
         return carts.stream().map(cart -> {
-            List<CartItem> items = cart.getItems();
+            List<CartItemResponseDTO> itemResponseDTOS = cart.getItems()
+                    .stream()
+                    .map(item->
+                        new CartItemResponseDTO(
+                                item.getId(),
+                                cart.getUserInfo().getUser().getUsername(),
+                                item.getQuantity(),
+                                item.getPrice(),
+                                item.getTotalPrice(),
+                                item.getProfessionalServices().getId(),
+                                item.getProfessionalServices().getTitle(),
+                                item.getProfessionalServices().getDescription(),
+                                item.getProfessionalServices().getImage(),
+                                item.getProfessionalServices().getCurrency().getCurrencyType().name(),
+                                item.getCreatedAt(),
+                                item.getUpdatedAt()
+                        )
+                    ).collect(Collectors.toList());
+
             BigDecimal totalPrice = cart.getTotalPrice();
             String userName = cart.getUserInfo().getUser().getUsername();
 
             return new CartsResponse(
                     cart.getId(),
                     userName,
-                    items,
+                    itemResponseDTOS,
                     totalPrice,
                     cart.getCreatedAt(),
                     cart.getUpdatedAt()

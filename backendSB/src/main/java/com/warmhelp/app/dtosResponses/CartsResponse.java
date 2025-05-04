@@ -9,13 +9,13 @@ import java.util.List;
 public class CartsResponse {
     private Long cartId;
     private String userName;
-    private List<CartItem> items;
+    private List<CartItemResponseDTO> items;
     private BigDecimal totalPrice;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
 
-    public CartsResponse(Long cartId, String userName, List<CartItem> items, BigDecimal totalPrice, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public CartsResponse(Long cartId, String userName, List<CartItemResponseDTO> items, BigDecimal totalPrice, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.cartId = cartId;
         this.userName = userName;
         this.items = items;
@@ -40,11 +40,11 @@ public class CartsResponse {
         this.cartId = cartId;
     }
 
-    public List<CartItem> getItems() {
+    public List<CartItemResponseDTO> getItems() {
         return items;
     }
 
-    public void setItems(List<CartItem> items) {
+    public void setItems(List<CartItemResponseDTO> items) {
         this.items = items;
     }
 

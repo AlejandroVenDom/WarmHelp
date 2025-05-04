@@ -1,6 +1,7 @@
 package com.warmhelp.app.services;
 
 import com.warmhelp.app.dtos.auth.CartItemRequestDTO;
+import com.warmhelp.app.dtosResponses.CartItemResponseDTO;
 import com.warmhelp.app.models.Cart;
 import com.warmhelp.app.models.CartItem;
 import com.warmhelp.app.models.ProfessionalServices;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CartItemService {
@@ -53,7 +55,26 @@ public class CartItemService {
         return cartItemRepository.save(cartItem);
     }
 
-    public List<CartItem> getAllCartItems(){
-        return cartItemRepository.findAll();
+    public List<CartItemResponseDTO> getAllCartItems(){
+        List<CartItem> cartItems = cartItemRepository.findAll();
+
+        return cartItems
+                .stream()
+                .map(cartItem -> {
+                    return new CartItemResponseDTO(
+                            cartItem.getId(),
+                            cartItem.getCart().getUserInfo().getUser().getUsername(),
+                            cartItem.getQuantity(),
+                            cartItem.getPrice(),
+                            cartItem.getTotalPrice(),
+                            cartItem.getProfessionalServices().getId(),
+                            cartItem.getProfessionalServices().getTitle(),
+                            cartItem.getProfessionalServices().getDescription(),
+                            cartItem.getProfessionalServices().getImage(),
+                            cartItem.getProfessionalServices().getCurrency().getCurrencyType().name(),
+                            cartItem.getCreatedAt(),
+                            cartItem.getUpdatedAt()
+                    );
+                }).collect(Collectors.toList());
     }
 }

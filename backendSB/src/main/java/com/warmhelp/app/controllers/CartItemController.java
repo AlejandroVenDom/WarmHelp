@@ -1,6 +1,7 @@
 package com.warmhelp.app.controllers;
 
 import com.warmhelp.app.dtos.auth.CartItemRequestDTO;
+import com.warmhelp.app.dtosResponses.CartItemResponseDTO;
 import com.warmhelp.app.models.CartItem;
 import com.warmhelp.app.services.CartItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class CartItemController {
     }
 
     @GetMapping
-    public List<CartItem> getAllCartItems(){
+    public List<CartItemResponseDTO> getAllCartItems(){
         return cartItemService.getAllCartItems();
     }
 
