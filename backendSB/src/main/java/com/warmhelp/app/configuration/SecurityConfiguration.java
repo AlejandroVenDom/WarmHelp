@@ -58,6 +58,7 @@ public class SecurityConfiguration {
                         .requestMatchers(
                                 "/users/login",
                                 "/users",
+                                "/users/*",
                                 "/users/users-info",
                                 "/users/*/username",
                                 "/users/register",

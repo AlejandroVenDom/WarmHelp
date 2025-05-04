@@ -65,20 +65,16 @@ public class UserService implements UserDetailsService {
         return this.userInfoRepository.findAll();
     }
 
-    public Optional<User> getUserById(Long id){
-        return this.userRepository.findById(id);
-    }
+    @Transactional
+    public void deleteByUserId(Long id){
+        User user = userRepository.findById(id)
+                .orElseThrow(()->new IllegalArgumentException("user not found"));
 
-    public Optional<UserInfo> getUserInfoById(Long id){
-        return this.userInfoRepository.findByUserId(id);
-    }
+        UserInfo userInfo = userInfoRepository.findByUser(user)
+                .orElseThrow(()-> new IllegalArgumentException("user information not found"));
 
-    public Optional<User> findByUsername(String username){
-        return this.userRepository.findByUsername(username);
-    }
-
-    public Optional<UserInfo> findByUser(User user){
-        return this.userInfoRepository.findByUser(user);
+        userInfoRepository.delete(userInfo);
+        userRepository.delete(user);
     }
 
 

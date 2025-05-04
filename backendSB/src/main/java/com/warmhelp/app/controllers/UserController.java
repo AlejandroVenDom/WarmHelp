@@ -129,4 +129,16 @@ public class UserController {
             return new ResponseEntity("User not Found", HttpStatus.NOT_FOUND);
         }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUserById(@PathVariable Long id){
+        try {
+            userService.deleteByUserId(id);
+            return ResponseEntity.ok("user delete correctly");
+        }catch (
+                IllegalArgumentException e
+        ){
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
