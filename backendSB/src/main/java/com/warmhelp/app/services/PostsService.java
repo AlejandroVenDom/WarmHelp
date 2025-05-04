@@ -94,16 +94,20 @@ public class PostsService {
         }).collect(Collectors.toList());
     }
 
-    public Optional<Posts> getPostsById(Long id){
-        return this.postsRepository.findById(id);
-    }
-
-    public Optional<Posts> getPostsByName(String title){
-        return this.postsRepository.findByTitle(title);
-    }
-
+    @Transactional
     public void deletePostById(Long id){
-        this.postsRepository.deletePostById(id);
+        Posts post = postsRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("post not found"));
+
+        post.getLikesPosts().forEach(like -> {});
+
+        post.getComments().forEach(comments -> {
+            comments.getResponseComments().forEach(responseComments -> {});
+        });
+
+        post.getReportPosts().forEach(reportPost -> {});
+
+        postsRepository.delete(post);
     }
 
 

@@ -42,4 +42,16 @@ public class ProfessionalServicesController {
         return ResponseEntity.ok(updateService);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteProfessionalServiceById(@PathVariable Long id){
+        try {
+            professionalServicesService.deleteProfessionalServiceById(id);
+            return ResponseEntity.ok("delete correctly");
+        }catch (
+                IllegalArgumentException e
+        ){
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

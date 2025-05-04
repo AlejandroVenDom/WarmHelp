@@ -44,4 +44,16 @@ public class PostsController {
         return ResponseEntity.ok(updatePost);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePostById(@PathVariable Long id){
+        try {
+            postsService.deletePostById(id);
+            return ResponseEntity.ok("delete correctly");
+        } catch (
+                IllegalArgumentException e
+        ){
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

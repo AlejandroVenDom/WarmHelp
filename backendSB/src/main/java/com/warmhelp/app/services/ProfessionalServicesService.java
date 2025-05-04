@@ -84,12 +84,12 @@ public class ProfessionalServicesService {
                 }).toList();
     }
 
-    public Optional<ProfessionalServices> getProfessionalServicesById (Long id){
-        return this.professionalServicesRepository.findById(id);
-    }
+    public void deleteProfessionalServiceById(Long id){
+        ProfessionalServices service = professionalServicesRepository.findById(id)
+                .orElseThrow(()->new IllegalArgumentException("post not found"));
 
-    public Optional<ProfessionalServices> getProfessionalServicesByTitle(String title){
-        return this.professionalServicesRepository.findByTitle(title);
+        professionalServicesRepository.delete(service);
+
     }
 
     public ProfessionalServiceResponseDTO createProfessionalService(ProfessionalServicesRequest postFormFront){
