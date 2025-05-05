@@ -1,5 +1,5 @@
 export interface UserInterface{
-  id: number,
+    idUser: number,
     username: string,
     password: string,
     roleType: "CLIENT"|"PROFESSIONAL"|"ADMIN",

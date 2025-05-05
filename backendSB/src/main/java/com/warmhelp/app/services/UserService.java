@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -61,8 +62,22 @@ public class UserService implements UserDetailsService {
         return this.userRepository.findAll();
     }
 
-    public List<UserInfo> getAllUsersInfo(){
-        return this.userInfoRepository.findAll();
+    public List<UserInfoResponseDTO> getAllUsersInfo(){
+        List<UserInfo> userInfo = this.userInfoRepository.findAll();
+        return userInfo.stream()
+                .map(userInfo1 ->
+                        new UserInfoResponseDTO(
+                                userInfo1.getUser().getId(),
+                                userInfo1.getId(),
+                                userInfo1.getUser().getUsername(),
+                                userInfo1.getFirst_name(),
+                                userInfo1.getLast_name(),
+                                userInfo1.getAddress(),
+                                userInfo1.getNumber(),
+                                userInfo1.getEmail(),
+                                userInfo1.getMySelf_description(),
+                                userInfo1.getUser().getRole().getRoleType().name()
+                        )).collect(Collectors.toList());
     }
 
     @Transactional

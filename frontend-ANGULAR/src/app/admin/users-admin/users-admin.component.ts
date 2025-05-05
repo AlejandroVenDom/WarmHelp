@@ -45,17 +45,18 @@ export class UsersAdminComponent implements OnInit {
 
   loadUsers(): void {
     this.userService.getAllUsers().subscribe(users => {
+      console.log(users);
       this.users = users;
     });
   }
 
   startEdit(user: UserInterface): void {
     this.isEditing = true;
-    this.currentUserId = user.id;
+    this.currentUserId = user.idUser;
     this.userForm.patchValue(user);
     this.userForm.get('password')?.setValue('');
 
-    if (this.loggedUserId === user.id) {
+    if (this.loggedUserId === user.idUser) {
       this.userForm.get('roleType')?.disable();
     } else {
       this.userForm.get('roleType')?.enable();

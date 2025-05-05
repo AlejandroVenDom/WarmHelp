@@ -2,6 +2,7 @@ package com.warmhelp.app.controllers;
 
 import com.warmhelp.app.dtos.auth.*;
 import com.warmhelp.app.dtosResponses.PublicUserProfileResponse;
+import com.warmhelp.app.dtosResponses.UserInfoResponseDTO;
 import com.warmhelp.app.exceptions.UserAlreadyExistException;
 import com.warmhelp.app.exceptions.UserNotFoundException;
 import com.warmhelp.app.services.IEmailService;
@@ -42,7 +43,7 @@ public class UserController {
     }
 
     @GetMapping("/users-info")
-    public ResponseEntity<List<UserInfo>> getAllUsersInfo() {
+    public ResponseEntity<List<UserInfoResponseDTO>> getAllUsersInfo() {
         return ResponseEntity.ok(this.userService.getAllUsersInfo());
     }
 
