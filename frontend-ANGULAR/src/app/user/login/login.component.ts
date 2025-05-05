@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { TokenService } from '../../services/auth/token.service';
 import { UseStateService } from '../../services/auth/use-state.service';
 import { PopupService } from '../../services/popup.service';
+import { CartService } from '../../services/auth/cart.service';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,8 @@ export class LoginComponent {
     private router: Router,
     private tokenService: TokenService,
     private useStateService: UseStateService,
-    private popupService: PopupService
+    private popupService: PopupService,
+    private cartService: CartService
   ) {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -73,8 +75,8 @@ export class LoginComponent {
             incidents: data.incidents,
             reports: data.reports,
             likes: data.likes
-          });
 
+          });
           this.popupService.close();
           this.popupService.showMessage(
             'Bienvenido',
