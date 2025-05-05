@@ -213,6 +213,24 @@ public class UserService implements UserDetailsService {
         );
     }
 
+    private CartItemResponseDTO mapToCartItemsDTO(CartItem cartItem){
+        return new CartItemResponseDTO(
+                cartItem.getId(),
+                cartItem.getCart().getUserInfo().getUser().getUsername(),
+                cartItem.getQuantity(),
+                cartItem.getPrice(),
+                cartItem.getTotalPrice(),
+                cartItem.getProfessionalServices().getId(),
+                cartItem.getProfessionalServices().getTitle(),
+                cartItem.getProfessionalServices().getDescription(),
+                cartItem.getProfessionalServices().getImage(),
+                cartItem.getProfessionalServices().getCurrency().getCurrencyType().name(),
+                cartItem.getCreatedAt(),
+                cartItem.getUpdatedAt()
+
+        );
+    }
+
     // RESPONSE OF LOGIN FOR COMMENTS
     private CommentsResponseDTO mapToCommentsResponseDTO(Comments comments){
         List<ResponseCommentsResponseDTO> responseDTOS = comments.getResponseComments()
@@ -227,6 +245,21 @@ public class UserService implements UserDetailsService {
                 comments.getCreatedAt(),
                 comments.getUpdatedAt(),
                 comments.getDeletedAt()
+        );
+    }
+
+    private CartsResponse mapToCartsResponseDTO(Cart carts){
+        List<CartItemResponseDTO> responseDTOS = carts.getItems()
+                .stream()
+                .map(this::mapToCartItemsDTO)
+                .toList();
+        return new CartsResponse(
+            carts.getId(),
+            carts.getUserInfo().getUser().getUsername(),
+            responseDTOS,
+            carts.getTotalPrice(),
+            carts.getCreatedAt(),
+            carts.getUpdatedAt()
         );
     }
 
@@ -394,6 +427,11 @@ public class UserService implements UserDetailsService {
                 .toList();
         loginData.setLikesPostsResponseDTOS(likesPostsResponseDTOS);
 
+        List<CartsResponse> cartsResponsesDTO = userInfo.getCarts()
+                .stream()
+                .map(this::mapToCartsResponseDTO)
+                .toList();
+        loginData.setCartsResponses(cartsResponsesDTO);
 
         return loginData;
     }

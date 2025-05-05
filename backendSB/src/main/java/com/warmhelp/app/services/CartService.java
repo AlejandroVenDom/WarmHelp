@@ -92,26 +92,15 @@ public class CartService {
 
         cart.setItems(items);
         cart.updateTotalPrice();
-        System.out.println(cart.getTotalPrice());
-        return cartRepository.save(cart);
+        cartRepository.save(cart);
+        return cart;
     }
 
     public Optional<Cart> getCartById(Long id){
         return cartRepository.findById(id);
     }
 
-    public Cart addItemToCart(Long cartId, CartItem cartItem){
-        Optional<Cart> optionalCart = cartRepository.findById(cartId);
-        if(optionalCart.isPresent()){
-            Cart cart = optionalCart.get();
-            cartItem.setCart(cart);
-            cartItemRepository.save(cartItem);
-            cart.getItems().add(cartItem);
-            cart.updateTotalPrice();
-            return cartRepository.save(cart);
-        }
-        return null;
-    }
+
 
     public Cart removeItemFromCart(Long cartId, Long cartItemId){
         Optional<Cart> optionalCart = cartRepository.findById(cartId);

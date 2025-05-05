@@ -37,10 +37,19 @@ public class LoginResponse {
         private List<ReportPostDTO> reportPostDTOS;
         private List<ReportServiceResponseDTO> reportServiceResponseDTOS;
         private List<Likes_Posts_ResponseDTO> likesPostsResponseDTOS;
+        private List<CartsResponse> cartsResponses;
 
 
     public List<Likes_Posts_ResponseDTO> getLikesPostsResponseDTOS() {
         return likesPostsResponseDTOS;
+    }
+
+    public List<CartsResponse> getCartsResponses() {
+        return cartsResponses;
+    }
+
+    public void setCartsResponses(List<CartsResponse> cartsResponses) {
+        this.cartsResponses = cartsResponses;
     }
 
     public void setLikesPostsResponseDTOS(List<Likes_Posts_ResponseDTO> likesPostsResponseDTOS) {

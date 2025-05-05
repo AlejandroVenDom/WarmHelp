@@ -33,6 +33,8 @@ public class CartItemResponseDTO {
         this.updatedAt = updatedAt;
     }
 
+
+
     public String getCurrency() {
         return currency;
     }

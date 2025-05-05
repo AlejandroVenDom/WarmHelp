@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
@@ -28,7 +29,7 @@ public class Cart {
     @JsonManagedReference("cart-cartItem")
     private List<CartItem> items = new ArrayList<>();
 
-    @Column(nullable = false)
+    @Column(name = "total_price", nullable = false)
     private BigDecimal totalPrice = BigDecimal.ZERO ;
 
     @CreationTimestamp

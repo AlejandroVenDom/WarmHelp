@@ -37,20 +37,27 @@ public class CartItemService {
         ProfessionalServices service = optionalProfessionalServices.get();
 
         Optional<Cart> optionalCart = cartRepository.findById(dto.getCartId());
-        Cart cart = optionalCart.orElseGet(Cart::new);
+        Cart cart = optionalCart.orElseGet(()->{
+            Cart newCart = new Cart();
+            return cartRepository.save(newCart);
+        });
 
 
         CartItem cartItem = new CartItem();
         cartItem.setProfessionalServices(service);
         cartItem.setQuantity(dto.getQuantity());
-
         cartItem.setPrice(service.getPrice());
 
         BigDecimal quantityAsBigDecimal = new BigDecimal(dto.getQuantity());
         BigDecimal totalPrice = service.getPrice().multiply(quantityAsBigDecimal);
         cartItem.setTotalPrice(totalPrice);
-
         cartItem.setCart(cart);
+
+        CartItem savedCartItem = cartItemRepository.save(cartItem);
+
+        cart.getItems().add(savedCartItem);
+        cart.updateTotalPrice();
+        cartRepository.save(cart);
 
         return cartItemRepository.save(cartItem);
     }
