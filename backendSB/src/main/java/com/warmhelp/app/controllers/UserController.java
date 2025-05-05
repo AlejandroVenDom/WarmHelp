@@ -17,6 +17,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -149,10 +150,12 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUserById(@PathVariable Long id){
+    public ResponseEntity<Map<String,String>> deleteUserById(@PathVariable Long id){
         try {
             userService.deleteByUserId(id);
-            return ResponseEntity.ok("user delete correctly");
+            Map<String,String> response = new HashMap<>();
+            response.put("message","user delete correctly");
+            return ResponseEntity.ok(response);
         }catch (
                 IllegalArgumentException e
         ){

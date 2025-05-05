@@ -8,7 +8,7 @@ import { PopupService } from '../../services/popup.service';
   selector: 'app-users-admin',
   standalone: false,
   templateUrl: './users-admin.component.html',
-  styleUrl: './users-admin.component.scss'
+  styleUrl: './users-admin.component.scss',
 })
 export class UsersAdminComponent implements OnInit {
   users: UserInterface[] = [];
@@ -31,7 +31,7 @@ export class UsersAdminComponent implements OnInit {
       address: ['', Validators.required],
       number: ['', Validators.required],
       mySelf_description: [''],
-      roleType: ['CLIENT', Validators.required]
+      roleType: ['CLIENT', Validators.required],
     });
   }
 
@@ -81,51 +81,78 @@ export class UsersAdminComponent implements OnInit {
 
       this.userService.updateUser(this.currentUserId, formData).subscribe({
         next: () => {
-          this.popup.showMessage('Actualizado', 'Usuario actualizado correctamente', 'success');
+          this.popup.showMessage(
+            'Actualizado',
+            'Usuario actualizado correctamente',
+            'success'
+          );
           this.loadUsers();
           this.cancelEdit();
         },
         error: (err) => {
-          this.popup.showMessage('Error', err?.error?.message || 'Error al actualizar usuario', 'error');
-        }
+          this.popup.showMessage(
+            'Error',
+            err?.error?.message || 'Error al actualizar usuario',
+            'error'
+          );
+        },
       });
     } else {
       if (!formData.password) {
-        this.popup.showMessage('Error', 'La contraseña es obligatoria para crear usuario', 'error');
+        this.popup.showMessage(
+          'Error',
+          'La contraseña es obligatoria para crear usuario',
+          'error'
+        );
         return;
       }
 
       this.userService.addUser(formData).subscribe({
         next: () => {
-          this.popup.showMessage('Creado', 'Usuario creado correctamente', 'success');
+          this.popup.showMessage(
+            'Creado',
+            'Usuario creado correctamente',
+            'success'
+          );
           this.loadUsers();
           this.cancelEdit();
         },
         error: (err) => {
-          this.popup.showMessage('Error', err?.error?.message || 'Error al crear usuario', 'error');
-        }
+          this.popup.showMessage(
+            'Error',
+            err?.error?.message || 'Error al crear usuario',
+            'error'
+          );
+        },
       });
     }
   }
 
-  async deleteUser(id: number): Promise<void> {
+  async deleteUser(idUser: number): Promise<void> {
     const confirm = await this.popup.showConfirmation(
       'Eliminar usuario',
-      '¿Estás seguro de eliminar este usuario?',
-      'Sí, eliminar',
+      '¿Estás seguro de eliminar a este usuario definitivamente de WarmHelp?',
+      'Sí, eliminar usuario',
       'Cancelar'
     );
-
+  
     if (confirm) {
-      this.userService.deleteUser(id).subscribe({
-        next: () => {
-          this.popup.showMessage('Eliminado', 'Usuario eliminado correctamente', 'success');
-          this.loadUsers();
-        },
-        error: () => {
-          this.popup.showMessage('Error', 'No se pudo eliminar el usuario', 'error');
-        }
-      });
+      try {
+        await this.userService.deleteUser(idUser).toPromise(); // usamos await en lugar de subscribe
+        this.popup.showMessage(
+          'Usuario eliminado',
+          'Usuario eliminado correctamente de warmhelp',
+          'success'
+        );
+        this.loadUsers(); // también deberías revisar esta función por si da error
+      } catch (error) {
+        console.error('Error al eliminar:', error);
+        this.popup.showMessage(
+          'Error',
+          'No se pudo eliminar el usuario',
+          'error'
+        );
+      }
     }
   }
 }
