@@ -1,104 +1,106 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { UseStateService } from './use-state.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { CartItem } from '../interfaces/cart';
 
-export interface CartItem {
-  id: number;
-  title: string;
-  image: string;
-  price: number;
-  tax: number;
-  currencyType: 'USD' | 'EUR' | 'JPY';
-  quantity: number;
-}
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class CartService {
-  private cartItems: CartItem[] = [];
-  private cartSubject = new BehaviorSubject<CartItem[]>([]);
-  private cartVisibleSubject = new BehaviorSubject<boolean>(false);
-  private readonly STORAGE_KEY_PREFIX = 'warmhelp_cart_';
-  private currentUsername: string | null = null;
+  private cartUrl = `${environment.apiUrl}/cart`;
+  private cartItemsUrl = `${environment.apiUrl}/cart-items`;
+  private cartSidebarVisible$ = new BehaviorSubject<boolean>(false);
+  private cartItems$ = new BehaviorSubject<CartItem[]>(this.getLocalCart());
 
-  cart$ = this.cartSubject.asObservable();
-  cartVisible$ = this.cartVisibleSubject.asObservable();
+  constructor(
+    private http: HttpClient,
+    private useState: UseStateService
+  ) {}
 
-  constructor(private useStateService: UseStateService) {
-    const username = this.useStateService.getUsername();
-    if (username) {
-      this.currentUsername = username;
-      this.loadCartFromStorage();
-    }
+  createCartItem(dto: { serviceId: number; quantity: number; cartId: number | null }) {
+    return this.http.post<any>(`${this.cartItemsUrl}`, dto);
   }
 
-
-  toggleCart(): void {
-    const current = this.cartVisibleSubject.getValue();
-    this.cartVisibleSubject.next(!current);
+  createCart(dto: { userInfoId: number; cartItemsIds: number[] }) {
+    return this.http.post<any>(`${this.cartUrl}`, dto);
   }
 
-  showCart(): void {
-    this.cartVisibleSubject.next(true);
+  // Visibilidad del sidebar
+  getCartSidebarVisibility() {
+    return this.cartSidebarVisible$.asObservable();
   }
 
-  hideCart(): void {
-    this.cartVisibleSubject.next(false);
+  toggleCart() {
+    this.cartSidebarVisible$.next(!this.cartSidebarVisible$.value);
   }
 
-  addToCart(product: Omit<CartItem, 'quantity'>, quantity: number = 1): void {
-    const existing = this.cartItems.find(item => item.id === product.id);
-    if (existing) {
-      existing.quantity += quantity;
+  // Obtener estado del carrito
+  getCartItems() {
+    return this.cartItems$.asObservable();
+  }
+
+  private getLocalCart(): CartItem[] {
+    const data = localStorage.getItem('warmhelp_cart');
+    return data ? JSON.parse(data) : [];
+  }
+
+  private saveLocalCart(items: CartItem[]) {
+    localStorage.setItem('warmhelp_cart', JSON.stringify(items));
+    this.cartItems$.next(items);
+  }
+
+  addToCart(service: any, quantity: number = 1) {
+    const existing = this.getLocalCart();
+    const existingItem = existing.find(item => item.serviceId === service.id);
+
+    if (existingItem) {
+      existingItem.quantity += quantity;
+      existingItem.totalPrice = existingItem.quantity * existingItem.priceUd;
     } else {
-      this.cartItems.push({ ...product, quantity });
+      const newItem: CartItem = {
+        serviceId: service.id,
+        quantity,
+        priceUd: service.price,
+        totalPrice: quantity * service.price,
+        image: service.image,
+        currency: service.currencyType,
+        serviceTitle: service.title
+      };
+      existing.push(newItem);
     }
-    this.updateCartState();
+
+    this.saveLocalCart(existing);
   }
 
-  updateQuantity(productId: number, quantity: number): void {
-    if (quantity <= 0) {
-      this.removeFromCart(productId);
-      return;
-    }
-
-    const item = this.cartItems.find(p => p.id === productId);
-    if (item) {
-      item.quantity = quantity;
-      this.updateCartState();
-    }
+  removeItem(serviceId: number) {
+    const filtered = this.getLocalCart().filter(i => i.serviceId !== serviceId);
+    this.saveLocalCart(filtered);
   }
 
-  removeFromCart(productId: number): void {
-    this.cartItems = this.cartItems.filter(item => item.id !== productId);
-    this.updateCartState();
+  clearCart() {
+    localStorage.removeItem('warmhelp_cart');
+    this.cartItems$.next([]);
   }
 
-  clearCart(): void {
-    this.cartItems = [];
-    this.updateCartState();
-  }
+  syncCartToBackend() {
+    const userId = this.useState.getUserId();
+    if (!userId) return;
 
-  private updateCartState(): void {
-    this.cartSubject.next([...this.cartItems]);
-    this.saveCartToStorage();
-  }
+    const cartItems = this.getLocalCart();
+    const creationRequests = cartItems.map(item =>
+      this.http.post(`${this.cartItemsUrl}`, {
+        serviceId: item.serviceId,
+        quantity: item.quantity,
+        cartId: null
+      })
+    );
 
-  private getStorageKey(): string {
-    return `${this.STORAGE_KEY_PREFIX}${this.currentUsername || 'anonimo'}`;
-  }
-
-
-  private loadCartFromStorage(): void {
-    const key = this.getStorageKey();
-    const storedCart = localStorage.getItem(key);
-    this.cartItems = storedCart ? JSON.parse(storedCart) : [];
-    this.cartSubject.next([...this.cartItems]);
-  }
-
-  private saveCartToStorage(): void {
-    const key = this.getStorageKey();
-    localStorage.setItem(key, JSON.stringify(this.cartItems));
+    return Promise.all(creationRequests).then((responses: any[]) => {
+      const ids = responses.map(res => res.cartItemId);
+      return this.http.post(`${this.cartUrl}`, {
+        userInfoId: userId,
+        cartItemsIds: ids
+      }).toPromise();
+    });
   }
 }

@@ -40,26 +40,28 @@ export class TiendaComponent implements OnInit {
     'FALSE_INFORMATION'
   ];
 
-
   constructor(
-  private service: ProfessionalService,
-  private router: Router,
-  private cartService: CartService,
-  private reportService: ReportService,
-  private useStateService: UseStateService,
-  private popupService: PopupService
+    private service: ProfessionalService,
+    private router: Router,
+    private cartService: CartService,
+    private reportService: ReportService,
+    private useStateService: UseStateService,
+    private popupService: PopupService
   ) {}
 
   ngOnInit(): void {
     this.loadServicios();
     window.addEventListener('scroll', this.verificarScroll.bind(this));
   }
+
   ngOnDestroy(): void {
     window.removeEventListener('scroll', this.verificarScroll.bind(this));
   }
+
   verificarScroll(): void {
     this.mostrarBotonScroll = window.scrollY > 300;
   }
+
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -72,11 +74,13 @@ export class TiendaComponent implements OnInit {
       this.setPriceRangeLimits();
     });
   }
+
   verPerfilPublico(username: string): void {
     if (username) {
       this.router.navigate(['/perfil-publico', username]);
     }
   }
+
   addToCart(servicio: ProfessionalServiceInterface): void {
     this.cartService.addToCart({
       id: servicio.id!,
@@ -87,10 +91,10 @@ export class TiendaComponent implements OnInit {
       currencyType: servicio.currencyType
     }, 1);
   }
+
   toggleCart(): void {
     this.cartService.toggleCart();
   }
-
 
   setPriceRangeLimits() {
     const prices = this.servicios.map(s => s.price);
@@ -154,6 +158,7 @@ export class TiendaComponent implements OnInit {
       this.closeModal();
     });
   }
+
   getNombreTipoReporte(tipo: string): string {
     const map: Record<string, string> = {
       BULLYING_OR_HARASSMENT: 'Acoso',
@@ -167,10 +172,9 @@ export class TiendaComponent implements OnInit {
     return map[tipo] || tipo;
   }
 
-
-
   closeModal() {
     this.showModal = false;
     this.selectedService = null;
   }
 }
+

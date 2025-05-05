@@ -4,6 +4,7 @@ import com.warmhelp.app.dtos.auth.*;
 import com.warmhelp.app.dtosResponses.PublicUserProfileResponse;
 import com.warmhelp.app.exceptions.UserAlreadyExistException;
 import com.warmhelp.app.exceptions.UserNotFoundException;
+import com.warmhelp.app.services.IEmailService;
 import com.warmhelp.app.services.UserService;
 import com.warmhelp.app.models.User;
 import com.warmhelp.app.models.UserInfo;
@@ -26,6 +27,9 @@ public class UserController {
     private final UserService userService;
 
     @Autowired
+    private IEmailService emailService;
+
+    @Autowired
     private UserServiceChat userServiceChat;
 
     public UserController(UserService userService) {
@@ -46,6 +50,19 @@ public class UserController {
     public ResponseEntity<?> login(@RequestBody LoginRequest credentials) {
         try {
             LoginResponse loginResponse = this.userService.login(credentials);
+//            ******************************
+            /* Esto es lo que cambie para el email automatico */
+
+            String[] to = new String[]{loginResponse.getEmail()}; // Asegúrate que `getEmail()` exista
+            String subject = "Inicio de sesión exitoso";
+            String message = "Hola " + loginResponse.getFirst_name() + ",\n\n"
+                    + "Has iniciado sesión correctamente en WarmHelp.\n\n"
+                    + "Si no fuiste tú, por favor contacta a soporte.";
+
+//                        ********************************
+
+            emailService.sendEmail(to, subject, message);
+
             return ResponseEntity.ok(loginResponse);
         }
         catch (BadCredentialsException e) {

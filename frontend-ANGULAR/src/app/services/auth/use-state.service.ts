@@ -35,6 +35,7 @@ export class UseStateService {
     const session = this.getSession();
     return session ? session.id : null;
   }
+
   getReports(): ReportServiceInterface[] {
     const session = this.getSession();
     return session ? session.reportServiceResponseDTOS || [] : [];
