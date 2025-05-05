@@ -11,8 +11,14 @@ import com.warmhelp.app.repositories.PostsRepository;
 import com.warmhelp.app.repositories.UserInfoRepository;
 import com.warmhelp.app.repositories.UserRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -127,6 +133,37 @@ public class PostsService {
         post.setUserInfo(userInfo);
 
         return this.postsRepository.save(post);
+    }
+
+    public ResponseEntity<?> createPostWithImage(String title, String description, String userName, MultipartFile image){
+        UserInfo userInfo = this.userInfoRepository.findByUser_Username(userName)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+        if(this.postsRepository.existsByTitle(title)){
+            throw new IllegalArgumentException("Post ya existe");
+        }
+
+        String imageName = null;
+        try {
+            if (!image.isEmpty()){
+                String uploadDir = "uploads/images/";
+                Files.createDirectories(Paths.get(uploadDir));
+                imageName = System.currentTimeMillis() + "_" + image.getOriginalFilename();
+                Path filePath = Paths.get(uploadDir, imageName);
+                image.transferTo(filePath);
+            }
+        } catch (IOException e){
+            return ResponseEntity.status(500).body("error al guardar la imagen");
+        }
+
+        Posts post = new Posts();
+        post.setTitle(title);
+        post.setDescription(description);
+        post.setImage(imageName);
+        post.setUserInfo(userInfo);
+
+        postsRepository.save(post);
+        return ResponseEntity.ok("Post Creado Correctamente");
     }
 
     @Transactional

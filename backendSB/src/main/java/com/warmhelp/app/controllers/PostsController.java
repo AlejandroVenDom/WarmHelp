@@ -8,6 +8,7 @@ import com.warmhelp.app.services.PostsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.method.P;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -55,5 +56,17 @@ public class PostsController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    // Importante que los valores coincidan con los valores de ANGULAR del formDATA
+    @PostMapping("/uploadPostWithImage")
+    public ResponseEntity<?> uploadPostWithImage(
+            @RequestParam("title") String title,
+            @RequestParam("description") String description,
+            @RequestParam("username") String username,
+            @RequestParam("image") MultipartFile image
+    ){
+        return postsService.createPostWithImage(title, description, username, image);
+    }
+
 
 }

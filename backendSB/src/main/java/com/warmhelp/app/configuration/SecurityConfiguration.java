@@ -96,7 +96,8 @@ public class SecurityConfiguration {
                                 "/likes/isLiked",
                                 "/carts",
                                 "/carts/*/items",
-                                "/cart-items"
+                                "/cart-items",
+                                "/posts/uploadPostWithImage"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
