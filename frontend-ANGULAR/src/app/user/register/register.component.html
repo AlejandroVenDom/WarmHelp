@@ -6,6 +6,13 @@
     <div class="register-header">
       <h2 class="register-title">Registrarme</h2>
     </div>
+    <!-- Pantalla de espera -->
+    <div *ngIf="isLoading" class="loading-overlay">
+      <div class="spinner">
+        <i class="fa fa-spinner fa-spin"></i>
+      </div>
+      <p>Estamos procesando tu registro...</p>
+    </div>
 
     <form method="post" [formGroup]="registerForm" (ngSubmit)="submit()">
       <div class="form-grid">
@@ -100,5 +107,20 @@
         <button type="submit" class="register-btn" [disabled]="registerForm.invalid">Finalizar registro</button>
       </div>
     </form>
+    
+  <!-- Botón de Continuar después de la Verificación -->
+  <!-- ... (todo el HTML anterior se mantiene igual hasta el final) -->
+
+<!-- Reemplaza el bloque verification-message por este: -->
+<div *ngIf="isWaitingForVerification" class="verification-message">
+  <h3>¡Registro exitoso!</h3>
+  <p>Hemos enviado un enlace a <strong>{{ emailSentTo }}</strong>.</p>
+  
+  <div class="verification-loader">
+    <i class="fa fa-spinner fa-spin"></i>
+    <p>Esperando verificación...</p>
   </div>
 
+  <button (click)="continueAfterVerification()" class="btn-continue">Continuar</button>
+</div>
+</div>
