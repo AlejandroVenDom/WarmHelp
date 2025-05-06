@@ -74,7 +74,8 @@ export class LoginComponent {
             responseComments: data.responseComments,
             incidents: data.incidents,
             reports: data.reports,
-            likes: data.likes
+            likes: data.likes,
+            avatar: data.avatar
 
           });
           this.popupService.close();

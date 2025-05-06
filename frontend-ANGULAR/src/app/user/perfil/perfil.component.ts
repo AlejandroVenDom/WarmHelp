@@ -18,6 +18,7 @@ export class PerfilComponent implements OnInit {
   email: string | null = null;
   address: string | null = null;
   number: string | null = null;
+  avatar: string | null = null;
   comments: any[] = [];
   posts: any[] = [];
   first_name: string | null = null;
@@ -74,6 +75,7 @@ export class PerfilComponent implements OnInit {
     this.professionalServices = this.useStateService.getProfessionalServices();
     this.reviews = this.useStateService.getReviews();
     window.addEventListener('scroll', this.verificarScroll.bind(this));
+    this.avatar = this.useStateService.getAvatar(); // luego te explico cómo añadirlo en `UseStateService`
   }
   ngOnDestroy(): void {
     window.removeEventListener('scroll', this.verificarScroll.bind(this));
@@ -97,6 +99,31 @@ export class PerfilComponent implements OnInit {
     this.showPasswordFields = false;
     this.passwordError = false;
   }
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) return;
+
+    const file = input.files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const userId = this.useStateService.getUserId();
+    if (!userId) return;
+
+    this.credentialsService.uploadAvatar(userId, formData).subscribe({
+      next: (res) => {
+        this.avatar = res.avatar;
+    const session = this.useStateService.getSession();
+    this.useStateService.save({ ...session, avatar: res.avatar });
+        this.popupService.showMessage('Éxito', 'Avatar actualizado correctamente', 'success');
+      },
+      error: () => {
+        this.popupService.showMessage('Error', 'No se pudo actualizar el avatar', 'error');
+      }
+    });
+  }
+
+
 
   onChangePassword() {
     if (this.newPassword !== this.repeatNewPassword) {

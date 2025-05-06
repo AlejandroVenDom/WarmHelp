@@ -38,5 +38,8 @@ export class CredentialsService {
   resendVerificationEmail(email: string): Observable<any> {
     return this.http.post('/api/auth/resend-verification', { email });
   }
+  uploadAvatar(userId: number, formData: FormData): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/users/${userId}/upload-avatar`, formData);
+  }
 
 }

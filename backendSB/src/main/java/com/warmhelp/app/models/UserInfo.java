@@ -28,6 +28,18 @@ public class UserInfo {
     @Column(nullable = false)
     private String first_name;
 
+    @Column(length = 512)
+    private String avatar; // ruta o nombre del archivo
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+
     @Column(nullable = false)
     private String last_name;
 

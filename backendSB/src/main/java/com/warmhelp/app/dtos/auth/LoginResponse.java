@@ -39,6 +39,17 @@ public class LoginResponse {
         private List<Likes_Posts_ResponseDTO> likesPostsResponseDTOS;
         private List<CartsResponse> cartsResponses;
 
+    private String avatar; // NUEVO
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+
 
     public List<Likes_Posts_ResponseDTO> getLikesPostsResponseDTOS() {
         return likesPostsResponseDTOS;

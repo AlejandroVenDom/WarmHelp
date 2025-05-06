@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -179,4 +180,15 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+    @PostMapping("/{id}/upload-avatar")
+    public ResponseEntity<?> uploadAvatar(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
+        try {
+            String avatarUrl = userService.saveUserAvatar(id, file);
+            String fullUrl = "http://localhost:8080/api" + avatarUrl;
+            return ResponseEntity.ok(Map.of("avatar", fullUrl));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", e.getMessage()));
+        }
+    }
+
 }
