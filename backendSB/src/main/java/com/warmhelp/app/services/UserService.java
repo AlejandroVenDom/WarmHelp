@@ -7,6 +7,7 @@ import com.warmhelp.app.models.*;
 import com.warmhelp.app.repositories.*;
 import com.warmhelp.app.security.JwtUtil;
 import jakarta.transaction.Transactional;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,12 +16,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
+
+    private final VerificationTokenRepository tokenRepository;
     private final UserRepository userRepository;
     private final UserInfoRepository userInfoRepository;
     private final RoleRepository roleRepository;
@@ -32,9 +36,11 @@ public class UserService implements UserDetailsService {
     private final ResponseCommentsRespository responseCommentsRespository;
     private final IncidentRepository incidentRepository;
     private final IncidentStateRepository incidentStateRepository;
+    private final IEmailService emailService;
 
-    public UserService(UserRepository userRepository, UserInfoRepository userInfoRepository, RoleRepository roleRepository, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, JwtUtil jwtUtil, PostsRepository postsRepository, CommentsRepository commentsRepository, ResponseCommentsRespository responseCommentsRespository, IncidentRepository incidentRepository, IncidentStateRepository incidentStateRepository) {
+    public UserService(IEmailService emailService, VerificationTokenRepository tokenRepository, UserRepository userRepository, UserInfoRepository userInfoRepository, RoleRepository roleRepository, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, JwtUtil jwtUtil, PostsRepository postsRepository, CommentsRepository commentsRepository, ResponseCommentsRespository responseCommentsRespository, IncidentRepository incidentRepository, IncidentStateRepository incidentStateRepository) {
         this.userRepository = userRepository;
+        this.tokenRepository = tokenRepository;
         this.userInfoRepository = userInfoRepository;
         this.roleRepository = roleRepository;
         this.authenticationManager = authenticationManager;
@@ -45,6 +51,7 @@ public class UserService implements UserDetailsService {
         this.responseCommentsRespository = responseCommentsRespository;
         this.incidentRepository = incidentRepository;
         this.incidentStateRepository = incidentStateRepository;
+        this.emailService = emailService;
     }
 
     @Override
@@ -120,34 +127,64 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public User createUser(RegisterRequest userFromFront){
-        if (this.userRepository.existsByUsername(userFromFront.getUsername())){
-            throw new IllegalArgumentException("User alredy exists");
+    public User createUser(RegisterRequest userFromFront) {
+        if (userRepository.existsByUsername(userFromFront.getUsername())) {
+            throw new IllegalArgumentException("User already exists");
         }
-        else {
-            Role role = this.roleRepository.findByRoleType(userFromFront.getRoleType()).orElseThrow(
-                    () -> new IllegalArgumentException("Role no permitido")
-            );
-            User user = new User();
-            user.setUsername(userFromFront.getUsername());
-            user.setPassword(
-                    this.passwordEncoder.encode(userFromFront.getPassword())
-            );
-            user.setRole(role);
-            user = this.userRepository.save(user);
 
-            UserInfo userInfo = new UserInfo();
-            userInfo.setUser(user);
-            userInfo.setFirst_name(userFromFront.getFirst_name());
-            userInfo.setLast_name(userFromFront.getLast_name());
-            userInfo.setAddress(userFromFront.getAddress());
-            userInfo.setNumber(userFromFront.getNumber());
-            userInfo.setMySelf_description(userFromFront.getMySelf_description());
-            userInfo.setEmail(userFromFront.getEmail());
+        Role role = roleRepository.findByRoleType(userFromFront.getRoleType())
+                .orElseThrow(() -> new IllegalArgumentException("Role no permitido"));
 
-            this.userInfoRepository.save(userInfo);
-            return user;
+        User user = new User();
+        user.setUsername(userFromFront.getUsername());
+        user.setPassword(passwordEncoder.encode(userFromFront.getPassword()));
+        user.setRole(role);
+        user.setEnabled(false); // 🚨 IMPORTANTE: usuario no está activo aún
+        user = userRepository.save(user);
+
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUser(user);
+        userInfo.setFirst_name(userFromFront.getFirst_name());
+        userInfo.setLast_name(userFromFront.getLast_name());
+        userInfo.setAddress(userFromFront.getAddress());
+        userInfo.setNumber(userFromFront.getNumber());
+        userInfo.setMySelf_description(userFromFront.getMySelf_description());
+        userInfo.setEmail(userFromFront.getEmail());
+        userInfoRepository.save(userInfo);
+
+        // 🔐 Crear y guardar el token de verificación
+        VerificationToken verificationToken = VerificationToken.generate(user);
+        tokenRepository.save(verificationToken);
+
+        // 📧 Enviar email de verificación
+        String url = "http://localhost:4200/verify?token=" + verificationToken.getToken(); // reemplaza con URL real del frontend
+        String subject = "Verifica tu cuenta";
+        String message = "Hola " + userInfo.getFirst_name() + ",\n\n"
+                + "Gracias por registrarte en WarmHelp. Por favor verifica tu cuenta haciendo clic en el siguiente enlace:\n\n"
+                + url + "\n\n"
+                + "Este enlace expirará en 24 horas.";
+
+        emailService.sendEmail(new String[]{userInfo.getEmail()}, subject, message);
+
+        return user;
+    }
+
+    @Transactional
+    public ResponseEntity<?> confirmUserAccount(String token) {
+        VerificationToken verificationToken = tokenRepository.findByToken(token)
+                .orElseThrow(() -> new IllegalArgumentException("Token inválido o expirado"));
+
+        if (verificationToken.getExpiryDate().isBefore(LocalDateTime.now())) {
+            return ResponseEntity.badRequest().body("El token ha expirado.");
         }
+
+        User user = verificationToken.getUser();
+        user.setEnabled(true);
+        userRepository.save(user);
+
+        tokenRepository.delete(verificationToken); // Eliminar token tras verificación
+
+        return ResponseEntity.ok("Cuenta verificada correctamente. Ya puedes iniciar sesión.");
     }
 
     public void changePassword(ChangePasswordRequest request) {

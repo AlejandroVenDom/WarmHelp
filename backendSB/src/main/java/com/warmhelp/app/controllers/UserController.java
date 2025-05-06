@@ -56,11 +56,14 @@ public class UserController {
             /* Esto es lo que cambie para el email automatico */
 
             String[] to = new String[]{loginResponse.getEmail()}; // Asegúrate que `getEmail()` exista
-            String subject = "Inicio de sesión exitoso";
+            String subject = "Inicio de sesión exitoso en WarmHelp";
             String message = "Hola " + loginResponse.getFirst_name() + ",\n\n"
-                    + "Has iniciado sesión correctamente en WarmHelp.\n\n"
-                    + "Si no fuiste tú, por favor contacta a soporte.";
-
+                    + "¡Nos alegra verte de nuevo!\n\n"
+                    + "Has iniciado sesión correctamente en WarmHelp. Todo está listo para que sigas disfrutando de nuestros servicios.\n\n"
+                    + "Si no fuiste tú, por favor contacta a soporte inmediatamente para proteger tu cuenta.\n\n"
+                    + "Gracias por usar WarmHelp. ¡Estamos aquí para ayudarte!\n\n"
+                    + "Saludos cordiales,\n"
+                    + "El equipo de WarmHelp";
 //                        ********************************
 
             emailService.sendEmail(to, subject, message);
@@ -69,6 +72,16 @@ public class UserController {
         }
         catch (BadCredentialsException e) {
             return ResponseEntity.status(401).body(e.getMessage());
+        }
+    }
+    @GetMapping("/verify")
+    public ResponseEntity<?> verifyUser(@RequestParam("token") String token) {
+        try {
+            // Llama al servicio para verificar el token y confirmar la cuenta del usuario
+            return userService.confirmUserAccount(token);
+        } catch (IllegalArgumentException e) {
+            // Si el token es inválido o ha expirado, devuelve un mensaje de error
+            return ResponseEntity.status(400).body(Map.of("error", "Token inválido o expirado."));
         }
     }
 
@@ -81,6 +94,10 @@ public class UserController {
         catch (IllegalArgumentException e) {
             return ResponseEntity.status(401).body(e.getMessage());
         }
+    }
+    @GetMapping("/confirm")
+    public ResponseEntity<?> confirmUserAccount(@RequestParam("token") String token) {
+        return userService.confirmUserAccount(token);
     }
 
     @PostMapping("/check-token")
