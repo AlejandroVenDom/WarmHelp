@@ -51,6 +51,7 @@ export class TiendaComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadServicios();
+    this.cartService.loadUserCartFromBackend();
     window.addEventListener('scroll', this.verificarScroll.bind(this));
   }
 
@@ -82,15 +83,9 @@ export class TiendaComponent implements OnInit {
   }
 
   addToCart(servicio: ProfessionalServiceInterface): void {
-    this.cartService.addToCart({
-      id: servicio.id!,
-      title: servicio.title,
-      image: servicio.image || '/ans.jpg',
-      price: servicio.price,
-      tax: servicio.tax,
-      currencyType: servicio.currencyType
-    }, 1);
+    this.cartService.addToCart(servicio, 1);
   }
+
 
   toggleCart(): void {
     this.cartService.toggleCart();

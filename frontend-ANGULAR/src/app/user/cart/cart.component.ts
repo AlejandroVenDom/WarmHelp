@@ -16,6 +16,7 @@ export class CartComponent implements OnInit {
   constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
+    this.cartService.loadUserCartFromBackend();
     this.cartService.getCartItems().subscribe(items => this.cartItems = items);
     this.cartService.getCartSidebarVisibility().subscribe(v => this.visible = v);
   }
@@ -24,8 +25,8 @@ export class CartComponent implements OnInit {
     return this.cartItems.reduce((acc, item) => acc + (item.totalPrice || 0), 0);
   }
 
-  remove(serviceId: number) {
-    this.cartService.removeItem(serviceId);
+  remove(cartItemId: number) {
+    this.cartService.removeItem(cartItemId);
   }
 
   close() {
@@ -33,10 +34,31 @@ export class CartComponent implements OnInit {
   }
 
   checkout() {
-    this.cartService.syncCartToBackend()?.then(() => {
-      alert('Carrito enviado con éxito');
-      this.cartService.clearCart();
-      this.close();
-    });
+    alert('Compra finalizada (futura integración)');
+    this.close();
+  }
+
+  increaseQuantity(item: CartItem) {
+    const newQty = item.quantity + 1;
+    this.cartService.updateItemQuantity(item.cartItemId!, newQty);
+    this.animateQty(item.cartItemId!);
+  }
+
+  decreaseQuantity(item: CartItem) {
+    const newQty = item.quantity - 1;
+    if (newQty <= 0) {
+      this.remove(item.cartItemId!);
+    } else {
+      this.cartService.updateItemQuantity(item.cartItemId!, newQty);
+    }
+    this.animateQty(item.cartItemId!);
+  }
+
+  private animateQty(id: number) {
+    const el = document.getElementById('qty-' + id);
+    if (el) {
+      el.classList.add('updated');
+      setTimeout(() => el.classList.remove('updated'), 400);
+    }
   }
 }
