@@ -30,6 +30,7 @@ export class PostsComponent implements OnInit {
   totalPaginas = 1;
   paginas: number[] = [];
   mostrarBotonScroll = false;
+  imagenSeleccionada: File | null = null;
 
   // Estado de modales
   modalNuevoPost = false;
@@ -111,6 +112,27 @@ tiposReporte: string[] = [
       postId: post.id
     };
     this.modalReportePostVisible = true;
+  }
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.imagenSeleccionada = file;
+    }
+  }
+  getImageUrl(imagePath: string): string {
+    if (!imagePath || typeof imagePath !== 'string') return '';
+    const trimmed = imagePath.trim();
+    if (trimmed.startsWith('http')) return trimmed;
+    return `http://localhost:8080/api/uploads/images/${encodeURIComponent(trimmed)}`;
+  }
+
+
+
+  onImageError(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    if (!img.src.includes('image-not-found.jpg')) {
+      img.src = '/assets/image-not-found.jpg';
+    }
   }
 
   cerrarModalReportePost(): void {
@@ -297,25 +319,33 @@ tiposReporte: string[] = [
   }
 
   publicarPost(): void {
-    const { title, description } = this.nuevoPost;
+    const { title, description, userName } = this.nuevoPost;
     if (!title.trim() || !description.trim()) {
       alert('Completa el título y la descripción');
       return;
     }
 
     this.popupService.loader('Publicando...', 'Esto puede tardar un poco');
-    this.postService.createPost(this.nuevoPost).pipe(delay(200)).subscribe({
+
+    const obs = this.imagenSeleccionada
+      ? this.postService.createPostWithImage(title, description, userName, this.imagenSeleccionada)
+      : this.postService.createPost(this.nuevoPost);
+
+    obs.pipe(delay(200)).subscribe({
       next: () => {
         this.popupService.close();
         this.popupService.showMessage('Publicación subida', '¡Tu publicación ha sido subida exitosamente!', 'success');
         this.cerrarModalNuevoPost();
         this.cargarPosts();
+        this.imagenSeleccionada = null;
       },
       error: err => {
-        this.popupService.showMessage('Error de publicación', 'ERROR: ' + err.error, 'error');
+        const mensaje = err.error?.message || JSON.stringify(err.error);
+        this.popupService.showMessage('Error de publicación', 'ERROR: ' + mensaje, 'error');
       }
     });
   }
+
 
   // --- Comentarios ---
   abrirModalComentarios(post: Post): void {

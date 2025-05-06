@@ -148,7 +148,12 @@ public class PostsService {
             if (!image.isEmpty()){
                 String uploadDir = "uploads/images/";
                 Files.createDirectories(Paths.get(uploadDir));
-                imageName = System.currentTimeMillis() + "_" + image.getOriginalFilename();
+                String originalName = image.getOriginalFilename();
+                String cleanedName = originalName != null
+                        ? originalName.replaceAll("[^a-zA-Z0-9._-]", "_")
+                        : "image";
+
+                imageName = System.currentTimeMillis() + "_" + cleanedName;
                 Path filePath = Paths.get(uploadDir, imageName);
                 image.transferTo(filePath);
             }

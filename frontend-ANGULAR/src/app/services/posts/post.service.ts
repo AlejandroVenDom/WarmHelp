@@ -30,5 +30,19 @@ export class PostService {
   softDeletePost(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+  createPostWithImage(
+    title: string,
+    description: string,
+    userName: string,
+    image: File
+  ): Observable<any> {
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('username', userName);
+    formData.append('image', image);
+
+    return this.http.post(`${this.apiUrl}/uploadPostWithImage`, formData, { responseType: 'text' });
+  }
 
 }
