@@ -351,6 +351,7 @@ router-outlet + * {
       display: flex;
       align-items: center;
       gap: 0.6rem;
+      margin-bottom: 5%;
 
       &:hover {
         background-color: #DF6D14;
