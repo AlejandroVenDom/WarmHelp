@@ -28,6 +28,7 @@ export class UseStateService {
     reports: any[];
     likes: any[],
     role: string;
+    avatar?: string;
   }): void {
     sessionStorage.setItem(this.USER_KEY, JSON.stringify(userData));
   }
@@ -39,6 +40,10 @@ export class UseStateService {
   getReports(): ReportServiceInterface[] {
     const session = this.getSession();
     return session ? session.reportServiceResponseDTOS || [] : [];
+  }
+  getAvatar(): string | null {
+    const session = this.getSession();
+    return session?.avatar || null;
   }
   getIncidents(): any[] {
     const session = this.getSession();
@@ -117,7 +122,7 @@ export class UseStateService {
     sessionStorage.removeItem(this.USER_KEY);
   }
 
-  private getSession(): any {
+  public getSession(): any {
     return JSON.parse(<string>sessionStorage.getItem(this.USER_KEY));
   }
 }

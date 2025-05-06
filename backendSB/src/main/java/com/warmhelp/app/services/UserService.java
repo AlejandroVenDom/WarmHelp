@@ -15,10 +15,16 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -414,6 +420,7 @@ public class UserService implements UserDetailsService {
         loginData.setNumber(userInfo.getNumber());
         loginData.setEmail(userInfo.getEmail());
         loginData.setMySelf_description(userInfo.getMySelf_description());
+        loginData.setAvatar(userInfo.getAvatar());
 
 
 
@@ -520,5 +527,21 @@ public class UserService implements UserDetailsService {
 
         return dto;
     }
+    public String saveUserAvatar(Long userId, MultipartFile file) throws IOException {
+        UserInfo userInfo = userInfoRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+        String uploadDir = "C:/JavaStuff/Angular/WarmHelp/WarmHelp/backendSB/uploads/images/";
+        String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+        Path filePath = Paths.get(uploadDir + fileName);
+        Files.write(filePath, file.getBytes());
+
+        String url = "/uploads/images/" + fileName;
+        userInfo.setAvatar(url);
+        userInfoRepository.save(userInfo);
+        return url;
+    }
+
+
 
 }

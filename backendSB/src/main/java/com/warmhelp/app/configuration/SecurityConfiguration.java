@@ -100,7 +100,8 @@ public class SecurityConfiguration {
                                 "/cart-items/**",
                                 "/carts/**",
                                 "/posts/uploadPostWithImage",
-                                "/uploads/images/**"
+                                "/uploads/images/**",
+                                "/uploads/avatars/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

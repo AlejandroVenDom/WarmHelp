@@ -5,8 +5,9 @@
     <!-- Izquierda: Info usuario -->
     <div class="perfil-card">
       <div class="avatar-section">
-        <img src="/ken.gif" alt="Avatar del usuario" class="avatar">
-        <button class="btn-editar"><i class="bi bi-pencil-fill"></i></button>
+        <img *ngIf="avatar && avatar.trim() !== ''" [src]="avatar" alt="Avatar del usuario" class="avatar">
+        <input type="file" accept="image/*" #fileInput hidden (change)="onFileSelected($event)">
+        <button class="btn-editar" (click)="fileInput.click()"><i class="bi bi-pencil-fill"></i></button>
       </div>
 
       <div class="info-section">
