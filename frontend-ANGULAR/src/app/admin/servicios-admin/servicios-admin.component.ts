@@ -3,6 +3,7 @@ import { ProfessionalServiceInterface } from '../../services/interfaces/professi
 import { PopupService } from '../../services/popup.service';
 import { ProfessionalService } from '../../services/professional.service';
 import Swal from 'sweetalert2';
+import { HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-servicios-admin',
@@ -30,6 +31,13 @@ export class ServiciosAdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarServicios();
+  }
+
+  @HostListener('document:keydown.escape', ['$event'])
+  handleEscapeKey(event: KeyboardEvent): void {
+    if (this.mostrarModal) {
+      this.cerrarModal();
+    }
   }
 
   cargarServicios(): void {
@@ -62,7 +70,7 @@ export class ServiciosAdminComponent implements OnInit {
 
     const start = (this.paginaActual - 1) * this.cantidadMostrar;
     const end = start + this.cantidadMostrar;
-    this.serviciosFiltrados = this.serviciosFiltrados.slice(start, end);
+    this.serviciosFiltrados = [...this.serviciosFiltrados].slice(start, end);
   }
 
   onCantidadChange(): void {
@@ -98,9 +106,12 @@ export class ServiciosAdminComponent implements OnInit {
         if (confirmado) {
           this.professionalService.delete(id).subscribe({
             next: () => {
-              Swal.fire("Eliminado", "Servicio eliminado correctamente", "success").then(() => {
-                this.cargarServicios();
-              });
+              // ✅ Elimina el servicio localmente
+              this.servicios = this.servicios.filter(s => s.id !== id);
+              this.filtrarServicios(); // aplica de nuevo filtros y paginación
+
+              // ✅ Muestra el popup correctamente
+              Swal.fire("Eliminado", "Servicio eliminado correctamente", "success");
             },
             error: () => {
               Swal.fire("Error", "No se pudo eliminar el servicio", "error");
@@ -110,25 +121,38 @@ export class ServiciosAdminComponent implements OnInit {
       });
   }
 
+
   abrirModalEditar(servicio: ProfessionalServiceInterface): void {
-    this.servicioEditando = { ...servicio }; // copia del servicio
+    this.servicioEditando = { ...servicio };
     this.mostrarModal = true;
+    document.body.style.overflow = 'hidden';
   }
 
   cerrarModal(): void {
     this.mostrarModal = false;
     this.servicioEditando = null;
+    document.body.style.overflow = '';
   }
 
   guardarCambios(): void {
     if (!this.servicioEditando || !this.servicioEditando.id) return;
 
-    this.professionalService.update(this.servicioEditando.id, this.servicioEditando).subscribe({
+    const dataToSend = {
+      ...this.servicioEditando,
+      currency: this.servicioEditando.currencyType
+    };
+
+    this.professionalService.update(this.servicioEditando.id, dataToSend).subscribe({
       next: () => {
-        Swal.fire("Actualizado", "Servicio actualizado correctamente", "success").then(() => {
-          this.cerrarModal();
-          this.cargarServicios();
-        });
+        // ✅ Actualizar el servicio en la lista local sin recargar desde backend
+        const index = this.servicios.findIndex(s => s.id === this.servicioEditando!.id);
+        if (index !== -1) {
+          this.servicios[index] = { ...this.servicioEditando! };
+          this.filtrarServicios(); // volver a aplicar filtro y paginación
+        }
+
+        this.cerrarModal();
+        Swal.fire("Actualizado", "Servicio actualizado correctamente", "success");
       },
       error: () => {
         Swal.fire("Error", "No se pudo actualizar el servicio", "error");

@@ -14,6 +14,7 @@ export class HeaderAdminComponent implements OnInit {
   sidebarOpen = false;
 
   username: string | null = '';
+  submenuReportesAbierto = false;
 
   constructor(
     private useStateService: UseStateService,
@@ -33,6 +34,7 @@ export class HeaderAdminComponent implements OnInit {
 
   closeSidebar(): void {
     this.sidebarOpen = false;
+    this.submenuReportesAbierto = false;
     this.toggleBodyClass(false);
   }
 

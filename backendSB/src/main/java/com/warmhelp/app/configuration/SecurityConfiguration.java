@@ -78,6 +78,7 @@ public class SecurityConfiguration {
                                 "/professionalServices",
                                 "/professionalServices/*",
                                 "/professionalServices/registerService",
+                                "/professionalServices/**",
                                 "/professionalServices/*/update",
                                 "/reviews",
                                 "/reviews/registerReview",

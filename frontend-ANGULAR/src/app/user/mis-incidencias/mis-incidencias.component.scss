@@ -208,3 +208,18 @@
     color: white;
   }
 }
+.mensaje-vacio {
+  padding: 1.5rem;
+  background-color: #fbfaf4;
+  border-radius: 12px;
+  border: 2px dashed #ccc;
+  color: #666;
+  font-style: italic;
+  text-align: center;
+  font-size: 1rem;
+
+  i {
+    color: #DF6D14;
+    margin-right: 8px;
+  }
+}

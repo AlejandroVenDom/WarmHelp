@@ -50,24 +50,24 @@
   </div>
 </div>
 
-<!-- Modal de edición -->
 <div class="modal-editar" *ngIf="mostrarModal">
-  <div class="modal-contenido">
-    <h3>Editar Servicio</h3>
-    <label>Título</label>
-    <input [(ngModel)]="servicioEditando!.title" />
+  <div class="modal-contenido" (click)="$event.stopPropagation()">
+    <h3><i class="bi bi-pencil-square"></i> Editar Servicio</h3>
 
-    <label>Descripción</label>
-    <textarea [(ngModel)]="servicioEditando!.description"></textarea>
+    <label for="titulo">Título</label>
+    <input id="titulo" [(ngModel)]="servicioEditando!.title" />
 
-    <label>Precio</label>
-    <input type="number" [(ngModel)]="servicioEditando!.price" />
+    <label for="descripcion">Descripción</label>
+    <textarea id="descripcion" [(ngModel)]="servicioEditando!.description"></textarea>
 
-    <label>Impuesto (%)</label>
-    <input type="number" [(ngModel)]="servicioEditando!.tax" />
+    <label for="precio">Precio</label>
+    <input id="precio" type="number" [(ngModel)]="servicioEditando!.price" />
 
-    <label>Moneda</label>
-    <select [(ngModel)]="servicioEditando!.currencyType">
+    <label for="tax">Impuesto (%)</label>
+    <input id="tax" type="number" [(ngModel)]="servicioEditando!.tax" />
+
+    <label for="moneda">Moneda</label>
+    <select id="moneda" [(ngModel)]="servicioEditando!.currencyType">
       <option value="USD">USD</option>
       <option value="EUR">EUR</option>
       <option value="JPY">JPY</option>
@@ -79,3 +79,4 @@
     </div>
   </div>
 </div>
+

@@ -3,6 +3,21 @@
     <i class="bi bi-people-fill"></i> Administración de Usuarios
   </h2>
 
+  <!-- Filtros -->
+  <div class="acciones-admin">
+    <div class="buscador">
+      <input type="text" [(ngModel)]="filtroBusqueda" (input)="filtrarUsuarios()" placeholder="Buscar usuario...">
+      <button (click)="resetearFiltros()" title="Resetear filtros"><i class="bi bi-arrow-clockwise"></i></button>
+    </div>
+    <div class="cantidad">
+      <label>Mostrar:</label>
+      <select [(ngModel)]="cantidadMostrar" (change)="onCantidadChange()">
+        <option *ngFor="let c of cantidadesDisponibles" [value]="c">{{ c }}</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Formulario -->
   <form [formGroup]="userForm" (ngSubmit)="submit()" class="formulario">
     <div class="form-grid">
       <input formControlName="username" placeholder="Nombre de usuario" />
@@ -11,11 +26,6 @@
       <input formControlName="last_name" placeholder="Apellido" />
       <input formControlName="address" placeholder="Dirección" />
       <input formControlName="number" placeholder="Teléfono" />
-      <select formControlName="roleType">
-        <option value="CLIENT">CLIENT</option>
-        <option value="PROFESSIONAL">PROFESSIONAL</option>
-        <option value="ADMIN">ADMIN</option>
-      </select>
       <textarea formControlName="mySelf_description" rows="3" placeholder="Sobre mí..."></textarea>
     </div>
 
@@ -25,6 +35,7 @@
     </div>
   </form>
 
+  <!-- Lista de Usuarios -->
   <div class="users-grid">
     <div *ngFor="let user of users" class="user-card">
       <h4><i class="bi bi-person-badge-fill"></i> {{ user.username }}</h4>
@@ -32,7 +43,7 @@
       <p><i class="bi bi-person-lines-fill"></i> {{ user.first_name }} {{ user.last_name }}</p>
       <p><i class="bi bi-geo-alt-fill"></i> {{ user.address }}</p>
       <p><i class="bi bi-phone-fill"></i> {{ user.number }}</p>
-      <p><i class="bi bi-award-fill"></i> Rol: {{ user.roleType }}</p>
+      <p><i class="bi bi-list-columns-reverse"></i> Descripción: {{ user.mySelf_description }}</p>
 
       <div class="btn-actions">
         <button class="btn-editar" (click)="startEdit(user)">
@@ -43,5 +54,14 @@
         </button>
       </div>
     </div>
+  </div>
+
+  <!-- Paginación -->
+  <div class="paginacion" *ngIf="totalPaginas > 1">
+    <button (click)="cambiarPagina(-1)" [disabled]="paginaActual === 1">Anterior</button>
+    <span *ngFor="let p of paginas" [class.activa]="p === paginaActual" (click)="irAPagina(p)">
+      {{ p }}
+    </span>
+    <button (click)="cambiarPagina(1)" [disabled]="paginaActual === totalPaginas">Siguiente</button>
   </div>
 </div>

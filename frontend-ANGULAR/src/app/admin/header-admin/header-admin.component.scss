@@ -306,4 +306,74 @@ router-outlet + * {
     }
   }
 }
+.dropdown-link {
+  display: flex;
+  flex-direction: column;
+
+  .main-link {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.8rem 1rem;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #3A7D44;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: background 0.3s, color 0.3s;
+
+    &:hover {
+      background-color: #DF6D14;
+      color: white;
+
+      i {
+        color: white;
+      }
+    }
+
+    i {
+      font-size: 1.2rem;
+      transition: transform 0.2s ease;
+    }
+  }
+
+  .submenu {
+    display: flex;
+    flex-direction: column;
+    padding-left: 1.5rem;
+    margin-top: 0.5rem;
+
+    a {
+      padding: 0.6rem 1rem;
+      font-size: 0.95rem;
+      color: #3A7D44;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+
+      &:hover {
+        background-color: #DF6D14;
+        color: white;
+
+        i {
+          color: white;
+        }
+      }
+
+      &.active {
+        background-color: #9DC08B;
+        color: white;
+
+        i {
+          color: white;
+        }
+      }
+
+      i {
+        font-size: 1rem;
+      }
+    }
+  }
+}
 

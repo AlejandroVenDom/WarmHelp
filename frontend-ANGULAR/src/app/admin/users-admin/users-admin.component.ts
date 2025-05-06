@@ -16,6 +16,14 @@ export class UsersAdminComponent implements OnInit {
   isEditing = false;
   currentUserId: number | null = null;
   loggedUserId: number | null = null;
+  filtroBusqueda = '';
+  cantidadMostrar = 10;
+  cantidadesDisponibles = [5, 10, 20, 50];
+  paginaActual = 1;
+  totalPaginas = 1;
+  paginas: number[] = [];
+
+allUsers: UserInterface[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -45,9 +53,62 @@ export class UsersAdminComponent implements OnInit {
 
   loadUsers(): void {
     this.userService.getAllUsers().subscribe(users => {
-      console.log(users);
-      this.users = users;
+      this.allUsers = users;
+      this.actualizarListaUsuarios();
     });
+  }
+  actualizarListaUsuarios(): void {
+    const filtro = this.filtroBusqueda.toLowerCase().trim();
+
+    const filtrados = this.allUsers.filter(user =>
+      user.username.toLowerCase().includes(filtro) ||
+      user.email.toLowerCase().includes(filtro) ||
+      user.first_name.toLowerCase().includes(filtro) ||
+      user.last_name.toLowerCase().includes(filtro)
+    );
+
+    this.totalPaginas = Math.ceil(filtrados.length / this.cantidadMostrar);
+    this.paginas = Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
+
+    if (this.paginaActual > this.totalPaginas) {
+      this.paginaActual = this.totalPaginas || 1;
+    }
+
+    const start = (this.paginaActual - 1) * this.cantidadMostrar;
+    const end = start + this.cantidadMostrar;
+
+    this.users = filtrados.slice(start, end);
+  }
+
+  filtrarUsuarios(): void {
+    this.paginaActual = 1;
+    this.actualizarListaUsuarios();
+  }
+
+  onCantidadChange(): void {
+    this.cantidadMostrar = +this.cantidadMostrar;
+    this.paginaActual = 1;
+    this.actualizarListaUsuarios();
+  }
+
+  resetearFiltros(): void {
+    this.filtroBusqueda = '';
+    this.cantidadMostrar = 10;
+    this.paginaActual = 1;
+    this.actualizarListaUsuarios();
+  }
+
+  cambiarPagina(delta: number): void {
+    const nueva = this.paginaActual + delta;
+    if (nueva >= 1 && nueva <= this.totalPaginas) {
+      this.paginaActual = nueva;
+      this.actualizarListaUsuarios();
+    }
+  }
+
+  irAPagina(p: number): void {
+    this.paginaActual = p;
+    this.actualizarListaUsuarios();
   }
 
   startEdit(user: UserInterface): void {
@@ -135,7 +196,7 @@ export class UsersAdminComponent implements OnInit {
       'Sí, eliminar usuario',
       'Cancelar'
     );
-  
+
     if (confirm) {
       try {
         await this.userService.deleteUser(idUser).toPromise(); // usamos await en lugar de subscribe

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ControlPanelService } from '../../services/control-panel.service';
 import { ChartData } from 'chart.js';
 import { Router } from '@angular/router';
+import { UserService } from '../../services/users/user.service';
 
 @Component({
   selector: 'app-control-panel',
@@ -14,6 +15,7 @@ export class ControlPanelComponent implements OnInit {
   totalPosts = 0;
   totalIncidencias = 0;
   totalReportes = 0;
+  totalUsuarios = 0;
   abrirSelectorReportes = false;
 
   serviciosPorMoneda: ChartData<'pie', number[], string> = { labels: [], datasets: [] };
@@ -25,13 +27,17 @@ export class ControlPanelComponent implements OnInit {
 
   constructor(
     private panelService: ControlPanelService,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
     this.panelService.getResumenServicios().subscribe(data => {
       this.totalServicios = data.total;
       this.serviciosPorMoneda = data.porMoneda;
+      this.userService.getAllUsers().subscribe(users => {
+        this.totalUsuarios = users.length;
+      });
     });
 
     this.panelService.getResumenPosts().subscribe(data => {

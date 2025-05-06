@@ -1,41 +1,53 @@
 <div class="mis-servicios-container">
   <h2 class="title">Mis Servicios Profesionales</h2>
-  <button class="btn-crear" (click)="openModal()">+ Añadir Servicio</button>
+  <button class="btn-crear" (click)="openModal()">
+    <i class="bi bi-plus-circle"></i> Añadir Servicio
+  </button>
 
   <div class="mis-servicios-grid">
-    <div *ngFor="let servicio of servicios" class="servicio-card">
+    <div class="servicio-card" *ngFor="let servicio of servicios" (click)="openModal(servicio)">
       <img [src]="servicio.image || 'https://seranking.com/es/blog/wp-content/uploads/sites/13/2021/09/que-es-una-url.png'" alt="Imagen" class="imagen-servicio" />
-      <h4>{{ servicio.title }}</h4>
-      <p>{{ servicio.description }}</p>
-      <p><strong>Precio:</strong> {{ servicio.price }} {{ servicio.currencyType }}</p>
-      <p><strong>Impuesto:</strong> {{ servicio.tax }} {{ servicio.currencyType }}</p>
+      <div class="servicio-info">
+        <h4>{{ servicio.title }}</h4>
+        <p>{{ servicio.description }}</p>
+        <div class="precio-impuesto">
+          <span><strong>Precio:</strong> {{ servicio.price }} {{ servicio.currencyType }}</span>
+          <p><strong>Impuesto:</strong> {{ servicio.tax }} {{ servicio.currencyType }}</p>
+        </div>
+      </div>
+      <div class="acciones">
+        <button class="editar" (click)="openModal(servicio)" title="Editar"><i class="bi bi-pencil-square"></i></button>
+        <button class="eliminar" (click)="eliminarServicio(servicio.id!); $event.stopPropagation()" title="Eliminar"><i class="bi bi-trash"></i></button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Modal de creación -->
-<div class="modal-overlay" *ngIf="showModal">
-  <div class="modal-content">
-    <span class="icon-cancel" (click)="closeModal()">
-      <i class="bi bi-x-circle"></i>
-    </span>
-    <h3>Crear nuevo servicio</h3>
-    <input type="text" placeholder="Título" [(ngModel)]="nuevoServicio.title">
-    <textarea placeholder="Descripción" [(ngModel)]="nuevoServicio.description"></textarea>
-    <input type="text" placeholder="URL de la imagen" [(ngModel)]="nuevoServicio.image">
-    <input type="number" placeholder="Precio" [(ngModel)]="nuevoServicio.price">
-    <input type="number" placeholder="Impuesto (%)" [(ngModel)]="nuevoServicio.tax">
-    <select [(ngModel)]="nuevoServicio.currencyType">
-      <option value="USD">USD</option>
-      <option value="EUR">EUR</option>
-      <option value="JPY">JPY</option>
-    </select>
-    <button class="btn-confirmar" (click)="crearServicio()">Guardar</button>
+  <!-- Modal de creación/edición -->
+  <div class="modal-overlay" *ngIf="showModal">
+    <div class="modal-content">
+      <span class="icon-cancel" (click)="closeModal()">
+        <i class="bi bi-x-circle"></i>
+      </span>
+      <h3>{{ modoEdicion ? 'Editar Servicio' : 'Nuevo Servicio' }}</h3>
+
+      <input type="text" placeholder="Título del Servicio" [(ngModel)]="servicioEditando!.title" />
+      <textarea placeholder="Descripción del Servicio" [(ngModel)]="servicioEditando!.description"></textarea>
+      <input type="text" placeholder="URL Imagen" [(ngModel)]="servicioEditando!.image" />
+      <input type="number" placeholder="Precio" [(ngModel)]="servicioEditando!.price" />
+      <input type="number" placeholder="Impuesto (%)" [(ngModel)]="servicioEditando!.tax" />
+      <select [(ngModel)]="servicioEditando!.currencyType">
+        <option value="USD">USD ($)</option>
+        <option value="EUR">EUR (€)</option>
+        <option value="JPY">JPY (¥)</option>
+      </select>
+
+      <button class="btn-confirmar" (click)="guardarServicio()">
+        {{ modoEdicion ? 'Actualizar' : 'Guardar' }}
+      </button>
+    </div>
   </div>
-  <button *ngIf="mostrarBotonScroll"
-  class="scroll-top-btn fade-in"
-  (click)="scrollToTop()"
-  title="Volver arriba">
-<i class="bi bi-arrow-up-circle-fill"></i>
-</button>
+
+  <button *ngIf="mostrarBotonScroll" class="scroll-top-btn fade-in" (click)="scrollToTop()" title="Volver arriba">
+    <i class="bi bi-arrow-up-circle-fill"></i>
+  </button>
 </div>

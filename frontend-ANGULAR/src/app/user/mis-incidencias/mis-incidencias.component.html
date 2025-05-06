@@ -22,6 +22,9 @@
     </div>
 
     <div class="lista-incidencias">
+      <div *ngIf="incidencias.length === 0" class="mensaje-vacio">
+        <i class="bi bi-info-circle"></i> No has registrado ninguna incidencia todavía.
+      </div>
       <div *ngFor="let i of incidencias" class="incidencia-card">
         <div class="incidencia-header">
           <h4><i class="bi bi-clipboard2-fill"></i> {{ i.title }}</h4>
@@ -48,6 +51,9 @@
   </h2>
 
   <div *ngIf="mostrarReportesServicio" class="lista-incidencias">
+    <div *ngIf="reportesServicio.length === 0" class="mensaje-vacio">
+      <i class="bi bi-info-circle"></i> No has realizado ningún reporte de servicios.
+    </div>
     <div *ngFor="let r of reportesServicio" class="incidencia-card">
       <div class="incidencia-header">
         <h4><i class="bi bi-tools"></i> {{ r.serviceTitle }}</h4>
@@ -71,6 +77,9 @@
   </h2>
 
   <div *ngIf="mostrarReportesPost" class="lista-incidencias">
+    <div *ngIf="reportesPost.length === 0" class="mensaje-vacio">
+      <i class="bi bi-info-circle"></i> No has reportado ninguna publicación.
+    </div>
     <div *ngFor="let r of reportesPost" class="incidencia-card">
       <div class="incidencia-header">
         <h4><i class="bi bi-file-text-fill"></i> {{ r.postTitle }}</h4>

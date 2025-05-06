@@ -29,13 +29,23 @@
       <i class="bi bi-exclamation-triangle-fill"></i> Incidencias
     </a>
 
-    <a routerLink="/app/reports-admin" routerLinkActive="active" (click)="closeSidebar()">
-      <i class="bi bi-wrench-adjustable-circle-fill"></i> Reportes Servicios
-    </a>
+<!-- Menú desplegable de Reportes -->
+<div class="dropdown-link" [class.open]="submenuReportesAbierto">
+  <div class="main-link" (click)="submenuReportesAbierto = !submenuReportesAbierto">
+    <i class="bi bi-flag-fill"></i> Reportes
+    <i class="bi" [ngClass]="submenuReportesAbierto ? 'bi-chevron-up' : 'bi-chevron-down'" style="margin-left:auto;"></i>
+  </div>
 
+  <div class="submenu" *ngIf="submenuReportesAbierto">
+    <a routerLink="/app/reports-admin" routerLinkActive="active" (click)="closeSidebar()">
+      <i class="bi bi-flag-fill"></i> Reportes Servicios
+    </a>
     <a routerLink="/app/reports-posts-admin" routerLinkActive="active" (click)="closeSidebar()">
       <i class="bi bi-flag-fill"></i> Reportes Posts
     </a>
+  </div>
+</div>
+
 
     <!-- <a routerLink="/app/likes-admin" routerLinkActive="active" (click)="closeSidebar()">
       <i class="bi bi-hand-thumbs-up-fill"></i> Likes
@@ -53,9 +63,9 @@
       <i class="bi bi-briefcase-fill"></i> Servicios
     </a>
 
-    <a routerLink="/app/comentarios-admin" routerLinkActive="active" (click)="closeSidebar()">
+    <!-- <a routerLink="/app/comentarios-admin" routerLinkActive="active" (click)="closeSidebar()">
       <i class="bi bi-chat-left-text-fill"></i> Comentarios
-    </a>
+    </a> -->
 
     <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeSidebar()">
       <i class="bi bi-house-door-fill"></i> Página Principal
