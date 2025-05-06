@@ -18,7 +18,11 @@ import { PopupService } from '../../services/popup.service';
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
-  showPassword: boolean = true;
+  isWaitingForVerification: boolean = false; // Nueva variable
+  isLoading: boolean = false; // Controla la pantalla de espera
+  showVerificationMessage: boolean = false; // Controla el mensaje de verificación
+  showPassword: boolean = true;  
+  emailSentTo: string = ''; // Nuevo: Guarda el email para mostrarlo
   registerForm: FormGroup;
 
   constructor(
@@ -52,48 +56,42 @@ export class RegisterComponent {
   }
 
   submit() {
-    if (this.registerForm.invalid) {
-      this.popupService.showMessage(
-        'Error',
-        'Por favor, complete todos los campos correctamente',
-        'error'
-      );
-      return;
-    }
-
-    this.popupService.loader('Completando Registro', 'Por favor espere...');
-
-    this.credentialsService
-      .register(this.registerForm.value as UserInterface)
-      .subscribe({
-        next: () => {
-          setTimeout(() => {
-            this.router.navigate(['/login']);
-            this.popupService.close();
-            this.popupService.showMessage(
-              'Éxito',
-              'Usted se ha registrado correctamente',
-              'success'
-            );
-          }, 1200);
-        },
-        error: (err) => {
-          this.popupService.close();
-          let message;
-
-          switch (err.error) {
-            case 'Username already taken':
-              message = 'El nombre de usuario ya está en uso. Prueba con otro.';
-              break;
-            default:
-              message =
-                err.error ||
-                'Hubo un problema al registrar el usuario. Inténtelo de nuevo más tarde.';
-              break;
-          }
-
-          this.popupService.showMessage('Error', message, 'error');
-        },
-      });
+    if (this.registerForm.invalid) return;
+  
+    this.isLoading = true;
+    this.popupService.loader('Completando Registro', 'Espera...');
+  
+    this.credentialsService.register(this.registerForm.value as UserInterface).subscribe({
+      next: () => {
+        this.isLoading = false;
+        this.isWaitingForVerification = true; // Activa el estado de espera
+        this.emailSentTo = this.registerForm.value.email;
+        this.popupService.close();
+      },
+      error: (err) => { /* ... */ }
+    });
+  }
+  
+  // Nuevo método (añádelo después de submit())
+  resendVerificationEmail() {
+    this.credentialsService.resendVerificationEmail(this.emailSentTo).subscribe({
+      next: () => {
+        this.popupService.showMessage('Éxito', '¡Correo de verificación reenviado!', 'success');
+      },
+      error: () => {
+        this.popupService.showMessage('Error', 'No se pudo reenviar el correo. Inténtalo más tarde.', 'error');
+      },
+    });
+  }
+  continueAfterVerification() {
+    // Redirige al login (aunque la cuenta no esté verificada aún)
+    this.router.navigate(['/login']);
+  
+    // Opcional: Mostrar un mensaje recordando verificar el email
+    this.popupService.showMessage(
+      'Importante',
+      'Tu cuenta aún no está verificada. Por favor revisa tu correo electrónico para activarla.',
+      'info'
+    );
   }
 }

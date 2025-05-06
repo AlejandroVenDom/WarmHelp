@@ -35,8 +35,8 @@ export class CredentialsService {
     return this.http.post(`${environment.apiUrl}/users/${id}/update`, data);
   }
 
-
-
-
+  resendVerificationEmail(email: string): Observable<any> {
+    return this.http.post('/api/auth/resend-verification', { email });
+  }
 
 }
