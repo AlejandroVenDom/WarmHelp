@@ -89,7 +89,8 @@ public class UserService implements UserDetailsService {
                                 userInfo1.getNumber(),
                                 userInfo1.getEmail(),
                                 userInfo1.getMySelf_description(),
-                                userInfo1.getUser().getRole().getRoleType().name()
+                                userInfo1.getUser().getRole().getRoleType().name(),
+                                userInfo1.getAvatar()
                         )).collect(Collectors.toList());
     }
 
