@@ -28,6 +28,7 @@ import { ControlEvent } from '@angular/forms';
 import { ControlPanelComponent } from './admin/control-panel/control-panel.component';
 import { ReportsAdminComponent } from './admin/reports-admin/reports-admin.component';
 import { ReportsPostsAdminComponent } from './admin/reports-posts-admin/reports-posts-admin.component';
+import { StripePayComponent } from './user/stripe-pay/stripe-pay.component';
 
 const routes: Routes = [
   // users without authentication
@@ -43,7 +44,8 @@ const routes: Routes = [
       { path: 'mis-publicaciones', component: MisPublicacionesComponent , canActivate: [authGuard] },
       { path: 'mis-incidencias', component: MisIncidenciasComponent, canActivate: [authGuard]},
       { path: 'chat-gpt', component: ChatGptComponent , canActivate: [authGuard]},
-      { path: 'servicioscr', component: BackofficeAdminComponent}
+      { path: 'servicioscr', component: BackofficeAdminComponent, canActivate: [roleGuard]},
+      { path: 'stripe-pay', component: StripePayComponent, canActivate: [authGuard]}
     ]
   },
     // admins

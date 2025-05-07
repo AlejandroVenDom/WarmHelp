@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UseStateService } from '../../services/auth/use-state.service';
 import { CartService } from '../../services/auth/cart.service';
 import { CartItem } from '../../services/interfaces/cart';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -13,7 +14,10 @@ export class CartComponent implements OnInit {
   cartItems: CartItem[] = [];
   visible = false;
 
-  constructor(private cartService: CartService) {}
+  constructor(
+    private cartService: CartService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.cartService.loadUserCartFromBackend();
@@ -34,8 +38,8 @@ export class CartComponent implements OnInit {
   }
 
   checkout() {
-    alert('Compra finalizada (futura integración)');
     this.close();
+    this.router.navigate(['/stripe-pay']);
   }
 
   increaseQuantity(item: CartItem) {

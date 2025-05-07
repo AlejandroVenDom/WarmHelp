@@ -1,0 +1,27 @@
+<div class="checkout-page">
+  <h2><i class="bi bi-credit-card-fill"></i> Confirmar tu compra</h2>
+
+  <div *ngIf="cartItems.length === 0" class="empty-cart">
+    <i class="bi bi-cart-x"></i>
+    <p>Tu carrito está vacío</p>
+  </div>
+
+  <div *ngIf="cartItems.length > 0" class="checkout-items">
+    <div *ngFor="let item of cartItems" class="checkout-item">
+      <img [src]="item.image || '/ans.jpg'" alt="Imagen" />
+      <div class="info">
+        <h4>{{ item.serviceTitle }}</h4>
+        <p>{{ item.quantity }} × {{ item.priceUd }} {{ item.currency }}</p>
+        <p class="total">Subtotal: {{ item.totalPrice }} {{ item.currency }}</p>
+      </div>
+    </div>
+
+    <div class="checkout-summary">
+      <div class="line">
+        <span>Total:</span>
+        <strong>{{ total.toFixed(2) }} {{ cartItems[0]?.currency || '' }}</strong>
+      </div>
+      <button class="pay-btn"><i class="bi bi-lock-fill"></i> Pagar con tarjeta</button>
+    </div>
+  </div>
+</div>
