@@ -5,6 +5,7 @@ import { UseStateService } from '../../services/auth/use-state.service';
 import { PopupService } from '../../services/popup.service';
 import { PostService } from '../../services/posts/post.service';
 import { CredentialsService } from '../../services/auth/credentials.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-perfil',
@@ -31,6 +32,7 @@ export class PerfilComponent implements OnInit {
   showNewPassword: boolean = false;
   showRepeatPassword: boolean = false;
   mostrarBotonScroll = false;
+  avatarSub!: Subscription;
 
   // Cambio de contraseña
   oldPassword: string = '';
@@ -74,11 +76,14 @@ export class PerfilComponent implements OnInit {
     this.responseComments = this.useStateService.getResponseComments();
     this.professionalServices = this.useStateService.getProfessionalServices();
     this.reviews = this.useStateService.getReviews();
+    this.avatar = this.useStateService.getAvatar();
     window.addEventListener('scroll', this.verificarScroll.bind(this));
-    this.avatar = this.useStateService.getAvatar(); // luego te explico cómo añadirlo en `UseStateService`
   }
   ngOnDestroy(): void {
     window.removeEventListener('scroll', this.verificarScroll.bind(this));
+    if (this.avatarSub) {
+      this.avatarSub.unsubscribe();
+    }
   }
   verificarScroll(): void {
     this.mostrarBotonScroll = window.scrollY > 300;
@@ -113,8 +118,7 @@ export class PerfilComponent implements OnInit {
     this.credentialsService.uploadAvatar(userId, formData).subscribe({
       next: (res) => {
         this.avatar = res.avatar;
-    const session = this.useStateService.getSession();
-    this.useStateService.save({ ...session, avatar: res.avatar });
+        this.useStateService.setAvatar(res.avatar);
         this.popupService.showMessage('Éxito', 'Avatar actualizado correctamente', 'success');
       },
       error: () => {
@@ -122,6 +126,7 @@ export class PerfilComponent implements OnInit {
       }
     });
   }
+
 
 
 
@@ -210,16 +215,17 @@ export class PerfilComponent implements OnInit {
       next: (updated) => {
         this.popupService.showMessage('Éxito', 'Perfil actualizado correctamente', 'success');
 
-        const currentSession = JSON.parse(sessionStorage.getItem('warmhelp_user')!);
+        const currentSession = this.useStateService.getSession();
 
         const newSession = {
           ...currentSession,
-          ...updated
+          ...updated,
+          avatar: currentSession.avatar // <- MANTENER avatar actual
         };
 
         this.useStateService.save(newSession);
 
-        // ACTUALIZAR datos locales (visualmente)
+        // ACTUALIZAR datos locales
         this.username = newSession.username;
         this.first_name = newSession.first_name;
         this.last_name = newSession.last_name;
@@ -228,13 +234,14 @@ export class PerfilComponent implements OnInit {
         this.email = newSession.email;
         this.mySelf_description = newSession.mySelf_description;
 
-        this.closeEditModal(); // Cerrar modal tras actualizar
+        this.closeEditModal();
       },
       error: (err) => {
         this.popupService.showMessage('Error', err?.error?.message || 'Error al actualizar el perfil', 'error');
       }
     });
   }
+
 
 
 

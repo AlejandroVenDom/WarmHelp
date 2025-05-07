@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
 import { ReportServiceInterface } from '../interfaces/report';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UseStateService {
   private readonly USER_KEY = 'warmhelp_user';
+  private avatarSubject = new BehaviorSubject<string | null>(this.getAvatar());
 
-
-  constructor() {}
+  constructor() {
+    const session = this.getSession();
+    if (session?.avatar) {
+      this.avatarSubject.next(session.avatar);
+    }
+  }
 
   save(userData: {
     id: number;
@@ -28,9 +34,10 @@ export class UseStateService {
     reports: any[];
     likes: any[],
     role: string;
-    avatar?: string;
+    avatar: string;
   }): void {
     sessionStorage.setItem(this.USER_KEY, JSON.stringify(userData));
+    this.avatarSubject.next(userData.avatar || null);
   }
   getUserId(): number | null {
     const session = this.getSession();
@@ -44,6 +51,18 @@ export class UseStateService {
   getAvatar(): string | null {
     const session = this.getSession();
     return session?.avatar || null;
+  }
+  getAvatar$(): Observable<string | null> {
+    return this.avatarSubject.asObservable();
+  }
+
+  setAvatar(avatar: string) {
+    const session = this.getSession();
+    if (session) {
+      const newSession = { ...session, avatar };
+      this.save(newSession);
+      this.avatarSubject.next(avatar);
+    }
   }
   getIncidents(): any[] {
     const session = this.getSession();

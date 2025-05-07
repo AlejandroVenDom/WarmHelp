@@ -4,7 +4,7 @@ import { environment } from "../../../environments/environment";
 import { UserInterface } from "../interfaces/auth";
 import { Injectable } from "@angular/core";
 
-@Injectable({ providedIn: 'root' }) // FALTABA ESTO
+@Injectable({ providedIn: 'root' })
 export class UserService {
   private apiUrl = `${environment.apiUrl}/users`;
 
