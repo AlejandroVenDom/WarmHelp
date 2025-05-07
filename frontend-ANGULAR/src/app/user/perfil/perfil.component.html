@@ -146,7 +146,7 @@
     </div>
 
     <!-- Derecha: Comentarios -->
-    <div class="resenas-card">
+    <div class="resenas-card" *ngIf="role === 'PROFESSIONAL' || role === 'ADMIN'">
       <div class="section-header">
         <i class="bi bi-star-half"></i>
         Reseñas recibidas

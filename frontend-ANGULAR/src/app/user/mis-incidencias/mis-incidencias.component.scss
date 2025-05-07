@@ -8,12 +8,10 @@
   .titulo-seccion {
     font-size: 2rem;
     font-weight: 600;
-    margin-bottom: 2rem;
+    margin: 2% 0;
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-top: 2%;
-    margin-bottom: 2%;
     color: #3A7D44;
 
     i {
@@ -106,20 +104,9 @@
           background: #eee;
           color: #3A7D44;
 
-          &.pendiente {
-            background-color: #FFD580;
-            color: #8a4b00;
-          }
-
-          &.resuelto {
-            background-color: #9DC08B;
-            color: white;
-          }
-
-          &.rechazado {
-            background-color: #e57373;
-            color: white;
-          }
+          &.pendiente { background-color: #FFD580; color: #8a4b00; }
+          &.resuelto  { background-color: #9DC08B; color: white; }
+          &.rechazado { background-color: #e57373; color: white; }
         }
       }
 
@@ -146,30 +133,25 @@
       }
     }
   }
-}
 
-// Responsive
-@media (max-width: 768px) {
-  .mis-incidencias-container {
-    padding: 2rem 1rem;
+  .mensaje-vacio {
+    padding: 1.5rem;
+    background-color: #fbfaf4;
+    border-radius: 12px;
+    border: 2px dashed #ccc;
+    color: #666;
+    font-style: italic;
+    text-align: center;
+    font-size: 1rem;
 
-    .titulo-seccion {
-      font-size: 1.6rem;
-    }
-
-    .formulario-incidencia {
-      padding: 1rem;
-    }
-
-    .incidencia-card {
-      padding: 1rem;
-    }
-
-    .info-extra {
-      flex-direction: column;
+    i {
+      color: #DF6D14;
+      margin-right: 8px;
     }
   }
 }
+
+// 👇 FORMULARIO DE REPORTES (hereda)
 .formulario-reporte-servicio {
   @extend .formulario-incidencia;
   background-color: #fbfaf4;
@@ -181,13 +163,13 @@
 
   button {
     background-color: #3A7D44;
-
     &:hover {
       background-color: darken(#3A7D44, 10%);
     }
   }
 }
 
+// 🎯 INCIDENCIA CARD PARA REPORTES
 .lista-incidencias .incidencia-card {
   border-left: 6px solid #DF6D14 !important;
 
@@ -199,27 +181,79 @@
     background-color: #FFD580;
     color: #8a4b00;
   }
+
   .estado.in_progress {
     background-color: #FFB347;
     color: white;
   }
+
   .estado.completed {
     background-color: #9DC08B;
     color: white;
   }
 }
-.mensaje-vacio {
-  padding: 1.5rem;
-  background-color: #fbfaf4;
-  border-radius: 12px;
-  border: 2px dashed #ccc;
-  color: #666;
-  font-style: italic;
-  text-align: center;
-  font-size: 1rem;
 
-  i {
-    color: #DF6D14;
-    margin-right: 8px;
+//
+// 🧩 RESPONSIVE – BREAKPOINTS PERSONALIZADOS
+//
+
+@media (max-width: 1400px) { // xxl
+  .titulo-seccion { font-size: 1.9rem; }
+}
+
+@media (max-width: 1200px) { // xl
+  .titulo-seccion { font-size: 1.8rem; }
+}
+
+@media (max-width: 992px) { // lg
+  .mis-incidencias-container {
+    padding: 2.5rem 1.25rem;
+  }
+  .titulo-seccion { font-size: 1.7rem; }
+}
+
+@media (max-width: 769px) { // md
+  .mis-incidencias-container {
+    padding: 2rem 1rem;
+  }
+  .titulo-seccion { font-size: 1.6rem; }
+  .formulario-incidencia, .incidencia-card { padding: 1rem; }
+  .info-extra { flex-direction: column; }
+}
+
+@media (max-width: 576px) { // sm
+  .titulo-seccion { font-size: 1.5rem; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .formulario-incidencia input, .formulario-incidencia textarea, .formulario-incidencia select {
+    font-size: 0.95rem;
+  }
+  .incidencia-card h4 { font-size: 1.1rem; }
+}
+
+@media (max-width: 375px) { // móvil pequeño
+  .titulo-seccion { font-size: 1.3rem; }
+  .formulario-incidencia button {
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+  }
+}
+
+@media (max-width: 350px) {
+  .formulario-incidencia input,
+  .formulario-incidencia textarea,
+  .formulario-incidencia select {
+    font-size: 0.85rem;
+  }
+
+  .titulo-seccion {
+    font-size: 1.2rem;
+    gap: 0.3rem;
+  }
+
+  .incidencia-card h4 {
+    font-size: 1rem;
+  }
+
+  .estado {
+    font-size: 0.75rem;
   }
 }
