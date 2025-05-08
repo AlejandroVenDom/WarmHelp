@@ -23,6 +23,9 @@ export class MisPublicacionesComponent implements OnInit, OnDestroy {
   totalPaginas = 1;
   paginas: number[] = [];
   eliminandoId: number | null = null;
+  modoImagen: 'url' | 'archivo' = 'url';
+  imagenSeleccionada: File | null = null;
+
 
   nuevoPost = {
     title: '',
@@ -160,24 +163,57 @@ export class MisPublicacionesComponent implements OnInit, OnDestroy {
   }
 
   cerrarModalNuevoPost(): void {
+    this.modoImagen = 'url';
+    this.imagenSeleccionada = null;
     this.modalNuevoPost = false;
     this.nuevoPost = {
       title: '',
       description: '',
       image: '',
       userName: this.stateService.getUsername() || ''
+
     };
   }
 
   publicarPost(): void {
     if (!this.nuevoPost.title.trim() || !this.nuevoPost.description.trim()) return;
-    this.postService.createPost(this.nuevoPost).subscribe(post => {
-      this.misPosts.unshift(post);
-      this.actualizarLista();
-      this.cerrarModalNuevoPost();
-      this.popupService.showMessage('¡Publicación creada!', 'Tu post fue publicado correctamente.', 'success');
+
+    const { title, description, userName } = this.nuevoPost;
+
+    const obs = this.modoImagen === 'archivo' && this.imagenSeleccionada
+      ? this.postService.createPostImage(title, description, userName, this.imagenSeleccionada)
+      : this.postService.createPost(this.nuevoPost);
+
+    obs.subscribe({
+      next: (post) => {
+        this.misPosts.unshift(post);
+        this.actualizarLista();
+        this.cerrarModalNuevoPost();
+        this.popupService.showMessage('¡Publicación creada!', 'Tu post fue publicado correctamente.', 'success');
+      },
+      error: (err) => {
+        if (err.status === 201 || err.status === 200) {
+          // Manejar como éxito si el servidor devuelve 201 o 200 sin cuerpo
+          this.cerrarModalNuevoPost();
+          this.popupService.showMessage('¡Publicación creada!', 'Tu post fue publicado correctamente.', 'success');
+          this.cargarMisPosts();
+        } else {
+          const mensaje = err?.error?.message || 'No se pudo crear la publicación';
+          this.popupService.showMessage('Error', mensaje, 'error');
+        }
+      }
     });
   }
+
+
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.imagenSeleccionada = file;
+    }
+  }
+
+
 
   iniciarEdicion(post: Post): void {
     this.postEditando = { ...post };
