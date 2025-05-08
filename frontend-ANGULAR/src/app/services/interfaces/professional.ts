@@ -8,4 +8,5 @@ export interface ProfessionalServiceInterface {
   currencyType: 'USD' | 'EUR' | 'JPY';
   userName: string;
   username?: string; // opcional si viene con nombre diferente desde el backend
+  createdAt?: string;
 }

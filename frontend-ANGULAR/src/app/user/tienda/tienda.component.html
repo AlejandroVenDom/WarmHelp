@@ -4,7 +4,7 @@
 
   <!-- Filtros -->
   <div class="filters-container">
-    <div class="search-container">
+    <!-- <div class="search-container">
       <i class="bi bi-search"></i>
       <input type="text" [(ngModel)]="searchTerm" class="form-control" placeholder="Buscar servicio..." (input)="filterServicios()">
     </div>
@@ -18,7 +18,12 @@
       </div>
     </div>
 
-    <button class="reset-btn" (click)="resetFilters()">Restablecer</button>
+    <button class="reset-btn" (click)="resetFilters()">Restablecer</button> -->
+
+    <!-- Botón de Filtros con toggle -->
+<button class="btn-filter" (click)="mostrarFiltros = !mostrarFiltros">
+  <i class="bi bi-funnel-fill"></i> Filtros
+</button>
     <!-- Botón de carrito -->
     <button class="btn-order" (click)="toggleCart()">
       <i class="bi bi-cart4"></i> Carrito
@@ -45,6 +50,10 @@
           <span class="link-perfil" (click)="verPerfilPublico(servicio.userName); $event.stopPropagation()">
             {{ servicio.userName || 'Desconocido' }}
           </span>
+        </p>
+        <p class="created-at" *ngIf="servicio.createdAt">
+          <i class="bi bi-calendar-event"></i>
+          Publicado el: {{ servicio.createdAt | date:'short' }}
         </p>
       </div>
       <button class="btn-add-cart" (click)="addToCart(servicio); $event.stopPropagation()">
@@ -107,4 +116,18 @@
 </div>
 
 <app-cart></app-cart>
+<app-filtros
+  [isOpen]="mostrarFiltros"
+  [searchTerm]="searchTerm"
+  [minPrice]="minPrice"
+  [maxPrice]="maxPrice"
+  [priceRangeMin]="priceRangeMin"
+  [priceRangeMax]="priceRangeMax"
+  (searchChange)="searchTerm = $event; filterServicios()"
+  (priceChange)="minPrice = $event.min; maxPrice = $event.max; filterServicios()"
+  (reset)="resetFilters()"
+  (close)="mostrarFiltros = false"
+  (orderChange)="ordenarServicios($event)"
+></app-filtros>
+
 </div>

@@ -35,6 +35,7 @@ import { ReportsPostsAdminComponent } from './admin/reports-posts-admin/reports-
 import { CartComponent } from './user/cart/cart.component';
 import { BaseChartDirective  } from 'ng2-charts';
 import { StripePayComponent } from './user/stripe-pay/stripe-pay.component';
+import { FiltrosComponent } from './user/tienda/filtros/filtros.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { StripePayComponent } from './user/stripe-pay/stripe-pay.component';
     ReportsAdminComponent,
     ReportsPostsAdminComponent,
     CartComponent,
-    StripePayComponent
+    StripePayComponent,
+    FiltrosComponent
 
   ],
   imports: [

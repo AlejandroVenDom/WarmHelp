@@ -1,0 +1,269 @@
+$color-bg: #fbfaf4;
+$color-surface: #F8F5E9;
+$color-primary: #3A7D44;
+$color-secondary: #9DC08B;
+$color-accent: #DF6D14;
+$color-text: #2B2B2B;
+
+.filtros-sidebar {
+  position: fixed;
+  top: 80px;
+  left: -420px;
+  width: 360px;
+  height: calc(100vh - 120px);
+  margin-left: 24px;
+  background: $color-surface;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  transition: left 0.4s ease;
+  z-index: 1050;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  overflow: hidden;
+
+  &.visible {
+    left: 0;
+  }
+
+  .cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: $color-primary;
+
+    h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: $color-accent;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      &:hover {
+        transform: scale(1.15);
+      }
+    }
+  }
+
+  .cart-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 4px;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $color-secondary;
+      border-radius: 10px;
+    }
+
+    .search-container {
+      display: flex;
+      align-items: center;
+      background: white;
+      border: 2px solid $color-secondary;
+      border-radius: 10px;
+      padding: 8px 12px;
+      margin-bottom: 1.5rem;
+
+      i {
+        color: $color-primary;
+        font-size: 1.2rem;
+        margin-right: 8px;
+      }
+
+      input {
+        border: none;
+        outline: none;
+        background: transparent;
+        width: 100%;
+        font-size: 1rem;
+        color: $color-text;
+
+        &::placeholder {
+          color: $color-secondary;
+        }
+      }
+
+      &:focus-within {
+        border-color: $color-accent;
+      }
+    }
+
+    .price-slider {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      font-weight: bold;
+      color: $color-text;
+      margin-bottom: 1.5rem;
+
+      label {
+        margin-bottom: 0.5rem;
+      }
+
+      .range-slider {
+        position: relative;
+        width: 100%;
+        height: 8px;
+        background: $color-secondary;
+        border-radius: 10px;
+
+        input[type='range'] {
+          position: absolute;
+          width: 100%;
+          -webkit-appearance: none;
+          background: transparent;
+          pointer-events: none;
+          height: 8px;
+
+          &::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: $color-primary;
+            border-radius: 50%;
+            cursor: pointer;
+            pointer-events: all;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            border: 2px solid white;
+            z-index: 3;
+          }
+
+          &::-webkit-slider-runnable-track {
+            height: 8px;
+            background: $color-accent;
+            border-radius: 4px;
+          }
+        }
+
+        .slider-track {
+          position: absolute;
+          height: 8px;
+          background: $color-accent;
+          border-radius: 4px;
+          top: 0;
+          left: var(--slider-min);
+          right: calc(100% - var(--slider-max));
+          z-index: 2;
+        }
+      }
+    }
+
+    .order-container {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 2rem;
+
+      label {
+        font-weight: bold;
+        font-size: 1rem;
+        margin-bottom: 0.3rem;
+      }
+
+      select {
+        padding: 8px;
+        border-radius: 10px;
+        border: 2px solid $color-secondary;
+        background: white;
+        font-size: 1rem;
+        color: $color-primary;
+
+        &:focus {
+          outline: none;
+          border-color: $color-accent;
+        }
+      }
+    }
+  }
+
+  .cart-footer {
+    padding-top: 1rem;
+    margin-top: 1rem;
+
+    .checkout-btn {
+      width: 100%;
+      background-color: $color-accent;
+      color: white;
+      border: none;
+      padding: 0.85rem;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 12px;
+      transition: background 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+      i {
+        margin-right: 0.5rem;
+      }
+
+      &:hover {
+        background-color: darken($color-accent, 10%);
+      }
+    }
+  }
+}
+
+// ✅ Responsive igual que el carrito
+@media (max-width: 1400px) {
+  .filtros-sidebar {
+    width: 25%;
+    border-radius: 40px;
+    aspect-ratio: 1 / 1.8;
+  }
+}
+@media (max-width: 1200px) {
+  .filtros-sidebar {
+    width: 30%;
+    left: -100%;
+    border-radius: 32px;
+    top: 0;
+    padding-top: 100px;
+    padding: 1.5rem 1rem;
+    aspect-ratio: 1 / 2;
+    &.visible {
+      left: 0;
+    }
+  }
+}
+@media (max-width: 992px) {
+  .filtros-sidebar {
+    width: 35%;
+    padding: 1.2rem 1rem;
+    border-radius: 28px;
+    aspect-ratio: 1 / 2.2;
+  }
+}
+@media (max-width: 769px) {
+  .filtros-sidebar {
+    width: 40%;
+    padding: 1rem;
+    top: 0;
+    border-radius: 24px;
+    aspect-ratio: 1 / 2.4;
+  }
+}
+@media (max-width: 576px) {
+  .filtros-sidebar {
+    width: 50%;
+    transform: translateX(0);
+    border-radius: 20px;
+    padding: 1rem 0.8rem;
+    height: auto;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+}

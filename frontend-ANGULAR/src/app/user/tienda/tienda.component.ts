@@ -6,6 +6,7 @@ import { UseStateService } from '../../services/auth/use-state.service';
 import { PopupService } from '../../services/popup.service';
 import { ReportService } from '../../services/report/report.service';
 import { CartService } from '../../services/auth/cart.service';
+import { FiltrosComponent } from './filtros/filtros.component';
 
 @Component({
   selector: 'app-tienda',
@@ -25,6 +26,7 @@ export class TiendaComponent implements OnInit {
   showModal = false;
   mostrarBotonScroll = false;
   showReportModal = false;
+  mostrarFiltros = false;
   nuevoReporte = {
     type: 'BULLYING_OR_HARASSMENT',
     description: '',
@@ -166,6 +168,27 @@ export class TiendaComponent implements OnInit {
     };
     return map[tipo] || tipo;
   }
+  ordenarServicios(criterio: string) {
+    switch (criterio) {
+      case 'precioAsc':
+        this.filteredServices.sort((a, b) => a.price - b.price);
+        break;
+      case 'precioDesc':
+        this.filteredServices.sort((a, b) => b.price - a.price);
+        break;
+      case 'recientes':
+        this.filteredServices.sort((a, b) =>
+          (b.createdAt || '').localeCompare(a.createdAt || '')
+        );
+        break;
+      case 'antiguos':
+        this.filteredServices.sort((a, b) =>
+          (a.createdAt || '').localeCompare(b.createdAt || '')
+        );
+        break;
+    }
+  }
+
 
   closeModal() {
     this.showModal = false;

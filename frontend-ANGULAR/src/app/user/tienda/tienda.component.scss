@@ -753,6 +753,17 @@ $color-text: #2B2B2B;
     transition: all 0.4s ease-in-out;
   }
 }
+.created-at {
+  font-size: 0.85rem;
+  color: $color-text;
+  margin-top: 4px;
+
+  i {
+    margin-right: 6px;
+    color: $color-primary;
+  }
+}
+
 
 // 🔁 Responsive Breakpoints
 @media (max-width: 1400px) { // xxl
