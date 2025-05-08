@@ -45,7 +45,7 @@
       <ng-template #modoLectura>
         <h4>{{ post.title }}</h4>
         <p>{{ post.description }}</p>
-        <img *ngIf="post.image" [src]="post.image" />
+        <img *ngIf="post.image" [src]="getImageUrl(post.image)" (error)="onImageError($event)" />
         <span class="fecha">{{ post.createdAt | date: 'short' }}</span>
 
         <div class="acciones">

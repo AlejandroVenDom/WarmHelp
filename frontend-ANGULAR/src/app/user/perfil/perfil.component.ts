@@ -96,6 +96,20 @@ export class PerfilComponent implements OnInit {
     this.showPasswordFields = !this.showPasswordFields;
     this.passwordError = false;
   }
+  getImageUrl(imagePath: string): string {
+    if (!imagePath || typeof imagePath !== 'string') return '';
+    const trimmed = imagePath.trim();
+    if (trimmed.startsWith('http')) return trimmed;
+    return `http://localhost:8080/api/uploads/images/${encodeURIComponent(trimmed)}`;
+  }
+
+  onImageError(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    if (!img.src.includes('image-not-found.jpg')) {
+      img.src = '/assets/image-not-found.jpg';
+    }
+  }
+
 
   cancelPasswordChange() {
     this.oldPassword = '';
