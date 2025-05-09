@@ -28,6 +28,7 @@ import { ControlEvent } from '@angular/forms';
 import { ControlPanelComponent } from './admin/control-panel/control-panel.component';
 import { ReportsAdminComponent } from './admin/reports-admin/reports-admin.component';
 import { ReportsPostsAdminComponent } from './admin/reports-posts-admin/reports-posts-admin.component';
+import { VerifyComponent } from './user/verify/verify.component';
 
 const routes: Routes = [
   // users without authentication
@@ -35,7 +36,7 @@ const routes: Routes = [
     path: '', component:LayoutComponent, children:[
       { path: '',component: HomeNoAuthComponent},
       { path: 'perfil', component: PerfilComponent, canActivate: [authGuard] },
-      {path: 'perfil-publico/:username', component: PublicProfileComponent, canActivate: [authGuard]},
+      {path:  'perfil-publico/:username', component: PublicProfileComponent, canActivate: [authGuard]},
       { path: 'login', component: LoginComponent, canActivate: [publicGuard] },
       { path: 'register', component: RegisterComponent, canActivate: [publicGuard] },
       { path: 'posts', component: PostsComponent, canActivate: [authGuard] },
@@ -43,7 +44,8 @@ const routes: Routes = [
       { path: 'mis-publicaciones', component: MisPublicacionesComponent , canActivate: [authGuard] },
       { path: 'mis-incidencias', component: MisIncidenciasComponent, canActivate: [authGuard]},
       { path: 'chat-gpt', component: ChatGptComponent , canActivate: [authGuard]},
-      { path: 'servicioscr', component: BackofficeAdminComponent}
+      { path: 'servicioscr', component: BackofficeAdminComponent},
+      { path: 'verify', component: VerifyComponent, canActivate: [authGuard] },
     ]
   },
     // admins

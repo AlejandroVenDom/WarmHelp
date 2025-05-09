@@ -34,6 +34,7 @@ import { ReportsAdminComponent } from './admin/reports-admin/reports-admin.compo
 import { ReportsPostsAdminComponent } from './admin/reports-posts-admin/reports-posts-admin.component';
 import { CartComponent } from './user/cart/cart.component';
 import { BaseChartDirective  } from 'ng2-charts';
+import { VerifyComponent } from './user/verify/verify.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { BaseChartDirective  } from 'ng2-charts';
     ControlPanelComponent,
     ReportsAdminComponent,
     ReportsPostsAdminComponent,
-    CartComponent
+    CartComponent,
+    VerifyComponent
 
   ],
   imports: [

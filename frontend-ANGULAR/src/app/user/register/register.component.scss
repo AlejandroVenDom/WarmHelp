@@ -179,3 +179,39 @@ body {
 .btn-back:hover {
   color: #2B2B2B;
 }
+.verification-message {
+  padding: 2rem;
+  text-align: center;
+  background: #f1f5f9;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-top: 20px;
+
+  h3 {
+    color: #2e7d32;
+  }
+
+  .verification-loader {
+    margin: 20px 0;
+    font-size: 18px;
+
+    i {
+      margin-right: 10px;
+    }
+  }
+
+  .btn-continue,
+  .btn-resend {
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #3a7d44;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .btn-resend {
+    background-color: #2196f3;
+  }
+}
