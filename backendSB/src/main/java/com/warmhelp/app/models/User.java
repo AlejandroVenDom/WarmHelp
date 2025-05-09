@@ -24,6 +24,9 @@ public class User {
     private String password;
 
     @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
     private boolean enabled = false;
 
     @ManyToOne

@@ -729,4 +729,124 @@ $color-text: #2B2B2B;
   from { transform: translateY(30px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
+// 📦 Contenedor flexible para tienda y carrito
+.tienda-y-carrito {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1400px;
+  margin: auto;
+
+  .tienda-container {
+    flex: 1;
+    max-width: 1000px;
+  }
+
+  .cart-sidebar {
+    position: sticky;
+    top: 100px;
+    right: 0;
+    width: 350px;
+    max-height: calc(100vh - 120px);
+    transition: all 0.4s ease-in-out;
+  }
+}
+.created-at {
+  font-size: 0.85rem;
+  color: $color-text;
+  margin-top: 4px;
+
+  i {
+    margin-right: 6px;
+    color: $color-primary;
+  }
+}
+
+
+// 🔁 Responsive Breakpoints
+@media (max-width: 1400px) { // xxl
+  .tienda-y-carrito {
+    gap: 1.5rem;
+    .cart-sidebar {
+      width: 320px;
+    }
+  }
+}
+
+@media (max-width: 1200px) { // xl
+  .tienda-y-carrito {
+    flex-direction: column;
+    align-items: center;
+
+    .cart-sidebar {
+      width: 100%;
+      max-width: 500px;
+      position: relative;
+      top: 0;
+      margin-top: 2rem;
+      right: auto;
+      border-radius: 20px;
+    }
+  }
+}
+
+@media (max-width: 992px) { // lg
+  .tienda-y-carrito {
+    padding: 0 1rem;
+    .cart-sidebar {
+      max-width: 100%;
+    }
+  }
+}
+
+@media (max-width: 769px) { // md
+  .tienda-y-carrito {
+    flex-direction: column;
+
+    .cart-sidebar {
+      width: 100%;
+      padding: 1rem;
+    }
+  }
+}
+
+@media (max-width: 576px) { // sm
+  .tienda-y-carrito {
+    .cart-sidebar {
+      padding: 1rem;
+      box-shadow: none;
+      border-radius: 14px;
+    }
+  }
+}
+
+@media (max-width: 375px) {
+  .tienda-y-carrito {
+    gap: 1rem;
+
+    .cart-sidebar {
+      padding: 0.8rem;
+    }
+  }
+}
+
+@media (max-width: 350px) {
+  .tienda-y-carrito {
+    .cart-sidebar {
+      padding: 0.6rem;
+      font-size: 0.95rem;
+
+      .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+
+        img {
+          margin-bottom: 0.5rem;
+        }
+      }
+    }
+  }
+}
 

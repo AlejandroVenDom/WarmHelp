@@ -14,6 +14,8 @@ public class StaticResourceConfig implements WebMvcConfigurer {
 
     }
 
+//    C:/Users/bp113/Angular/TFG_WarmHelp/WarmHelp/backendSB/uploads/images
+
     // C:/JavaStuff/Angular/WarmHelp/WarmHelp/backendSB/uploads/images/ ruta Rusoski
     // C:/Users/aleja/Desktop/WarmHelp/backendSB/uploads/images/ ruta alejandro
 }

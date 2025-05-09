@@ -31,6 +31,7 @@ export class PostsComponent implements OnInit {
   paginas: number[] = [];
   mostrarBotonScroll = false;
   imagenSeleccionada: File | null = null;
+  modoImagen: 'url' | 'archivo' = 'url';
 
   // Estado de modales
   modalNuevoPost = false;
@@ -327,7 +328,7 @@ tiposReporte: string[] = [
 
     this.popupService.loader('Publicando...', 'Esto puede tardar un poco');
 
-    const obs = this.imagenSeleccionada
+    const obs = this.modoImagen === 'archivo' && this.imagenSeleccionada
       ? this.postService.createPostWithImage(title, description, userName, this.imagenSeleccionada)
       : this.postService.createPost(this.nuevoPost);
 

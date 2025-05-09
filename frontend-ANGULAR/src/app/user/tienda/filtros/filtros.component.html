@@ -1,0 +1,59 @@
+<div class="filtros-sidebar" [class.visible]="isOpen">
+  <div class="cart-header">
+    <h3><i class="bi bi-funnel-fill"></i> Filtros</h3>
+    <button class="close-btn" (click)="cerrar()" aria-label="Cerrar filtros">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+
+  <div class="cart-content">
+    <div class="search-container">
+      <i class="bi bi-search"></i>
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="onInput()"
+        placeholder="Buscar servicio..."
+      />
+    </div>
+
+    <div class="price-slider">
+      <label>Precio: ${{ minPrice }} - ${{ maxPrice }}</label>
+      <div class="range-slider">
+        <input
+          type="range"
+          [(ngModel)]="minPrice"
+          [min]="priceRangeMin"
+          [max]="priceRangeMax"
+          (input)="onInput()"
+          class="thumb left"
+        />
+        <input
+          type="range"
+          [(ngModel)]="maxPrice"
+          [min]="priceRangeMin"
+          [max]="priceRangeMax"
+          (input)="onInput()"
+          class="thumb right"
+        />
+        <div class="slider-track"></div>
+      </div>
+    </div>
+
+    <div class="order-container">
+      <label for="orden">Ordenar por:</label>
+      <select id="orden" [(ngModel)]="ordenSeleccionado" (change)="onOrderChange()">
+        <option value="precioAsc">Precio más bajo</option>
+        <option value="precioDesc">Precio más alto</option>
+        <option value="recientes">Servicio más reciente</option>
+        <option value="antiguos">Servicio más antiguo</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="cart-footer">
+    <button class="checkout-btn" (click)="resetFilters()">
+      <i class="bi bi-arrow-clockwise"></i> Restablecer filtros
+    </button>
+  </div>
+</div>

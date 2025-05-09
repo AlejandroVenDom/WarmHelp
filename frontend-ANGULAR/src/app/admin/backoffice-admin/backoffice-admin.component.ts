@@ -67,7 +67,8 @@ export class BackofficeAdminComponent implements OnInit {
         price: 0,
         tax: 0,
         currencyType: 'USD',
-        userName: this.userState.getUsername() || ''
+        userName: this.userState.getUsername() || '',
+        createdAt: ''
       };
       this.modoEdicion = false;
     }

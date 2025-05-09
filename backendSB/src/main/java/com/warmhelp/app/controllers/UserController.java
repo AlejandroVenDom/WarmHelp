@@ -96,10 +96,6 @@ public class UserController {
             return ResponseEntity.status(401).body(e.getMessage());
         }
     }
-    @GetMapping("/confirm")
-    public ResponseEntity<?> confirmUserAccount(@RequestParam("token") String token) {
-        return userService.confirmUserAccount(token);
-    }
 
     @PostMapping("/check-token")
     public ResponseEntity<Boolean> checkToken(@RequestBody CheckTokenRequest checkTokenRequest) {

@@ -24,7 +24,8 @@ export class ProfessionalService {
           price: s.price,
           tax: s.tax,
           currencyType: s.currency,
-          userName: s.username
+          userName: s.username,
+          createdAt: s.createdAt
         }))
       )
     );

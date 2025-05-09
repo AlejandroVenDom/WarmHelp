@@ -89,7 +89,8 @@ public class UserService implements UserDetailsService {
                                 userInfo1.getNumber(),
                                 userInfo1.getEmail(),
                                 userInfo1.getMySelf_description(),
-                                userInfo1.getUser().getRole().getRoleType().name()
+                                userInfo1.getUser().getRole().getRoleType().name(),
+                                userInfo1.getAvatar()
                         )).collect(Collectors.toList());
     }
 
@@ -145,6 +146,7 @@ public class UserService implements UserDetailsService {
         user.setUsername(userFromFront.getUsername());
         user.setPassword(passwordEncoder.encode(userFromFront.getPassword()));
         user.setRole(role);
+        user.setEmail(userFromFront.getEmail());
         user.setEnabled(false); // 🚨 IMPORTANTE: usuario no está activo aún
         user = userRepository.save(user);
 
@@ -312,12 +314,12 @@ public class UserService implements UserDetailsService {
                 .map(this::mapToCartItemsDTO)
                 .toList();
         return new CartsResponse(
-            carts.getId(),
-            carts.getUserInfo().getUser().getUsername(),
-            responseDTOS,
-            carts.getTotalPrice(),
-            carts.getCreatedAt(),
-            carts.getUpdatedAt()
+                carts.getId(),
+                carts.getUserInfo().getUser().getUsername(),
+                responseDTOS,
+                carts.getTotalPrice(),
+                carts.getCreatedAt(),
+                carts.getUpdatedAt()
         );
     }
 
@@ -541,7 +543,5 @@ public class UserService implements UserDetailsService {
         userInfoRepository.save(userInfo);
         return url;
     }
-
-
 
 }

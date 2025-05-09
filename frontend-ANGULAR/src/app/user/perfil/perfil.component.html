@@ -146,7 +146,7 @@
     </div>
 
     <!-- Derecha: Comentarios -->
-    <div class="resenas-card">
+    <div class="resenas-card" *ngIf="role === 'PROFESSIONAL' || role === 'ADMIN'">
       <div class="section-header">
         <i class="bi bi-star-half"></i>
         Reseñas recibidas
@@ -172,7 +172,8 @@
 
       <div *ngIf="posts.length === 0">Aún no has creado publicaciones.</div>
       <div *ngFor="let post of posts" class="post">
-        <img src="/ans.jpg" alt="Imagen del post">
+        <img [src]="post.image ? getImageUrl(post.image) : '/assets/image-not-found.jpg'"
+     (error)="onImageError($event)" alt="Imagen del post">
         <div class="contenido">
           <h5>{{ post.title }}</h5>
           <p class="fecha">{{ post.createdAt | date:'longDate' }}</p>

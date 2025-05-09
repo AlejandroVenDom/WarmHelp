@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 90px; // Altura fija
+  height: 90px;
   background-color: #F8F5E9;
   padding: 1rem 2rem;
   display: flex;
@@ -83,7 +83,20 @@
     }
   }
 
-  @media (max-width: 768px) {
+  // 🔁 Responsive desde aquí
+  @media (max-width: 1400px) { // xxl
+    .nav-container {
+      gap: 1.5rem;
+    }
+  }
+
+  @media (max-width: 1050px) { // xl
+    .nav-container {
+      gap: 1.2rem;
+    }
+  }
+
+  @media (max-width: 1010px) { // lg
     .menu-toggle,
     .close-menu {
       display: block;
@@ -98,7 +111,7 @@
       flex-direction: column;
       align-items: flex-start;
       padding: 1rem 2rem;
-      gap: 1.2rem;
+      gap: 1rem;
       transform: translateY(-200%);
       opacity: 0;
       visibility: hidden;
@@ -117,9 +130,58 @@
       }
     }
   }
+
+  @media (max-width: 769px) { // md
+    .nav-container {
+      padding: 1rem 1.5rem;
+      gap: 0.8rem;
+    }
+    img {
+      max-width: 100px;
+    }
+  }
+
+  @media (max-width: 576px) { // sm
+    padding: 0.8rem 1rem;
+
+    .nav-container {
+      gap: 0.6rem;
+    }
+
+    img {
+      max-width: 90px;
+    }
+  }
+
+  @media (max-width: 375px) { // móviles pequeños
+    .nav-container {
+      padding: 1rem;
+      gap: 0.5rem;
+    }
+
+    img {
+      max-width: 75px;
+    }
+
+    .menu-toggle,
+    .close-menu {
+      font-size: 1.4rem;
+    }
+  }
+
+  @media (max-width: 350px) {
+    .nav-container a {
+      font-size: 0.9rem;
+    }
+
+    .btn-login {
+      font-size: 0.85rem;
+      padding: 6px 12px;
+    }
+  }
 }
 
-// 🧩 Margen para no tapar contenido al estar fixed
+// 🧩 Margen de compensación por header fijo
 main, .page-container, router-outlet + * {
   margin-top: 110px;
 }

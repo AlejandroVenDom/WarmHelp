@@ -163,9 +163,23 @@
         <textarea id="descripcion" rows="4" [(ngModel)]="nuevoPost.description" placeholder="¿Qué quieres compartir?"></textarea>
       </div>
       <div class="form-group">
-  <label for="imagen">Imagen (opcional)</label>
-  <input id="imagen" type="file" (change)="onFileSelected($event)" accept="image/*" />
-</div>
+        <label>Selecciona tipo de imagen:</label>
+        <select [(ngModel)]="modoImagen">
+          <option value="url">Desde URL</option>
+          <option value="archivo">Desde archivo</option>
+        </select>
+      </div>
+
+      <div class="form-group" *ngIf="modoImagen === 'url'">
+        <label>Imagen (URL)</label>
+        <input type="text" [(ngModel)]="nuevoPost.image" placeholder="https://..." />
+      </div>
+
+      <div class="form-group" *ngIf="modoImagen === 'archivo'">
+        <label>Imagen (archivo local)</label>
+        <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+      </div>
+
 
       <button class="btn-publicar-modal" (click)="publicarPost()">
         <i class="bi bi-send-fill"></i> Publicar

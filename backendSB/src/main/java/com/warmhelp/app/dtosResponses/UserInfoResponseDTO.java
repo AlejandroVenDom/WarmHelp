@@ -11,8 +11,11 @@ public class UserInfoResponseDTO {
     private String email;
     private String mySelf_description;
     private String roleType;
+    private String avatar; // ✅ Añadido
 
-    public UserInfoResponseDTO(Long idUser, Long idUserInfo, String username, String first_name, String last_name, String address, String number, String email, String mySelf_description, String roleType) {
+    public UserInfoResponseDTO(Long idUser, Long idUserInfo, String username, String first_name, String last_name,
+                               String address, String number, String email, String mySelf_description,
+                               String roleType, String avatar) {
         this.idUser = idUser;
         this.idUserInfo = idUserInfo;
         this.username = username;
@@ -23,6 +26,16 @@ public class UserInfoResponseDTO {
         this.email = email;
         this.mySelf_description = mySelf_description;
         this.roleType = roleType;
+        this.avatar = avatar;
+    }
+
+    // Getters y Setters
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getRoleType() {
