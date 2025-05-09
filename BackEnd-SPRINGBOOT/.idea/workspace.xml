@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e75caeda-8220-4c86-bcb0-61bade13ec98" name="Changes" comment="" />
+    <list default="true" id="e75caeda-8220-4c86-bcb0-61bade13ec98" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend-ANGULAR/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend-ANGULAR/src/app/app-routing.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend-ANGULAR/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend-ANGULAR/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend-ANGULAR/src/app/user/register/register.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend-ANGULAR/src/app/user/register/register.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend-ANGULAR/src/app/user/register/register.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend-ANGULAR/src/app/user/register/register.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend-ANGULAR/src/app/user/register/register.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend-ANGULAR/src/app/user/register/register.component.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,9 +32,9 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "test",
+    "git-widget-placeholder": "featureDevelopment",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/bp113/Angular/TFG_WarmHelp/WarmHelp/BackEnd-SPRINGBOOT",
+    "last_opened_file_path": "C:/Users/bp113",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
