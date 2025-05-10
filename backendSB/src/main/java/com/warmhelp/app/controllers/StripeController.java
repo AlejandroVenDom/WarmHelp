@@ -2,8 +2,12 @@ package com.warmhelp.app.controllers;
 
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
+import com.stripe.model.LineItem;
+import com.stripe.model.LineItemCollection;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
+import com.stripe.param.checkout.SessionLineItemListParams;
+import com.stripe.param.checkout.SessionListLineItemsParams;
 import com.warmhelp.app.dtos.auth.StripeCheckoutRequestDTO;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
@@ -76,6 +80,8 @@ public class StripeController {
         try{
             Stripe.apiKey = stripeSecretKey;
             Session session = Session.retrieve(sessionId);
+            SessionListLineItemsParams params = SessionListLineItemsParams.builder().build();
+            LineItemCollection lineItems = session.listLineItems(params);
 
             Map<String, Object> response = new HashMap<>();
             response.put("id", session.getId());
@@ -83,6 +89,17 @@ public class StripeController {
             response.put("payment_status", session.getPaymentStatus());
             response.put("total", session.getAmountTotal());
             response.put("customer_email", session.getCustomerEmail());
+
+            List<Map<String, Object>> products = new ArrayList<>();
+            for (LineItem item: lineItems.getData()){
+                Map<String,Object> product = new HashMap<>();
+                product.put("description", item.getDescription());
+                product.put("quantity", item.getQuantity());
+                products.add(product);
+            }
+
+            response.put("products",products);
+
 
             return ResponseEntity.ok(response);
     } catch (StripeException e){
