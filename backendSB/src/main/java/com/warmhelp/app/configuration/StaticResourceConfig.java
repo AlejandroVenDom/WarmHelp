@@ -10,11 +10,11 @@ public class StaticResourceConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/uploads/images/**")
-                .addResourceLocations("file:C:/JavaStuff/Angular/WarmHelp/WarmHelp/backendSB/uploads/images/");
+                .addResourceLocations("file:C:/Users/aleja/Desktop/WarmHelp/backendSB/uploads/images/");
 
     }
 
-//    C:/Users/bp113/Angular/TFG_WarmHelp/WarmHelp/backendSB/uploads/images
+//    C:/Users/bp113/Angular/TFG_WarmHelp/WarmHelp/backendSB/uploads/images -> ruta bryan
 
     // C:/JavaStuff/Angular/WarmHelp/WarmHelp/backendSB/uploads/images/ ruta Rusoski
     // C:/Users/aleja/Desktop/WarmHelp/backendSB/uploads/images/ ruta alejandro
