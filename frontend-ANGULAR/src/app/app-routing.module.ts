@@ -30,6 +30,8 @@ import { ReportsAdminComponent } from './admin/reports-admin/reports-admin.compo
 import { ReportsPostsAdminComponent } from './admin/reports-posts-admin/reports-posts-admin.component';
 import { VerifyComponent } from './user/verify/verify.component';
 import { StripePayComponent } from './user/stripe-pay/stripe-pay.component';
+import { PaymentSuccessComponent } from './user/payment-success/payment-success.component';
+import { PaymentDeniedComponent } from './user/payment-denied/payment-denied.component';
 
 const routes: Routes = [
   // users without authentication
@@ -48,7 +50,9 @@ const routes: Routes = [
       { path: 'servicioscr', component: BackofficeAdminComponent},
       { path: 'verify', component: VerifyComponent, canActivate: [authGuard] },
       { path: 'servicioscr', component: BackofficeAdminComponent, canActivate: [roleGuard]},
-      { path: 'stripe-pay', component: StripePayComponent, canActivate: [authGuard]}
+      { path: 'stripe-pay', component: StripePayComponent, canActivate: [authGuard]},
+      { path: 'success', component: PaymentSuccessComponent, canActivate: [authGuard]},
+      { path: 'cancel', component: PaymentDeniedComponent, canActivate: [authGuard]},
     ]
   },
     // admins

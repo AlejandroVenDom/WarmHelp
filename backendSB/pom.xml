@@ -82,6 +82,14 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.stripe/stripe-java -->
+		<dependency>
+			<groupId>com.stripe</groupId>
+			<artifactId>stripe-java</artifactId>
+			<version>27.1.0</version>
+		</dependency>
+
+
 		<!-- Lombok (ayuda en getters/setters/constructores automáticos) -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
