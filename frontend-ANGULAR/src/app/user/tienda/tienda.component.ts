@@ -22,6 +22,8 @@ export class TiendaComponent implements OnInit {
   maxPrice = 1000;
   priceRangeMin = 0;
   priceRangeMax = 1000;
+  monedasUnicas: string[] = [];
+  selectedCurrency = '';
   selectedService: ProfessionalServiceInterface | null = null;
   showModal = false;
   mostrarBotonScroll = false;
@@ -73,6 +75,7 @@ export class TiendaComponent implements OnInit {
     this.service.getAll().subscribe(servicios => {
       console.log("📦 Servicios recibidos del backend:", servicios);
       this.servicios = servicios;
+      this.monedasUnicas = [...new Set(servicios.map(s => s.currencyType).filter(Boolean))];
       this.filteredServices = [...this.servicios];
       this.setPriceRangeLimits();
     });
@@ -104,10 +107,11 @@ export class TiendaComponent implements OnInit {
 
   filterServicios() {
     this.filteredServices = this.servicios.filter(s =>
-      s.title.toLowerCase().includes(this.searchTerm.toLowerCase()) &&
-      s.price >= this.minPrice &&
-      s.price <= this.maxPrice
-    );
+  s.title.toLowerCase().includes(this.searchTerm.toLowerCase()) &&
+  s.price >= this.minPrice &&
+  s.price <= this.maxPrice &&
+  (!this.selectedCurrency || s.currencyType === this.selectedCurrency)
+);
   }
 
   updateSliderTrack() {

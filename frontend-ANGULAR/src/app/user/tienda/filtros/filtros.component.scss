@@ -7,10 +7,10 @@ $color-text: #2B2B2B;
 
 .filtros-sidebar {
   position: fixed;
-  top: 80px;
+  top: 10%;
   left: -420px;
-  width: 360px;
-  height: calc(100vh - 120px);
+  width: 15%;
+  height: calc(100vh - 50%);
   margin-left: 24px;
   background: $color-surface;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
@@ -31,6 +31,7 @@ $color-text: #2B2B2B;
     justify-content: space-between;
     align-items: center;
     color: $color-primary;
+    margin-bottom: 1rem;
 
     h3 {
       font-size: 1.5rem;
@@ -67,6 +68,12 @@ $color-text: #2B2B2B;
       border-radius: 10px;
     }
 
+    > div {
+      margin-bottom: 2rem;
+      padding-bottom: 1.2rem;
+      border-bottom: 1px solid lighten($color-secondary, 30%);
+    }
+
     .search-container {
       display: flex;
       align-items: center;
@@ -74,7 +81,6 @@ $color-text: #2B2B2B;
       border: 2px solid $color-secondary;
       border-radius: 10px;
       padding: 8px 12px;
-      margin-bottom: 1.5rem;
 
       i {
         color: $color-primary;
@@ -101,23 +107,29 @@ $color-text: #2B2B2B;
     }
 
     .price-slider {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      font-weight: bold;
-      color: $color-text;
-      margin-bottom: 1.5rem;
-
       label {
+        display: block;
+        font-weight: bold;
+        color: $color-text;
         margin-bottom: 0.5rem;
       }
 
       .range-slider {
         position: relative;
-        width: 100%;
         height: 8px;
         background: $color-secondary;
         border-radius: 10px;
+
+        .slider-track {
+          position: absolute;
+          height: 8px;
+          background: $color-accent;
+          border-radius: 4px;
+          top: 0;
+          left: var(--slider-min);
+          right: calc(100% - var(--slider-max));
+          z-index: 2;
+        }
 
         input[type='range'] {
           position: absolute;
@@ -126,6 +138,7 @@ $color-text: #2B2B2B;
           background: transparent;
           pointer-events: none;
           height: 8px;
+          z-index: 3;
 
           &::-webkit-slider-thumb {
             -webkit-appearance: none;
@@ -140,38 +153,27 @@ $color-text: #2B2B2B;
             transform: translateY(-50%);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             border: 2px solid white;
-            z-index: 3;
+            z-index: 4;
           }
 
           &::-webkit-slider-runnable-track {
             height: 8px;
-            background: $color-accent;
-            border-radius: 4px;
+            background: transparent;
           }
-        }
-
-        .slider-track {
-          position: absolute;
-          height: 8px;
-          background: $color-accent;
-          border-radius: 4px;
-          top: 0;
-          left: var(--slider-min);
-          right: calc(100% - var(--slider-max));
-          z-index: 2;
         }
       }
     }
 
+    .currency-filter,
     .order-container {
       display: flex;
       flex-direction: column;
-      margin-bottom: 2rem;
 
       label {
-        font-weight: bold;
         font-size: 1rem;
-        margin-bottom: 0.3rem;
+        font-weight: bold;
+        color: $color-text;
+        margin-bottom: 0.4rem;
       }
 
       select {
@@ -181,6 +183,7 @@ $color-text: #2B2B2B;
         background: white;
         font-size: 1rem;
         color: $color-primary;
+        transition: border-color 0.3s ease;
 
         &:focus {
           outline: none;
@@ -192,7 +195,7 @@ $color-text: #2B2B2B;
 
   .cart-footer {
     padding-top: 1rem;
-    margin-top: 1rem;
+    margin-top: auto;
 
     .checkout-btn {
       width: 100%;
@@ -217,7 +220,7 @@ $color-text: #2B2B2B;
   }
 }
 
-// ✅ Responsive igual que el carrito
+// Responsive como carrito
 @media (max-width: 1400px) {
   .filtros-sidebar {
     width: 25%;
