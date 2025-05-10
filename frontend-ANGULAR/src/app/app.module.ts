@@ -34,12 +34,9 @@ import { ReportsAdminComponent } from './admin/reports-admin/reports-admin.compo
 import { ReportsPostsAdminComponent } from './admin/reports-posts-admin/reports-posts-admin.component';
 import { CartComponent } from './user/cart/cart.component';
 import { BaseChartDirective  } from 'ng2-charts';
-<<<<<<< HEAD
 import { VerifyComponent } from './user/verify/verify.component';
-=======
 import { StripePayComponent } from './user/stripe-pay/stripe-pay.component';
 import { FiltrosComponent } from './user/tienda/filtros/filtros.component';
->>>>>>> 40f9fc777ba33537482d01a25020a4f86cbdc050
 
 @NgModule({
   declarations: [
@@ -71,13 +68,9 @@ import { FiltrosComponent } from './user/tienda/filtros/filtros.component';
     ReportsAdminComponent,
     ReportsPostsAdminComponent,
     CartComponent,
-<<<<<<< HEAD
-    VerifyComponent
-=======
+    VerifyComponent,
     StripePayComponent,
     FiltrosComponent
->>>>>>> 40f9fc777ba33537482d01a25020a4f86cbdc050
-
   ],
   imports: [
     BrowserModule,
