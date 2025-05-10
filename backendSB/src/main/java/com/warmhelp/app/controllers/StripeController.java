@@ -7,9 +7,12 @@ import com.stripe.param.checkout.SessionCreateParams;
 import com.warmhelp.app.dtos.auth.StripeCheckoutRequestDTO;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +59,7 @@ public class StripeController {
                 .setSuccessUrl(successUrl + "?session_id={CHECKOUT_SESSION_ID}")
                 .setCancelUrl(cancelUrl)
                 .addAllLineItem(lineItems)
+                .setCustomerEmail(request.getEmail())
                 .build();
 
         Session session = Session.create(params);
@@ -67,6 +71,25 @@ public class StripeController {
         return ResponseEntity.ok(respons);
     }
 
+    @GetMapping("/details/{sessionId}")
+    public ResponseEntity<Object> getPaymentDetails(@PathVariable String sessionId){
+        try{
+            Stripe.apiKey = stripeSecretKey;
+            Session session = Session.retrieve(sessionId);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("id", session.getId());
+            response.put("status", session.getStatus());
+            response.put("payment_status", session.getPaymentStatus());
+            response.put("total", session.getAmountTotal());
+            response.put("customer_email", session.getCustomerEmail());
+
+            return ResponseEntity.ok(response);
+    } catch (StripeException e){
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Error al obtener los detalles del pago: " + e.getMessage());
+        }
+    }
 
 
 }

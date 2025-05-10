@@ -102,7 +102,8 @@ public class SecurityConfiguration {
                                 "/posts/uploadPostWithImage",
                                 "/uploads/images/**",
                                 "/uploads/avatars/**",
-                                "/stripe-pay/create-checkout-session"
+                                "/stripe-pay/create-checkout-session",
+                                "/stripe-pay/details/*"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
