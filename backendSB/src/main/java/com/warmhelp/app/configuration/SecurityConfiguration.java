@@ -87,6 +87,7 @@ public class SecurityConfiguration {
                                 "/v1/sendMessage",
                                 "/incidents",
                                 "/incidents/registerIncident",
+                                "/incidents/**",
                                 "/reports-posts",
                                 "/reports-posts/register-report-post",
                                 "/reports-services",

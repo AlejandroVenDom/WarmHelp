@@ -52,29 +52,35 @@
       }
 
       .estado {
-        font-size: 0.85rem;
-        font-weight: 600;
-        padding: 6px 12px;
-        border-radius: 20px;
-        text-transform: uppercase;
-        background: #eee;
-        color: #3A7D44;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  background: #eee;
+  color: #3A7D44;
+  transition: background-color 0.3s ease, color 0.3s ease;
 
-        &.pendiente {
-          background-color: #FFD580;
-          color: #8a4b00;
-        }
+  &.pendiente {
+    background-color: #FFD580;
+    color: #8a4b00;
+  }
 
-        &.resuelto {
-          background-color: #9DC08B;
-          color: white;
-        }
+  &.en_progreso {
+    background-color: #DF6D14;
+    color: white;
+  }
 
-        &.rechazado {
-          background-color: #e57373;
-          color: white;
-        }
-      }
+  &.resuelta {
+    background-color: #1f5c00;
+    color: white;
+  }
+
+  &.cerrada {
+    background-color: red;
+    color: white;
+  }
+}
     }
 
     .descripcion {
@@ -119,3 +125,64 @@
     }
   }
 }
+.acciones {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+
+  .btn-eliminar {
+    background-color: #DF6D14;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #c65d0f;
+    }
+
+    i {
+      font-size: 1rem;
+    }
+  }
+}
+.cambiar-estado {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    font-weight: 600;
+    color: #3A7D44;
+    margin-bottom: 4px;
+  }
+
+  select {
+    padding: 8px 12px;
+    border-radius: 12px;
+    border: 2px solid #9DC08B;
+    background-color: #ffffff;
+    color: #3A7D44;
+    font-weight: bold;
+    font-family: 'Segoe UI', sans-serif;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.2s ease;
+
+    &:hover {
+      border-color: #3A7D44;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #DF6D14;
+    }
+  }
+}
+
