@@ -24,14 +24,15 @@ export class IncidentService {
   }): Observable<Incident> {
     return this.http.post<Incident>(`${this.apiUrl}/registerIncident`, data);
   }
-  updateIncidentState(id: number, newState: IncidentState) {
+
+  updateIncidentState(id: number, newState: IncidentState): Observable<any> {
   return this.http.patch(`${this.apiUrl}/${id}/update-state`, {
-    newState
+    newState: newState
   });
 }
-deleteIncident(id: number): Observable<string> {
-  return this.http.delete(`${this.apiUrl}/${id}`, { responseType: 'text' });
-}
 
 
+  deleteIncident(id: number): Observable<string> {
+    return this.http.delete(`${this.apiUrl}/${id}`, { responseType: 'text' });
+  }
 }

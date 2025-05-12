@@ -25,25 +25,26 @@ export class IncidenciasComponent {
   }
 
   onEstadoChange(event: Event, incidentId: number) {
-    const selectElement = event.target as HTMLSelectElement;
-    const newState = selectElement.value as IncidentState;
+  const selectElement = event.target as HTMLSelectElement;
+  const newState = selectElement.value as IncidentState;
 
-    this.incidentService.updateIncidentState(incidentId, newState).subscribe({
-      next: (res: any) => {
-        if (res?.success) {
-          const incident = this.incidencias.find(i => i.id === incidentId);
-          if (incident) incident.state = newState;
-          this.popupService.showMessage("Actualizado", "Estado cambiado correctamente", "success");
-        } else {
-          this.popupService.showMessage("Error", res?.message || "Error desconocido", "error");
-        }
-      },
-      error: err => {
-        console.error('Error actualizando estado:', err);
-        this.popupService.showMessage("Error", "Hubo un error al actualizar el estado.", "error");
+  this.incidentService.updateIncidentState(incidentId, newState).subscribe({
+    next: (res: any) => {
+      if (res?.success) {
+        const incident = this.incidencias.find(i => i.id === incidentId);
+        if (incident) incident.state = newState;
+        this.popupService.showMessage("Actualizado", "Estado cambiado correctamente", "success");
+      } else {
+        this.popupService.showMessage("Error", res?.message || "Error desconocido", "error");
       }
-    });
-  }
+    },
+    error: err => {
+      console.error('Error actualizando estado:', err);
+      this.popupService.showMessage("Error", "Hubo un error al actualizar el estado.", "error");
+    }
+  });
+}
+
 
   async eliminarIncidencia(incidentId: number): Promise<void> {
     const confirmed = await this.popupService.showConfirmation(

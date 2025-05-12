@@ -52,23 +52,17 @@ public class IncidentService {
                 })
                 .collect(Collectors.toList());
     }
-    public void updateIncidentState(Long incidentId, String newState) {
+    public void updateIncidentState(Long incidentId, IncidentState newState) {
         Incident incident = incidentRepository.findById(incidentId)
                 .orElseThrow(() -> new IllegalArgumentException("Incidencia no encontrada"));
 
-        IncidentState stateEnum;
-        try {
-            stateEnum = IncidentState.valueOf(newState);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Estado inválido: " + newState);
-        }
-
-        IncidentStateClass stateClass = incidentStateRepository.findByIncidentState(stateEnum)
+        IncidentStateClass stateClass = incidentStateRepository.findByIncidentState(newState)
                 .orElseThrow(() -> new IllegalArgumentException("Estado no encontrado en base de datos"));
 
         incident.setState(stateClass);
         incidentRepository.save(incident);
     }
+
     public void deleteIncidentById(Long id) {
         Incident incident = incidentRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Incidencia no encontrada"));

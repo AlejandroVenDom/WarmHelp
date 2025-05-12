@@ -22,7 +22,7 @@
       <div class="cambiar-estado">
         <label for="estado-{{ i.id }}">Cambiar estado:</label>
         <select [(ngModel)]="i.state" (change)="onEstadoChange($event, i.id)">
-  <option *ngFor="let estado of incidentStates" [ngValue]="estado">
+  <option *ngFor="let estado of incidentStates" [value]="estado">
     {{ estado }}
   </option>
 </select>

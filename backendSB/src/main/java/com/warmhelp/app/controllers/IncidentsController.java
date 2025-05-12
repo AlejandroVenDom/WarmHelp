@@ -3,6 +3,7 @@ package com.warmhelp.app.controllers;
 import com.warmhelp.app.dtos.auth.IncidentStateUpdateRequest;
 import com.warmhelp.app.dtos.auth.IncidentsRequest;
 import com.warmhelp.app.dtosResponses.IncidentResponseDTO;
+import com.warmhelp.app.enums.IncidentState;
 import com.warmhelp.app.models.Incident;
 import com.warmhelp.app.services.IncidentService;
 import org.springframework.http.ResponseEntity;
@@ -40,9 +41,9 @@ public class IncidentsController {
     @PatchMapping("/{id}/update-state")
     public ResponseEntity<Map<String, Object>> updateIncidentState(
             @PathVariable Long id,
-            @RequestBody Map<String, String> requestBody) {
+            @RequestBody IncidentStateUpdateRequest request) {
 
-        String newState = requestBody.get("newState");
+        IncidentState newState = request.getNewState();
 
         try {
             incidentService.updateIncidentState(id, newState);
@@ -57,6 +58,7 @@ public class IncidentsController {
             return ResponseEntity.status(400).body(error);
         }
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteIncident(@PathVariable Long id) {
         try {
