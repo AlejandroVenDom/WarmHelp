@@ -41,14 +41,14 @@ const routes: Routes = [
       { path: 'perfil', component: PerfilComponent, canActivate: [authGuard] },
       {path:  'perfil-publico/:username', component: PublicProfileComponent, canActivate: [authGuard]},
       { path: 'login', component: LoginComponent, canActivate: [publicGuard] },
-      { path: 'register', component: RegisterComponent, canActivate: [publicGuard] },
+      { path: 'register', component: RegisterComponent}, // este tampoco por el email
       { path: 'posts', component: PostsComponent, canActivate: [authGuard] },
       { path: 'tienda', component: TiendaComponent , canActivate: [authGuard] },
       { path: 'mis-publicaciones', component: MisPublicacionesComponent , canActivate: [authGuard] },
       { path: 'mis-incidencias', component: MisIncidenciasComponent, canActivate: [authGuard]},
       { path: 'chat-gpt', component: ChatGptComponent , canActivate: [authGuard]},
       { path: 'servicioscr', component: BackofficeAdminComponent},
-      { path: 'verify', component: VerifyComponent, canActivate: [authGuard] },
+      { path: 'verify', component: VerifyComponent}, // no pongan authGuard o al registrar el usuario estara siempre en false al verificar 
       { path: 'servicioscr', component: BackofficeAdminComponent, canActivate: [roleGuard]},
       { path: 'stripe-pay', component: StripePayComponent, canActivate: [authGuard]},
       { path: 'success', component: PaymentSuccessComponent, canActivate: [authGuard]},

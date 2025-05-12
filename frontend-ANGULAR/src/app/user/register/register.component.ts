@@ -67,8 +67,10 @@ export class RegisterComponent {
         this.isWaitingForVerification = true; // Activa el estado de espera
         this.emailSentTo = this.registerForm.value.email;
         this.popupService.close();
-      },
-      error: (err) => { /* ... */ }
+      },error: (err) => {
+        console.error('Error detallado:', err); // Ver en DevTools → Console
+        this.popupService.error('Error', err.error?.message || 'Error desconocido');
+      }
     });
   }
   

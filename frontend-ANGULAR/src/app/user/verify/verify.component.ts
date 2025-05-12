@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { PopupService } from '../../services/popup.service';
-
 @Component({
   selector: 'app-verify',  
   standalone: false,
@@ -10,30 +8,28 @@ import { PopupService } from '../../services/popup.service';
   templateUrl: './verify.component.html',
 })
 export class VerifyComponent implements OnInit {
-  message: string = 'Verificando token...';
-
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private router: Router,
-    private popupService: PopupService
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    const token = this.route.snapshot.queryParamMap.get('token');
-    if (token) {
-      this.http.get(`/api/verify?token=${token}`).subscribe({
-        next: () => {
-          this.message = '¡Tu cuenta ha sido activada exitosamente!';
-          this.popupService.showMessage('Éxito', this.message, 'success');
-          setTimeout(() => this.router.navigate(['/login']), 3000);
-        },
-        error: () => {
-          this.message = 'Token inválido o expirado.';
-          this.popupService.showMessage('Error', this.message, 'error');
-          setTimeout(() => this.router.navigate(['/register']), 4000);
-        }
-      });
-    }
+    this.route.queryParams.subscribe(params => {
+      const token = params['token'];
+      console.log('Token recibido:', token);
+      if (token) {
+        this.http.get(`http://localhost:8080/api/users/verify?token=${token}`).subscribe({
+          next: (res) => {
+            console.log('Verificación exitosa:', res);
+            this.router.navigate(['/login']); // página de éxito
+          },
+        });
+      }
+    });
   }
+    goToLogin(): void {
+  this.router.navigate(['/login']);
+}
+
 }

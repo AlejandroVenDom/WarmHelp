@@ -3,6 +3,7 @@ import { Observable } from "rxjs";
 import { environment } from "../../../environments/environment";
 import { UserInterface } from "../interfaces/auth";
 import { Injectable } from "@angular/core";
+import { LoginResponse } from "../interfaces/login-response";
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -48,4 +49,19 @@ export class UserService {
   getPublicProfile(username: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/public-profile/${username}`);
   }
+  register(user: { email: string, password: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, user);
+  }
+
+  verifyToken(token: string): Observable<{ message: string, success: boolean }> {
+    console.log('Token enviado al backend:', token); // Debug
+    return this.http.get<{ message: string, success: boolean }>(`${this.apiUrl}/verify?token=${encodeURIComponent(token)}`);
+  }
+  login(credentials: { email: string, password: string }) { // 👈 Usa 'email' en lugar de 'username'
+  return this.http.post<LoginResponse>(
+    `${environment.apiUrl}/users/login`,
+    credentials,
+    { headers: { 'Content-Type': 'application/json' } }
+  );
+}
 }
