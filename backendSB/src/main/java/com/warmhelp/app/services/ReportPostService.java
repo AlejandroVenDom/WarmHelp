@@ -50,6 +50,17 @@ public class ReportPostService {
                 })
                 .collect(Collectors.toList());
     }
+    public void updateReportState(Long id, String newState) {
+        ReportPost report = reportPostsRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Reporte no encontrado"));
+
+        ReportState stateEnum = ReportState.valueOf(newState);
+        ReportStateClass stateClass = reportStateRepository.findByReportState(stateEnum)
+                .orElseThrow(() -> new IllegalArgumentException("Estado inválido"));
+
+        report.setState(stateClass);
+        reportPostsRepository.save(report);
+    }
 
     public ReportPostDTO createReportForPost(ReportPostRequest reportPostFormFront){
 

@@ -7,9 +7,17 @@
     <div *ngFor="let r of reportes" class="reporte-card">
       <div class="reporte-header">
         <h4><i class="bi bi-wrench-adjustable-circle-fill"></i> {{ r.serviceTitle }}</h4>
-        <span class="estado" [ngClass]="r.state.toLowerCase()">
-          {{ r.state }}
-        </span>
+        <div class="estado-select">
+          <span class="estado" [ngClass]="r.state.toLowerCase().replace(' ', '_')">
+            {{ r.state }}
+          </span>
+          <div class="cambiar-estado">
+            <label>Cambiar estado:</label>
+            <select [value]="r.state" (change)="onEstadoChange($event, r.id)">
+              <option *ngFor="let estado of reportStates" [value]="estado">{{ estado }}</option>
+            </select>
+          </div>
+        </div>
       </div>
 
       <p class="descripcion">{{ r.description }}</p>

@@ -1,6 +1,7 @@
 package com.warmhelp.app.controllers;
 
 import com.warmhelp.app.dtos.auth.ReportPostRequest;
+import com.warmhelp.app.dtos.auth.ReportStateUpdateRequest;
 import com.warmhelp.app.dtosResponses.ReportPostDTO;
 import com.warmhelp.app.models.ReportPost;
 import com.warmhelp.app.services.ReportPostService;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/reports-posts")
@@ -34,4 +36,14 @@ public class ReportPostsController {
             return ResponseEntity.status(401).body(e.getMessage());
         }
     }
+    @PatchMapping("/{id}/update-state")
+    public ResponseEntity<?> updateReportPostState(@PathVariable Long id, @RequestBody ReportStateUpdateRequest request) {
+        try {
+            reportPostService.updateReportState(id, request.getNewState());
+            return ResponseEntity.ok(Map.of("success", true, "message", "Estado actualizado correctamente"));
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(Map.of("success", false, "message", e.getMessage()));
+        }
+    }
+
 }

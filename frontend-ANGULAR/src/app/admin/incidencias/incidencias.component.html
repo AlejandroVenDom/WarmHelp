@@ -21,11 +21,11 @@
       <!-- Selector para cambiar estado -->
       <div class="cambiar-estado">
         <label for="estado-{{ i.id }}">Cambiar estado:</label>
-        <select [value]="i.state" (change)="onEstadoChange($event, i.id)">
-          <option *ngFor="let estado of incidentStates" [value]="estado">
-            {{ estado }}
-          </option>
-        </select>
+        <select [(ngModel)]="i.state" (change)="onEstadoChange($event, i.id)">
+  <option *ngFor="let estado of incidentStates" [ngValue]="estado">
+    {{ estado }}
+  </option>
+</select>
       </div>
       <div class="acciones">
   <button (click)="eliminarIncidencia(i.id)" class="btn-eliminar">

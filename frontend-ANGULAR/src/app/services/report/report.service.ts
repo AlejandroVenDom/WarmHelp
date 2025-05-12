@@ -35,5 +35,12 @@ export class ReportService {
   }): Observable<any> {
     return this.http.post(`${environment.apiUrl}/reports-posts/register-report-post`, report);
   }
+  updateServiceReportState(id: number, newState: string): Observable<any> {
+  return this.http.patch(`${this.apiUrl}/${id}/update-state`, { newState });
+}
+
+updatePostReportState(id: number, newState: string): Observable<any> {
+  return this.http.patch(`${environment.apiUrl}/reports-posts/${id}/update-state`, { newState });
+}
 
 }

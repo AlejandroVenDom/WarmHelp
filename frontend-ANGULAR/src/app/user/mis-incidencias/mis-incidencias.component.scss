@@ -96,18 +96,51 @@
         }
 
         .estado {
-          font-size: 0.85rem;
-          font-weight: 600;
-          padding: 6px 12px;
-          border-radius: 20px;
-          text-transform: uppercase;
-          background: #eee;
-          color: #3A7D44;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    background: #eee;
+    color: #3A7D44;
+    transition: background-color 0.3s ease, color 0.3s ease;
 
-          &.pendiente { background-color: #FFD580; color: #8a4b00; }
-          &.resuelto  { background-color: #9DC08B; color: white; }
-          &.rechazado { background-color: #e57373; color: white; }
-        }
+    &.pendiente {
+      background-color: #FFD580;
+      color: #8a4b00;
+    }
+
+    &.en_progreso {
+      background-color: #DF6D14;
+      color: white;
+    }
+
+    &.resuelta {
+      background-color: #1f5c00;
+      color: white;
+    }
+
+    &.cerrada {
+      background-color: #f70707;
+      color: white;
+    }
+
+    &.pending {
+      background-color: #FFD580;
+      color: #8a4b00;
+    }
+
+    &.in_progress {
+      background-color: #FFB347;
+      color: white;
+    }
+
+    &.completed {
+      background-color: #1f5c00;
+      color: white;
+    }
+  }
+
       }
 
       .descripcion {
@@ -169,29 +202,21 @@
   }
 }
 
-// 🎯 INCIDENCIA CARD PARA REPORTES
-.lista-incidencias .incidencia-card {
-  border-left: 6px solid #DF6D14 !important;
-
-  .incidencia-header h4 i {
-    color: #DF6D14;
-  }
-
-  .estado.pending {
-    background-color: #FFD580;
-    color: #8a4b00;
-  }
-
-  .estado.in_progress {
-    background-color: #FFB347;
-    color: white;
-  }
-
-  .estado.completed {
-    background-color: #9DC08B;
-    color: white;
-  }
+.estado.pending {
+  background-color: #FFD580;
+  color: #8a4b00;
 }
+
+.estado.in_progress {
+  background-color: #FFB347;
+  color: white;
+}
+
+.estado.completed {
+  background-color: #9DC08B;
+  color: white;
+}
+
 
 //
 // 🧩 RESPONSIVE – BREAKPOINTS PERSONALIZADOS

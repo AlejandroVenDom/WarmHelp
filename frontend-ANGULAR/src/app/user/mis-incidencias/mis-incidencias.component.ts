@@ -56,7 +56,18 @@ export class MisIncidenciasComponent implements OnInit {
     this.cargarReportes();
     this.servicios = this.useStateService.getProfessionalServices();
   }
-
+  getEstadoClass(state: string): string {
+  return state.toLowerCase().replace(' ', '_'); // e.g., "EN_PROGRESO" → "en_progreso"
+}
+getEstadoIcon(state: string): string {
+  switch (state) {
+    case 'PENDIENTE': return 'bi-clock-fill';
+    case 'EN_PROGRESO': return 'bi-arrow-repeat';
+    case 'RESUELTA': return 'bi-check-circle-fill';
+    case 'CERRADA': return 'bi-lock-fill';
+    default: return 'bi-question-circle-fill';
+  }
+}
   cargarIncidencias(): void {
     const user = this.useStateService.getUsername();
     this.incidentService.getAllIncidents().subscribe(todas => {

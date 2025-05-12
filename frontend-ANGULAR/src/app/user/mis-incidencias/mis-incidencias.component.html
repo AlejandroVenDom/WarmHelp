@@ -28,9 +28,9 @@
       <div *ngFor="let i of incidencias" class="incidencia-card">
         <div class="incidencia-header">
           <h4><i class="bi bi-clipboard2-fill"></i> {{ i.title }}</h4>
-          <span class="estado" [ngClass]="i.state.toLowerCase()">
-            {{ getNombreEstado(i.state) }}
-          </span>
+          <span class="estado" [ngClass]="getEstadoClass(i.state)">
+  {{ getNombreEstado(i.state) }}
+</span>
         </div>
         <p class="descripcion">{{ i.description }}</p>
         <div class="info-extra">
@@ -57,7 +57,7 @@
     <div *ngFor="let r of reportesServicio" class="incidencia-card">
       <div class="incidencia-header">
         <h4><i class="bi bi-tools"></i> {{ r.serviceTitle }}</h4>
-        <span class="estado" [ngClass]="r.state.toLowerCase()">{{ getNombreEstado(r.state) }}</span>
+        <span class="estado" [ngClass]="getEstadoClass(r.state)">{{ getNombreEstado(r.state) }}</span>
       </div>
       <p class="descripcion">{{ r.description }}</p>
       <div class="info-extra">
@@ -83,7 +83,7 @@
     <div *ngFor="let r of reportesPost" class="incidencia-card">
       <div class="incidencia-header">
         <h4><i class="bi bi-file-text-fill"></i> {{ r.postTitle }}</h4>
-        <span class="estado" [ngClass]="r.state.toLowerCase()">{{ getNombreEstado(r.state) }}</span>
+        <span class="estado" [ngClass]="getEstadoClass(r.state)">{{ getNombreEstado(r.state) }}</span>
       </div>
       <p class="descripcion">{{ r.description }}</p>
       <div class="info-extra">
