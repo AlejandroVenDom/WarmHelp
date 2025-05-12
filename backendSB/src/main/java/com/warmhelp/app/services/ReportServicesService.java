@@ -26,18 +26,19 @@ public class ReportServicesService {
         this.professionalServicesRepository = professionalServicesRepository;
     }
 
-    public List<ReportServiceResponseDTO> getAllReports(){
+    public List<ReportServiceResponseDTO> getAllReports() {
         List<ReportService> reports = this.reportServicesRepository.findAll();
 
         return reports.stream()
-                .map(report->{
+                .filter(report -> report.getDeletedAt() == null) // 👈 Filtrar los eliminados
+                .map(report -> {
                     String state = report.getState() != null ? report.getState().getReportState().name() : null;
 
                     return new ReportServiceResponseDTO(
                             report.getId(),
                             report.getDescription(),
                             report.getType().getReportType().name(),
-                            report.getState().getReportState().name(),
+                            state,
                             report.getUserInfo().getUser().getUsername(),
                             report.getProfessionalServices().getId(),
                             report.getProfessionalServices().getTitle(),
@@ -49,6 +50,7 @@ public class ReportServicesService {
                 })
                 .collect(Collectors.toList());
     }
+
     public void updateReportState(Long id, String newState) {
         ReportService report = reportServicesRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Reporte no encontrado"));
@@ -60,6 +62,14 @@ public class ReportServicesService {
         report.setState(stateClass);
         reportServicesRepository.save(report);
     }
+    public void deleteReport(Long id) {
+        ReportService report = reportServicesRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Reporte de servicio no encontrado"));
+
+        report.setDeletedAt(java.time.LocalDateTime.now());
+        reportServicesRepository.save(report);
+    }
+
 
 
     public ReportServiceResponseDTO createdReportForService(ReportServicesRequest request){

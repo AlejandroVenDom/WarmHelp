@@ -42,5 +42,13 @@ export class ReportService {
 updatePostReportState(id: number, newState: string): Observable<any> {
   return this.http.patch(`${environment.apiUrl}/reports-posts/${id}/update-state`, { newState });
 }
+deleteServiceReport(id: number): Observable<any> {
+  return this.http.delete(`${this.apiUrl}/${id}`);
+}
+deletePostReport(id: number): Observable<any> {
+  return this.http.delete(`${environment.apiUrl}/reports-posts/${id}`);
+}
+
+
 
 }

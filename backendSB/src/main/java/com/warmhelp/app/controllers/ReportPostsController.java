@@ -45,5 +45,15 @@ public class ReportPostsController {
             return ResponseEntity.status(400).body(Map.of("success", false, "message", e.getMessage()));
         }
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteReportPost(@PathVariable Long id) {
+        try {
+            reportPostService.deleteReport(id);
+            return ResponseEntity.ok(Map.of("success", true, "message", "Reporte eliminado correctamente"));
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(Map.of("success", false, "message", e.getMessage()));
+        }
+    }
+
 
 }

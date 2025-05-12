@@ -52,6 +52,20 @@ export class ReportsPostsAdminComponent implements OnInit {
     }
   });
 }
+eliminarReporte(id: number) {
+  if (!confirm("¿Estás seguro de que deseas eliminar este reporte de publicación?")) return;
+
+  this.reportService.deletePostReport(id).subscribe({
+    next: () => {
+      this.reportesPost = this.reportesPost.filter(r => r.id !== id);
+      this.popupService.showMessage("Éxito", "Reporte eliminado correctamente", "success");
+    },
+    error: () => {
+      this.popupService.showMessage("Error", "No se pudo eliminar el reporte", "error");
+    }
+  });
+}
+
 
 
 }

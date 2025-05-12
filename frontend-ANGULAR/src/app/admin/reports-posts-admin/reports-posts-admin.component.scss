@@ -118,6 +118,30 @@
     }
   }
 }
+.acciones-admin {
+  margin-top: 1rem;
+  text-align: right;
+
+  button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    i {
+      margin-right: 6px;
+    }
+
+    &:hover {
+      background-color: #c0392b;
+    }
+  }
+}
+
 
 @media (max-width: 768px) {
   .admin-reports-container {

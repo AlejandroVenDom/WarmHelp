@@ -52,4 +52,18 @@ export class ReportsAdminComponent implements OnInit {
       }
     });
   }
+  eliminarReporte(id: number) {
+  if (!confirm("¿Estás seguro de que deseas eliminar este reporte?")) return;
+
+  this.reportService.deleteServiceReport(id).subscribe({
+    next: () => {
+      this.reportes = this.reportes.filter(r => r.id !== id);
+      this.popupService.showMessage("Éxito", "Reporte eliminado correctamente", "success");
+    },
+    error: () => {
+      this.popupService.showMessage("Error", "No se pudo eliminar el reporte", "error");
+    }
+  });
+}
+
 }
