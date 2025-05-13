@@ -197,3 +197,30 @@
     }
   }
 }
+.btn-add-cart {
+  background: #3A7D44;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  margin-left: 10px;
+
+  &:hover {
+    background: darken(#3A7D44, 10%);
+  }
+
+  i {
+    pointer-events: none;
+  }
+}
+
+.servicio-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}

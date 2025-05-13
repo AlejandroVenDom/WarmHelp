@@ -14,12 +14,19 @@ export class FiltrosComponent implements OnChanges, AfterViewInit {
   @Input() maxPrice = 1000;
   @Input() priceRangeMin = 0;
   @Input() priceRangeMax = 1000;
+  @Input() availableCurrencies: string[] = [];
+  @Input() selectedCurrency: string = '';
 
   @Output() searchChange = new EventEmitter<string>();
   @Output() priceChange = new EventEmitter<{ min: number; max: number }>();
   @Output() reset = new EventEmitter<void>();
   @Output() close = new EventEmitter<void>();
   @Output() orderChange = new EventEmitter<string>();
+  @Output() currencyChange = new EventEmitter<string>();
+
+  onCurrencyChange() {
+  this.currencyChange.emit(this.selectedCurrency);
+}
 
   ngAfterViewInit(): void {
     this.updateSliderTrack();
@@ -43,7 +50,8 @@ export class FiltrosComponent implements OnChanges, AfterViewInit {
     this.maxPrice = this.priceRangeMax;
     this.ordenSeleccionado = 'recientes'; // 🆕 restablece la orden
     this.updateSliderTrack();
-
+    this.selectedCurrency = '';
+    this.currencyChange.emit(this.selectedCurrency);
     this.searchChange.emit(this.searchTerm);
     this.priceChange.emit({ min: this.minPrice, max: this.maxPrice });
     this.orderChange.emit(this.ordenSeleccionado); // 🆕 notifica el cambio de orden

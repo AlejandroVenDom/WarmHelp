@@ -42,6 +42,16 @@ public class CartController {
         Cart updated = cartService.removeItemFromCart(cartId, cartItemId);
         return ResponseEntity.ok(updated);
     }
+    @DeleteMapping("/{cartId}/clear-items")
+    public ResponseEntity<String> clearCartItems(@PathVariable Long cartId) {
+        boolean cleared = cartService.clearAllItemsFromCart(cartId);
+        if (cleared) {
+            return ResponseEntity.ok("Carrito vaciado exitosamente.");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
     @PostMapping("/{cartId}/add-item")
     public ResponseEntity<CartItem> addOrUpdateItem(

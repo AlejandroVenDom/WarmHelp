@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of, tap } from 'rxjs';
 import { UseStateService } from './use-state.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -84,4 +84,13 @@ export class CartService {
   clearCartLocally() {
     this.cartItems$.next([]);
   }
+  clearCartFromBackendAsObservable() {
+  if (this.currentCartId === null) return of(null);
+
+  return this.http.delete(`${this.cartUrl}/${this.currentCartId}/clear-items`).pipe(
+    tap(() => this.cartItems$.next([]))
+  );
+}
+
+
 }

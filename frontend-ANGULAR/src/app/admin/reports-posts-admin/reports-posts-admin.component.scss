@@ -41,6 +41,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
 
       h4 {
         font-size: 1.3rem;
@@ -51,30 +53,46 @@
         color: #3A7D44;
       }
 
-      .estado {
-        font-size: 0.85rem;
-        font-weight: 600;
-        padding: 6px 12px;
-        border-radius: 20px;
-        text-transform: uppercase;
-        background: #eee;
-        color: #3A7D44;
+      .estado-select {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 8px;
 
-        &.pending {
-          background-color: #FFD580;
-          color: #8a4b00;
-        }
+        .estado,
+  select {
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    min-width: 130px;
+    text-align: center;
+    border: none;
+    appearance: none;
+  }
 
-        &.completed {
-          background-color: #9DC08B;
-          color: white;
-        }
+  // Aplica color también al select
+  .pending {
+    background-color: #FFD580;
+    color: #8a4b00;
+  }
 
-        &.rejected {
-          background-color: #e57373;
-          color: white;
-        }
-      }
+  .in_progress {
+    background-color: #DF6D14;
+    color: white;
+  }
+
+  .completed {
+    background-color: #1f5c00;
+    color: white;
+  }
+
+  .rejected {
+    background-color: #e57373;
+    color: white;
+  }
+}
     }
 
     .descripcion {
@@ -100,6 +118,30 @@
     }
   }
 }
+.acciones-admin {
+  margin-top: 1rem;
+  text-align: right;
+
+  button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    i {
+      margin-right: 6px;
+    }
+
+    &:hover {
+      background-color: #c0392b;
+    }
+  }
+}
+
 
 @media (max-width: 768px) {
   .admin-reports-container {
@@ -115,6 +157,11 @@
 
     .info-extra {
       flex-direction: column;
+    }
+
+    .reporte-header {
+      flex-direction: column;
+      align-items: flex-start;
     }
   }
 }

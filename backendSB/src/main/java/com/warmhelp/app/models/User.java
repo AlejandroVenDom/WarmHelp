@@ -24,6 +24,9 @@ public class User {
     private String password;
 
     @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
     private boolean enabled = false;
 
     @ManyToOne
@@ -99,4 +102,5 @@ public class User {
     public void setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
     }
+
 }

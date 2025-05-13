@@ -1,0 +1,17 @@
+<div class="stripe-success" *ngIf="sessionId">
+  <div class="success-icon">
+    <i class="bi bi-check-circle-fill"></i>
+  </div>
+  <h2>¡Pago completado con éxito!</h2>
+  <p class="info">Gracias por tu compra !</p>
+
+  <div class="order-summary">
+    <p><strong>ID de la sesión:</strong> {{ sessionId }}</p>
+    <p><strong>Email:</strong> {{ email }}</p>
+    <!-- Aquí puedes agregar más detalles del pedido si los tienes -->
+  </div>
+
+  <a routerLink="/tienda" class="back-to-store-btn">
+    <i class="bi bi-arrow-left-circle"></i> Volver a la tienda
+  </a>
+</div>

@@ -33,7 +33,7 @@ public class VerificationToken {
     }
 
     private static String generateToken() {
-        return java.util.UUID.randomUUID().toString();  // Genera un token único
+        return UUID.randomUUID().toString();  // Genera un token único
     }
 
     // Getters y Setters

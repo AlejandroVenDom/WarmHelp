@@ -1,0 +1,66 @@
+.stripe-success {
+  padding: 2.5rem;
+  width: 45%;
+  margin: 3% auto;
+  background: #f8f5e9;
+  border-radius: 24px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+
+  .success-icon {
+    font-size: 4rem;
+    color: #3a7d44;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    color: #3a7d44;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .info {
+    font-size: 1.1rem;
+    color: #9dc08b;
+    margin-bottom: 2rem;
+  }
+
+  .order-summary {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    color: #3a7d44;
+    font-size: 1rem;
+    text-align: left;
+
+    p {
+      margin: 0.5rem 0;
+
+      strong {
+        color: #df6d14;
+      }
+    }
+  }
+
+  .back-to-store-btn {
+    display: inline-block;
+    margin-top: 2rem;
+    background: #3a7d44;
+    color: #f8f5e9;
+    padding: 0.8rem 1.5rem;
+    border-radius: 14px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: background 0.3s ease;
+
+    i {
+      margin-right: 0.5rem;
+    }
+
+    &:hover {
+      background: #2e6a37;
+    }
+  }
+}

@@ -21,7 +21,7 @@
         <span>Total:</span>
         <strong>{{ total.toFixed(2) }} {{ cartItems[0]?.currency || '' }}</strong>
       </div>
-      <button class="pay-btn"><i class="bi bi-lock-fill"></i> Pagar con tarjeta</button>
+      <button class="pay-btn" (click)="payWithStripe()"><i class="bi bi-lock-fill"></i> Pagar con tarjeta</button>
     </div>
   </div>
 </div>

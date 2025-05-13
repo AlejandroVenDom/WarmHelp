@@ -7,7 +7,7 @@
     <div *ngFor="let i of incidencias" class="incidencia-card">
       <div class="incidencia-header">
         <h4><i class="bi bi-flag-fill"></i> {{ i.title }}</h4>
-        <span class="estado" [ngClass]="i.state.toLowerCase()">{{ i.state }}</span>
+        <span class="estado" [ngClass]="getEstadoClass(i.state)">{{ i.state }}</span>
       </div>
 
       <p class="descripcion">{{ i.description }}</p>
@@ -17,6 +17,21 @@
         <p><i class="bi bi-tag-fill"></i> <strong>Tipo:</strong> {{ i.type }}</p>
         <p><i class="bi bi-calendar-event-fill"></i> <strong>Fecha:</strong> {{ i.createdAt | date:'short' }}</p>
       </div>
+
+      <!-- Selector para cambiar estado -->
+      <div class="cambiar-estado">
+        <label for="estado-{{ i.id }}">Cambiar estado:</label>
+        <select [(ngModel)]="i.state" (change)="onEstadoChange($event, i.id)">
+  <option *ngFor="let estado of incidentStates" [value]="estado">
+    {{ estado }}
+  </option>
+</select>
+      </div>
+      <div class="acciones">
+  <button (click)="eliminarIncidencia(i.id)" class="btn-eliminar">
+    <i class="bi bi-trash-fill"></i> Eliminar
+  </button>
+</div>
     </div>
   </div>
 </div>
