@@ -224,3 +224,18 @@
   justify-content: space-between;
   margin-top: 10px;
 }
+.calificacion {
+  font-size: 0.95rem;
+  color: #DF6D14;
+  font-weight: bold;
+  margin-top: 0.2rem;
+}
+.estrellas {
+  margin-top: 0.3rem;
+  color: #DF6D14;
+
+  i {
+    margin-right: 2px;
+    font-size: 1rem;
+  }
+}

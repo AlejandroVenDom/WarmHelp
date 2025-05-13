@@ -75,7 +75,9 @@ export class PerfilComponent implements OnInit {
     this.mySelf_description = this.useStateService.getMySelfDescription();
     this.responseComments = this.useStateService.getResponseComments();
     this.professionalServices = this.useStateService.getProfessionalServices();
-    this.reviews = this.useStateService.getReviews();
+    const services = this.useStateService.getProfessionalServices() || [];
+this.professionalServices = services;
+this.reviews = services.flatMap((s: any) => s.reviews || []);
     this.avatar = this.useStateService.getAvatar();
     window.addEventListener('scroll', this.verificarScroll.bind(this));
   }
@@ -109,6 +111,16 @@ export class PerfilComponent implements OnInit {
       img.src = '/assets/image-not-found.jpg';
     }
   }
+  getStarCount(calification: string): number {
+  switch (calification) {
+    case 'EXCELENTE': return 5;
+    case 'BUENO': return 4;
+    case 'REGULAR': return 3;
+    case 'MALO': return 2;
+    case 'PESIMO': return 1;
+    default: return 0;
+  }
+}
 
 
   cancelPasswordChange() {

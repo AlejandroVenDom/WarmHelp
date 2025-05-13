@@ -26,12 +26,27 @@ export class PublicProfileComponent implements OnInit {
       const username = params.get('username');
       if (username) {
         this.userService.getPublicProfile(username).subscribe({
-          next: (res) => this.user = res,
-          error: (err) => console.error('Error cargando perfil público:', err)
-        });
+  next: (res) => {
+    this.user = res;
+
+    // 🔧 Combinar todas las reseñas de todos los servicios
+    this.user.reviews = this.user.professionalServices?.flatMap((s: any) => s.reviews || []) || [];
+  },
+  error: (err) => console.error('Error cargando perfil público:', err)
+});
       }
     });
   }
+  getStarCount(calification: string): number {
+  switch (calification) {
+    case 'EXCELENTE': return 5;
+    case 'BUENO': return 4;
+    case 'REGULAR': return 3;
+    case 'MALO': return 2;
+    case 'PESIMO': return 1;
+    default: return 0;
+  }
+}
 
   addToCart(service: any): void {
     this.cartService.addToCart(service, 1);

@@ -28,12 +28,17 @@
       </div>
       <div *ngIf="user.reviews?.length === 0">Este usuario aún no tiene reseñas.</div>
       <div *ngFor="let review of user.reviews" class="resena">
-        <div class="resena-header">
-          <strong>{{ review.username }}</strong>
-          <span>{{ review.createdAt | date:'longDate' }}</span>
-        </div>
-        <p>{{ review.description }}</p>
+  <div class="resena-header">
+    <div>
+      <strong>{{ review.username }}</strong>
+      <div class="estrellas">
+        <i *ngFor="let s of [].constructor(getStarCount(review.calification))" class="bi bi-star-fill"></i>
       </div>
+    </div>
+    <span>{{ review.createdAt | date:'longDate' }}</span>
+  </div>
+  <p>{{ review.description }}</p>
+</div>
     </div>
   </div>
 
@@ -73,19 +78,6 @@
     >
       <i class="bi bi-cart-plus"></i>
     </button>
-  </div>
-
-  <!-- Mostrar reseñas si hay -->
-  <div *ngIf="service.reviews?.length > 0" class="reseñas mt-3">
-    <h6><i class="bi bi-star-fill"></i> Reseñas</h6>
-    <div *ngFor="let review of service.reviews" class="resena container gap-2">
-      <div class="resena-header">
-        <strong>{{ review.calification }}</strong><br>
-        <span>{{ review.username }} </span>
-        <span>{{ review.createdAt | date:'longDate' }}</span>
-      </div>
-      <p>{{ review.description }}</p>
-    </div>
   </div>
 </div>
 

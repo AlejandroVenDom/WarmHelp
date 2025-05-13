@@ -9,9 +9,35 @@
     <p><strong>ID de la sesión:</strong> {{ sessionId }}</p>
     <p><strong>Email:</strong> {{ email }}</p>
     <!-- Aquí puedes agregar más detalles del pedido si los tienes -->
+     <button class="review-btn" (click)="abrirModalResena()">
+  <i class="bi bi-star-fill"></i> Dejar una reseña
+</button>
   </div>
 
   <a routerLink="/tienda" class="back-to-store-btn">
     <i class="bi bi-arrow-left-circle"></i> Volver a la tienda
   </a>
+
+<!-- Modal -->
+<div class="modal-overlay" *ngIf="showReviewModal">
+  <div class="modal-review">
+    <h2><i class="bi bi-star-half"></i> Deja tu reseña</h2>
+
+    <textarea [(ngModel)]="reviewDescription" rows="4" placeholder="Escribe tu reseña..."></textarea>
+
+    <label for="calification">Calificación:</label>
+    <select id="calification" [(ngModel)]="selectedCalification">
+      <option value="EXCELENTE">Excelente</option>
+      <option value="BUENO">Bueno</option>
+      <option value="REGULAR">Regular</option>
+      <option value="MALO">Malo</option>
+      <option value="PESIMO">Pésimo</option>
+    </select>
+
+    <div class="modal-buttons">
+      <button class="btn-enviar" (click)="enviarResena()">Enviar</button>
+      <button class="btn-cancelar" (click)="cerrarModalResena()">Cancelar</button>
+    </div>
+  </div>
+</div>
 </div>

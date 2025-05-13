@@ -151,14 +151,19 @@
         <i class="bi bi-star-half"></i>
         Reseñas recibidas
       </div>
-      <div *ngIf="reviews.length === 0" class="resena">Aún no has realizado reseñas.</div>
-      <div *ngFor="let review of reviews" class="resena">
-        <div class="resena-header">
-          <strong>{{ username }}</strong>
-          <span>{{ review.createdAt | date:'longDate' }}</span>
-        </div>
-        <p>{{ review.description }}</p>
+      <div *ngIf="reviews.length === 0" class="resena">Aún no has recibido reseñas.</div>
+<div *ngFor="let review of reviews" class="resena">
+  <div class="resena-header">
+    <div>
+      <strong>{{ review.username }}</strong>
+      <div class="estrellas">
+        <i *ngFor="let s of [].constructor(getStarCount(review.calification))" class="bi bi-star-fill"></i>
       </div>
+    </div>
+    <span>{{ review.createdAt | date:'longDate' }}</span>
+  </div>
+  <p>{{ review.description }}</p>
+</div>
     </div>
   </div>
 
