@@ -33,8 +33,6 @@ public class User {
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
     /*agregue email (solo esto luego quito (bryan))*/
-    @Column(nullable = false)
-    private String email;
 
     @CreationTimestamp
     @Column(nullable = false)
@@ -101,6 +99,22 @@ public class User {
 
     public void setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
 }
