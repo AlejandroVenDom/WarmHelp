@@ -47,6 +47,17 @@ export class PublicProfileComponent implements OnInit {
     default: return 0;
   }
 }
+getAverageRating(): number {
+  if (!this.user?.reviews?.length) return 0;
+
+  const total = this.user.reviews
+    .map((r: any) => this.getStarCount(r.calification))
+    .reduce((acc: number, val: number) => acc + val, 0);
+
+  return total / this.user.reviews.length;
+}
+
+
 
   addToCart(service: any): void {
     this.cartService.addToCart(service, 1);

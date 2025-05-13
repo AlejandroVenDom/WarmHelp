@@ -40,4 +40,21 @@ export class ProfessionalService {
   update(id: number, data: ProfessionalServiceInterface): Observable<any> {
     return this.http.post(`${this.apiUrl}/${id}/update`, data);
   }
+  getById(id: number): Observable<ProfessionalServiceInterface> {
+  return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
+    map(s => ({
+      id: s.id,
+      title: s.title,
+      description: s.description,
+      image: s.image,
+      price: s.price,
+      tax: s.tax,
+      currencyType: s.currency,
+      userName: s.username,
+      username: s.username,
+      createdAt: s.createdAt
+    }))
+  );
+}
+
 }

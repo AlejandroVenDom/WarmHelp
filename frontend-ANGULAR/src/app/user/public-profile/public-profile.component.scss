@@ -180,6 +180,19 @@
     font-weight: bold;
   }
 }
+.promedio-estrellas {
+  font-weight: bold;
+  color: #DF6D14;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  i {
+    color: #DF6D14;
+  }
+}
+
 
 @media (max-width: 768px) {
   .perfil-grid, .perfil-grid-secundaria {

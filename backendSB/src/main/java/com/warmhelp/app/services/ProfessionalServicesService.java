@@ -34,6 +34,52 @@ public class ProfessionalServicesService {
         this.currencyRepository = currencyRepository;
         this.reportServicesRepository = reportServicesRepository;
     }
+    public ProfessionalServiceResponseDTO getProfessionalServiceById(Long id) {
+        ProfessionalServices service = professionalServicesRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Service not found"));
+
+        List<ReviewResponseDTO> reviews = service.getReviews().stream().map(review ->
+                new ReviewResponseDTO(
+                        review.getId(),
+                        review.getDescription(),
+                        review.getUserInfo().getUser().getUsername(),
+                        review.getCalification().getCalificationType().name(),
+                        review.getCreatedAt()
+                )
+        ).toList();
+
+        List<ReportServiceResponseDTO> reports = service.getReports().stream().map(report ->
+                new ReportServiceResponseDTO(
+                        report.getId(),
+                        report.getDescription(),
+                        report.getType().getReportType().name(),
+                        report.getState() != null ? report.getState().getReportState().name() : null,
+                        report.getUserInfo().getUser().getUsername(),
+                        service.getId(),
+                        service.getTitle(),
+                        service.getDescription(),
+                        report.getCreatedAt(),
+                        report.getUpdatedAt(),
+                        report.getDeletedAt()
+                )
+        ).toList();
+
+        return new ProfessionalServiceResponseDTO(
+                service.getId(),
+                service.getTitle(),
+                service.getDescription(),
+                service.getPrice(),
+                service.getTax(),
+                service.getUserInfo().getUser().getUsername(),
+                service.getCurrency().getCurrencyType().name(),
+                reviews,
+                reports,
+                service.getCreatedAt(),
+                service.getUpdatedAt(),
+                service.getDeletedAt()
+        );
+    }
+
 
     public List<ProfessionalServiceResponseDTO> getAllProfessionalServices(){
         List<ProfessionalServices> services = professionalServicesRepository.findAll();

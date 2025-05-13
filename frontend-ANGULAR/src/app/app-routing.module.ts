@@ -32,6 +32,7 @@ import { VerifyComponent } from './user/verify/verify.component';
 import { StripePayComponent } from './user/stripe-pay/stripe-pay.component';
 import { PaymentSuccessComponent } from './user/payment-success/payment-success.component';
 import { PaymentDeniedComponent } from './user/payment-denied/payment-denied.component';
+import { ServicioProfesionalPublicoComponent } from './user/servicio-profesional-publico/servicio-profesional-publico.component';
 
 const routes: Routes = [
   // users without authentication
@@ -40,6 +41,7 @@ const routes: Routes = [
       { path: '',component: HomeNoAuthComponent},
       { path: 'perfil', component: PerfilComponent, canActivate: [authGuard] },
       {path:  'perfil-publico/:username', component: PublicProfileComponent, canActivate: [authGuard]},
+      { path: 'servicio/:id', component: ServicioProfesionalPublicoComponent, canActivate: [authGuard] },
       { path: 'login', component: LoginComponent, canActivate: [publicGuard] },
       { path: 'register', component: RegisterComponent}, // este tampoco por el email
       { path: 'posts', component: PostsComponent, canActivate: [authGuard] },
@@ -48,7 +50,7 @@ const routes: Routes = [
       { path: 'mis-incidencias', component: MisIncidenciasComponent, canActivate: [authGuard]},
       { path: 'chat-gpt', component: ChatGptComponent , canActivate: [authGuard]},
       { path: 'servicioscr', component: BackofficeAdminComponent},
-      { path: 'verify', component: VerifyComponent}, // no pongan authGuard o al registrar el usuario estara siempre en false al verificar 
+      { path: 'verify', component: VerifyComponent}, // no pongan authGuard o al registrar el usuario estara siempre en false al verificar
       { path: 'servicioscr', component: BackofficeAdminComponent, canActivate: [roleGuard]},
       { path: 'stripe-pay', component: StripePayComponent, canActivate: [authGuard]},
       { path: 'success', component: PaymentSuccessComponent, canActivate: [authGuard]},

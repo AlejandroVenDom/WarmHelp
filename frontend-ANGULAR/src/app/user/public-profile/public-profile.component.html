@@ -26,6 +26,10 @@
         <i class="bi bi-star-half"></i>
         Reseñas recibidas
       </div>
+      <div *ngIf="user.reviews?.length > 0" class="promedio-estrellas">
+  <i class="bi bi-star-fill"></i>
+  Nota media: {{ getAverageRating() | number:'1.1-2' }} / 5
+</div>
       <div *ngIf="user.reviews?.length === 0">Este usuario aún no tiene reseñas.</div>
       <div *ngFor="let review of user.reviews" class="resena">
   <div class="resena-header">

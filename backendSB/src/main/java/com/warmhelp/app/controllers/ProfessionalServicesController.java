@@ -41,6 +41,11 @@ public class ProfessionalServicesController {
         ProfessionalServices updateService = professionalServicesService.updateService(id, request);
         return ResponseEntity.ok(updateService);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<ProfessionalServiceResponseDTO> getProfessionalServiceById(@PathVariable Long id) {
+        return ResponseEntity.ok(professionalServicesService.getProfessionalServiceById(id));
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProfessionalServiceById(@PathVariable Long id){

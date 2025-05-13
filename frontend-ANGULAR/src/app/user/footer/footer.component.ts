@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
+import { TokenService } from '../../services/auth/token.service';
+import { UseStateService } from '../../services/auth/use-state.service';
 
 @Component({
   selector: 'app-footer',
@@ -7,5 +10,4 @@ import { Component } from '@angular/core';
   styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
-
 }

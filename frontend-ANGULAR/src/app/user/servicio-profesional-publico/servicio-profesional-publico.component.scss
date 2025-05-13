@@ -1,0 +1,256 @@
+$color-bg: #F8F5E9;
+$color-primary: #3A7D44;
+$color-secondary: #9DC08B;
+$color-accent: #DF6D14;
+$color-text: #2B2B2B;
+
+.total {
+  height: 75vh;
+}
+
+.servicio-detalle-container {
+  background: $color-bg;
+  padding: 2rem;
+  border-radius: 20px;
+  max-width: 1000px;
+  margin: 2rem auto;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+
+  button {
+    background: $color-primary;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    i {
+      margin-right: 6px;
+    }
+
+    &:hover {
+      background: darken($color-primary, 10%);
+    }
+  }
+}
+
+.contenido-servicio {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.imagen-wrapper {
+  flex: 1;
+  text-align: center;
+
+  .imagen-principal {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    object-fit: cover;
+  }
+}
+
+.info-servicio {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .titulo {
+    font-size: 2rem;
+    color: $color-primary;
+    margin-bottom: 0.5rem;
+  }
+
+  .descripcion {
+    font-size: 1.1rem;
+    color: $color-text;
+  }
+
+  .detalle-precios {
+    font-size: 1rem;
+    color: $color-accent;
+    font-weight: bold;
+
+    i {
+      color: $color-secondary;
+      margin-right: 6px;
+    }
+  }
+
+  .publicado {
+    font-size: 1rem;
+
+    .link-perfil {
+      color: $color-primary;
+      cursor: pointer;
+      text-decoration: underline;
+
+      &:hover {
+        color: darken($color-primary, 10%);
+      }
+    }
+  }
+
+  .fecha {
+    font-size: 0.95rem;
+    color: $color-text;
+
+    i {
+      margin-right: 6px;
+      color: $color-primary;
+    }
+  }
+
+  .btn-add-cart {
+    margin-top: 1rem;
+    background: $color-accent;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    i {
+      margin-right: 6px;
+    }
+
+    &:hover {
+      background: darken($color-accent, 10%);
+    }
+  }
+}
+.overlay-reporte-servicio {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+  padding: 1rem;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.contenido-reporte-servicio {
+  background: #ffffff;
+  border-radius: 20px;
+  max-width: 520px;
+  width: 100%;
+  padding: 2rem;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  font-family: 'Segoe UI', sans-serif;
+  color: #3A3A3A;
+
+  textarea {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 12px;
+    border: 2px solid #9DC08B;
+    background-color: #F8F5E9;
+    font-size: 1rem;
+    resize: none;
+    transition: box-shadow 0.3s ease;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(157, 192, 139, 0.4);
+    }
+  }
+
+  .grupo-select-reporte select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    border: 2px solid #9DC08B;
+    background-color: #F8F5E9;
+    font-size: 1rem;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg fill='%233A7D44' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+    transition: box-shadow 0.3s;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(58, 125, 68, 0.3);
+    }
+  }
+
+  .btn-enviar-reporte {
+    background-color: #DF6D14;
+    color: white;
+    padding: 0.85rem 1.6rem;
+    border: none;
+    border-radius: 14px;
+    font-weight: bold;
+    font-size: 1rem;
+    align-self: flex-end;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #c95c0d;
+    }
+  }
+
+  .btn-cerrar-reporte {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.4rem;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover {
+      color: #DF6D14;
+    }
+  }
+
+  .encabezado-reporte-servicio {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+
+    h2 {
+      font-size: 1.5rem;
+      color: #3A7D44;
+      margin: 0;
+    }
+
+    .icono-reporte {
+      font-size: 1.6rem;
+      color: #DF6D14;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+

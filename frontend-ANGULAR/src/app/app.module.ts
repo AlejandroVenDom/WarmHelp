@@ -39,6 +39,7 @@ import { StripePayComponent } from './user/stripe-pay/stripe-pay.component';
 import { FiltrosComponent } from './user/tienda/filtros/filtros.component';
 import { PaymentSuccessComponent } from './user/payment-success/payment-success.component';
 import { PaymentDeniedComponent } from './user/payment-denied/payment-denied.component';
+import { ServicioProfesionalPublicoComponent } from './user/servicio-profesional-publico/servicio-profesional-publico.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { PaymentDeniedComponent } from './user/payment-denied/payment-denied.com
     StripePayComponent,
     FiltrosComponent,
     PaymentSuccessComponent,
-    PaymentDeniedComponent
+    PaymentDeniedComponent,
+    ServicioProfesionalPublicoComponent
   ],
   imports: [
     BrowserModule,

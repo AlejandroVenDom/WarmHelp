@@ -52,46 +52,39 @@ export class TiendaComponent implements OnInit {
     private useStateService: UseStateService,
     private popupService: PopupService
   ) {}
-
   ngOnInit(): void {
     this.loadServicios();
     this.cartService.loadUserCartFromBackend();
     window.addEventListener('scroll', this.verificarScroll.bind(this));
   }
-
   ngOnDestroy(): void {
     window.removeEventListener('scroll', this.verificarScroll.bind(this));
   }
-
   verificarScroll(): void {
     this.mostrarBotonScroll = window.scrollY > 300;
   }
-
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-
+  goToServicio(servicio: ProfessionalServiceInterface) {
+  this.router.navigate(['/servicio', servicio.id]);
+}
   loadServicios() {
     this.service.getAll().subscribe(servicios => {
-      console.log("📦 Servicios recibidos del backend:", servicios);
       this.servicios = servicios;
       this.monedasUnicas = [...new Set(servicios.map(s => s.currencyType).filter(Boolean))];
       this.filteredServices = [...this.servicios];
       this.setPriceRangeLimits();
     });
   }
-
   verPerfilPublico(username: string): void {
     if (username) {
       this.router.navigate(['/perfil-publico', username]);
     }
   }
-
   addToCart(servicio: ProfessionalServiceInterface): void {
     this.cartService.addToCart(servicio, 1);
   }
-
-
   toggleCart(): void {
     this.cartService.toggleCart();
   }
@@ -132,45 +125,6 @@ export class TiendaComponent implements OnInit {
     this.maxPrice = this.priceRangeMax;
     this.filteredServices = [...this.servicios];
     this.updateSliderTrack();
-  }
-
-  openModal(servicio: ProfessionalServiceInterface) {
-    this.selectedService = servicio;
-    if (servicio.id !== undefined) {
-      this.nuevoReporte.serviceId = servicio.id;
-    }
-    this.showReportModal = false;
-    this.showModal = true;
-  }
-
-  enviarReporteServicio() {
-    const username = this.useStateService.getUsername();
-    if (!username) return;
-
-    const payload = {
-      ...this.nuevoReporte,
-      userName: username
-    };
-
-    this.reportService.create(payload).subscribe(() => {
-      this.popupService.showMessage('Reporte enviado', 'Gracias por tu reporte, lo revisaremos.', 'success');
-      this.nuevoReporte = { type: 'BULLYING_OR_HARASSMENT', description: '', serviceId: 0 };
-      this.showReportModal = false;
-      this.closeModal();
-    });
-  }
-
-  getNombreTipoReporte(tipo: string): string {
-    const map: Record<string, string> = {
-      BULLYING_OR_HARASSMENT: 'Acoso',
-      SUICIDE_SELF_INJURY_OR_EATING_DISORDERS: 'Conducta riesgosa',
-      VIOLENCE: 'Violencia',
-      ILLEGAL_SALES: 'Ventas ilegales',
-      NUDITY_OR_SEXUAL_ACTIVITY: 'Contenido sexual',
-      SCAMS_FRAUD_OR_SPAM: 'Estafa o fraude',
-      FALSE_INFORMATION: 'Información falsa'
-    };
-    return map[tipo] || tipo;
   }
   ordenarServicios(criterio: string) {
     switch (criterio) {

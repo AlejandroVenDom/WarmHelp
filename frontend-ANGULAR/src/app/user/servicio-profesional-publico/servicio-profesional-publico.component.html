@@ -1,0 +1,69 @@
+|<div class="total">
+<div class="servicio-detalle-container" *ngIf="servicio">
+  <div class="top-bar">
+    <button class="btn-volver" routerLink="/tienda">
+      <i class="bi bi-arrow-left-circle-fill"></i> Volver a la tienda
+    </button>
+    <button class="btn-reportar" (click)="abrirModalReporte()">
+      <i class="bi bi-flag-fill"></i> Reportar
+    </button>
+  </div>
+
+  <div class="contenido-servicio">
+    <div class="imagen-wrapper">
+      <img [src]="servicio.image || '/ans.jpg'" alt="Imagen del servicio" class="imagen-principal" />
+    </div>
+
+    <div class="info-servicio">
+      <h1 class="titulo">{{ servicio.title }}</h1>
+      <p class="descripcion">{{ servicio.description }}</p>
+
+      <div class="detalle-precios">
+        <p><i class="bi bi-tag-fill"></i> <strong>Precio:</strong> {{ servicio.price }} {{ servicio.currencyType }}</p>
+        <p><i class="bi bi-cash-coin"></i> <strong>Impuesto:</strong> {{ servicio.tax }} {{ servicio.currencyType }}</p>
+      </div>
+
+      <p class="publicado">
+        <i class="bi bi-person-fill"></i> <strong>Publicado por:</strong>
+        <span class="link-perfil" (click)="verPerfil()">{{ servicio.username }}</span>
+      </p>
+
+      <p class="fecha" *ngIf="servicio.createdAt">
+        <i class="bi bi-calendar-event"></i>
+        Publicado: {{ servicio.createdAt | date: 'short' }}
+      </p>
+
+      <button class="btn-add-cart" (click)="addToCart()">
+        <i class="bi bi-cart-plus-fill"></i> Añadir al carrito
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal de reporte -->
+  <div class="overlay-reporte-servicio" *ngIf="showReportModal">
+  <div class="contenido-reporte-servicio" (click)="$event.stopPropagation()">
+    <span class="btn-cerrar-reporte" (click)="showReportModal = false" title="Cerrar">
+      <i class="bi bi-x-circle-fill"></i>
+    </span>
+
+    <div class="encabezado-reporte-servicio">
+      <i class="bi bi-flag-fill icono-reporte"></i>
+      <h2>Reportar servicio</h2>
+    </div>
+
+    <textarea [(ngModel)]="nuevoReporte.description" rows="4" placeholder="Describe el problema..."></textarea>
+
+    <div class="grupo-select-reporte">
+      <select [(ngModel)]="nuevoReporte.type">
+        <option *ngFor="let tipo of tiposReporte" [value]="tipo">
+          {{ getNombreTipoReporte(tipo) }}
+        </option>
+      </select>
+    </div>
+
+    <button class="btn-enviar-reporte" (click)="enviarReporte()">
+      <i class="bi bi-send-exclamation-fill"></i> Enviar Reporte
+    </button>
+  </div>
+</div>
+</div>
