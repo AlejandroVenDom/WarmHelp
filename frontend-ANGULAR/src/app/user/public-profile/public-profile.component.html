@@ -60,22 +60,32 @@
         Servicios ofrecidos
       </div>
       <div *ngFor="let service of user.professionalServices" class="servicio">
-        <h5>{{ service.title }}</h5>
-        <p>{{ service.description }}</p>
-        <span class="precio">{{ service.price | currency:'EUR' }}</span>
+  <h5>{{ service.title }}</h5>
+  <p>{{ service.description }}</p>
+  <div class="servicio-footer">
+    <span class="precio">{{ service.price | currency:'EUR' }}</span>
 
-        <div *ngIf="service.reviews?.length > 0" class="reseñas mt-3">
-          <h6><i class="bi bi-star-fill"></i> Reseñas</h6>
-          <div *ngFor="let review of service.reviews" class="resena container gap-2">
-            <div class="resena-header">
-              <strong>{{ review.calification }}</strong><br>
-              <span>{{ review.username }} </span>
-              <span>{{ review.createdAt | date:'longDate' }}</span>
-            </div>
-            <p>{{ review.description }}</p>
-          </div>
-        </div>
+    <!-- Botón SIEMPRE visible -->
+    <button
+      class="btn-add-cart"
+      (click)="addToCart(service)"
+      title="Añadir al carrito"
+    >
+      <i class="bi bi-cart-plus"></i>
+    </button>
+  </div>
+
+  <!-- Mostrar reseñas si hay -->
+  <div *ngIf="service.reviews?.length > 0" class="reseñas mt-3">
+    <h6><i class="bi bi-star-fill"></i> Reseñas</h6>
+    <div *ngFor="let review of service.reviews" class="resena container gap-2">
+      <div class="resena-header">
+        <strong>{{ review.calification }}</strong><br>
+        <span>{{ review.username }} </span>
+        <span>{{ review.createdAt | date:'longDate' }}</span>
       </div>
+      <p>{{ review.description }}</p>
     </div>
   </div>
 </div>
+
