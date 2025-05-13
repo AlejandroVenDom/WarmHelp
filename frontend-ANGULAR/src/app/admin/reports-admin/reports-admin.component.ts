@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReportServiceInterface } from '../../services/interfaces/report';
 import { ReportService } from '../../services/report/report.service';
+import { PopupService } from '../../services/popup.service';
 
 @Component({
   selector: 'app-reports-admin',
@@ -10,8 +11,12 @@ import { ReportService } from '../../services/report/report.service';
 })
 export class ReportsAdminComponent implements OnInit {
   reportes: ReportServiceInterface[] = [];
+  reportStates: string[] = ['PENDING', 'IN_PROGRESS', 'COMPLETED'];
 
-  constructor(private reportService: ReportService) {}
+  constructor(
+    private reportService: ReportService,
+    private popupService: PopupService
+  ) {}
 
   ngOnInit(): void {
     this.reportService.getAll().subscribe(data => {
@@ -31,4 +36,34 @@ export class ReportsAdminComponent implements OnInit {
     };
     return map[tipo] || tipo;
   }
+
+  onEstadoChange(event: Event, reportId: number) {
+    const newState = (event.target as HTMLSelectElement).value;
+
+    this.reportService.updateServiceReportState(reportId, newState).subscribe({
+      next: () => {
+        const reporte = this.reportes.find(r => r.id === reportId);
+        if (reporte) reporte.state = newState;
+        this.popupService.showMessage("Éxito", "Estado actualizado correctamente", "success");
+      },
+      error: err => {
+        console.error(err);
+        this.popupService.showMessage("Error", "No se pudo actualizar el estado", "error");
+      }
+    });
+  }
+  eliminarReporte(id: number) {
+  if (!confirm("¿Estás seguro de que deseas eliminar este reporte?")) return;
+
+  this.reportService.deleteServiceReport(id).subscribe({
+    next: () => {
+      this.reportes = this.reportes.filter(r => r.id !== id);
+      this.popupService.showMessage("Éxito", "Reporte eliminado correctamente", "success");
+    },
+    error: () => {
+      this.popupService.showMessage("Error", "No se pudo eliminar el reporte", "error");
+    }
+  });
+}
+
 }

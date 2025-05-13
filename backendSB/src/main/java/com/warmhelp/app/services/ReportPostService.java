@@ -31,6 +31,7 @@ public class ReportPostService {
         List<ReportPost> reports = this.reportPostsRepository.findAll();
 
         return reports.stream()
+                .filter(report -> report.getDeletedAt() == null) // 👈 aquí se filtran los eliminados
                 .map(report -> {
                     String state = report.getState() != null ? report.getState().getReportState().name() : null;
 
@@ -50,6 +51,25 @@ public class ReportPostService {
                 })
                 .collect(Collectors.toList());
     }
+    public void updateReportState(Long id, String newState) {
+        ReportPost report = reportPostsRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Reporte no encontrado"));
+
+        ReportState stateEnum = ReportState.valueOf(newState);
+        ReportStateClass stateClass = reportStateRepository.findByReportState(stateEnum)
+                .orElseThrow(() -> new IllegalArgumentException("Estado inválido"));
+
+        report.setState(stateClass);
+        reportPostsRepository.save(report);
+    }
+    public void deleteReport(Long id) {
+        ReportPost report = reportPostsRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Reporte de post no encontrado"));
+
+        report.setDeletedAt(java.time.LocalDateTime.now());
+        reportPostsRepository.save(report);
+    }
+
 
     public ReportPostDTO createReportForPost(ReportPostRequest reportPostFormFront){
 

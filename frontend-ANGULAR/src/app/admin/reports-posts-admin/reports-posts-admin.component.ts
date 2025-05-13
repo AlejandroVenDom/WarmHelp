@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReportServiceInterface } from '../../services/interfaces/report';
 import { ReportService } from '../../services/report/report.service';
+import { PopupService } from '../../services/popup.service';
 
 @Component({
   selector: 'app-reports-posts-admin',
@@ -10,8 +11,13 @@ import { ReportService } from '../../services/report/report.service';
 })
 export class ReportsPostsAdminComponent implements OnInit {
   reportesPost: ReportServiceInterface[] = [];
+  reportStates: string[] = ['PENDING', 'IN_PROGRESS', 'COMPLETED'];
 
-  constructor(private reportService: ReportService) {}
+  constructor(
+    private reportService: ReportService,
+    private popupService: PopupService
+
+  ) {}
 
   ngOnInit(): void {
     this.reportService.getAllPostReports().subscribe(data => {
@@ -31,4 +37,35 @@ export class ReportsPostsAdminComponent implements OnInit {
     };
     return map[tipo] || tipo;
   }
+  onEstadoChange(event: Event, reportId: number) {
+  const newState = (event.target as HTMLSelectElement).value;
+
+  this.reportService.updatePostReportState(reportId, newState).subscribe({
+    next: (res: any) => {
+      const reporte = this.reportesPost.find(r => r.id === reportId);
+      if (reporte) reporte.state = newState;
+      this.popupService.showMessage("Éxito", "Estado actualizado correctamente", "success");
+    },
+    error: err => {
+      console.error(err);
+      this.popupService.showMessage("Error", "No se pudo actualizar el estado", "error");
+    }
+  });
+}
+eliminarReporte(id: number) {
+  if (!confirm("¿Estás seguro de que deseas eliminar este reporte de publicación?")) return;
+
+  this.reportService.deletePostReport(id).subscribe({
+    next: () => {
+      this.reportesPost = this.reportesPost.filter(r => r.id !== id);
+      this.popupService.showMessage("Éxito", "Reporte eliminado correctamente", "success");
+    },
+    error: () => {
+      this.popupService.showMessage("Error", "No se pudo eliminar el reporte", "error");
+    }
+  });
+}
+
+
+
 }

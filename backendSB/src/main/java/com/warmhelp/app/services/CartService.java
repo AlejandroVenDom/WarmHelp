@@ -169,5 +169,23 @@ public class CartService {
 
         return false; // El ítem fue actualizado, no eliminado
     }
+    public boolean clearAllItemsFromCart(Long cartId) {
+        Optional<Cart> optionalCart = cartRepository.findById(cartId);
+        if (optionalCart.isEmpty()) return false;
+
+        Cart cart = optionalCart.get();
+
+        // Elimina los ítems del repositorio
+        for (CartItem item : new ArrayList<>(cart.getItems())) {
+            cartItemRepository.deleteById(item.getId());
+        }
+
+        cart.getItems().clear();
+        cart.updateTotalPrice();
+        cartRepository.save(cart);
+
+        return true;
+    }
+
 
 }

@@ -39,7 +39,15 @@
         <div class="slider-track"></div>
       </div>
     </div>
-
+<div class="currency-filter">
+  <label for="currency">Moneda:</label>
+  <select id="currency" [(ngModel)]="selectedCurrency" (change)="onCurrencyChange()">
+    <option value="">Todas</option>
+    <option *ngFor="let currency of availableCurrencies" [value]="currency">
+      {{ currency }}
+    </option>
+  </select>
+</div>
     <div class="order-container">
       <label for="orden">Ordenar por:</label>
       <select id="orden" [(ngModel)]="ordenSeleccionado" (change)="onOrderChange()">

@@ -88,10 +88,13 @@ public class SecurityConfiguration {
                                 "/v1/sendMessage",
                                 "/incidents",
                                 "/incidents/registerIncident",
+                                "/incidents/**",
                                 "/reports-posts",
                                 "/reports-posts/register-report-post",
+                                "/reports-posts/**",
                                 "/reports-services",
                                 "/reports-services/register-report-service",
+                                "/reports-services/**",
                                 "/likes",
                                 "/likes/toggle",
                                 "/likes/count",
@@ -102,7 +105,9 @@ public class SecurityConfiguration {
                                 "/carts/**",
                                 "/posts/uploadPostWithImage",
                                 "/uploads/images/**",
-                                "/uploads/avatars/**"
+                                "/uploads/avatars/**",
+                                "/stripe-pay/create-checkout-session",
+                                "/stripe-pay/details/*"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

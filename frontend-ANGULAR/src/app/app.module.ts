@@ -34,8 +34,11 @@ import { ReportsAdminComponent } from './admin/reports-admin/reports-admin.compo
 import { ReportsPostsAdminComponent } from './admin/reports-posts-admin/reports-posts-admin.component';
 import { CartComponent } from './user/cart/cart.component';
 import { BaseChartDirective  } from 'ng2-charts';
+import { VerifyComponent } from './user/verify/verify.component';
 import { StripePayComponent } from './user/stripe-pay/stripe-pay.component';
 import { FiltrosComponent } from './user/tienda/filtros/filtros.component';
+import { PaymentSuccessComponent } from './user/payment-success/payment-success.component';
+import { PaymentDeniedComponent } from './user/payment-denied/payment-denied.component';
 
 @NgModule({
   declarations: [
@@ -67,9 +70,11 @@ import { FiltrosComponent } from './user/tienda/filtros/filtros.component';
     ReportsAdminComponent,
     ReportsPostsAdminComponent,
     CartComponent,
+    VerifyComponent,
     StripePayComponent,
-    FiltrosComponent
-
+    FiltrosComponent,
+    PaymentSuccessComponent,
+    PaymentDeniedComponent
   ],
   imports: [
     BrowserModule,

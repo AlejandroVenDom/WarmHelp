@@ -42,4 +42,8 @@ export class CredentialsService {
     return this.http.post(`${environment.apiUrl}/users/${userId}/upload-avatar`, formData);
   }
 
+  createCheckoutSession(data:{currency: string, amount: number; serviceName: string}): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/stripe-pay/create-checkout-session`, data);
+  }
+
 }

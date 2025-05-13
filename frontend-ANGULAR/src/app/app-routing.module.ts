@@ -28,7 +28,10 @@ import { ControlEvent } from '@angular/forms';
 import { ControlPanelComponent } from './admin/control-panel/control-panel.component';
 import { ReportsAdminComponent } from './admin/reports-admin/reports-admin.component';
 import { ReportsPostsAdminComponent } from './admin/reports-posts-admin/reports-posts-admin.component';
+import { VerifyComponent } from './user/verify/verify.component';
 import { StripePayComponent } from './user/stripe-pay/stripe-pay.component';
+import { PaymentSuccessComponent } from './user/payment-success/payment-success.component';
+import { PaymentDeniedComponent } from './user/payment-denied/payment-denied.component';
 
 const routes: Routes = [
   // users without authentication
@@ -36,16 +39,20 @@ const routes: Routes = [
     path: '', component:LayoutComponent, children:[
       { path: '',component: HomeNoAuthComponent},
       { path: 'perfil', component: PerfilComponent, canActivate: [authGuard] },
-      {path: 'perfil-publico/:username', component: PublicProfileComponent, canActivate: [authGuard]},
+      {path:  'perfil-publico/:username', component: PublicProfileComponent, canActivate: [authGuard]},
       { path: 'login', component: LoginComponent, canActivate: [publicGuard] },
-      { path: 'register', component: RegisterComponent, canActivate: [publicGuard] },
+      { path: 'register', component: RegisterComponent}, // este tampoco por el email
       { path: 'posts', component: PostsComponent, canActivate: [authGuard] },
       { path: 'tienda', component: TiendaComponent , canActivate: [authGuard] },
       { path: 'mis-publicaciones', component: MisPublicacionesComponent , canActivate: [authGuard] },
       { path: 'mis-incidencias', component: MisIncidenciasComponent, canActivate: [authGuard]},
       { path: 'chat-gpt', component: ChatGptComponent , canActivate: [authGuard]},
+      { path: 'servicioscr', component: BackofficeAdminComponent},
+      { path: 'verify', component: VerifyComponent}, // no pongan authGuard o al registrar el usuario estara siempre en false al verificar 
       { path: 'servicioscr', component: BackofficeAdminComponent, canActivate: [roleGuard]},
-      { path: 'stripe-pay', component: StripePayComponent, canActivate: [authGuard]}
+      { path: 'stripe-pay', component: StripePayComponent, canActivate: [authGuard]},
+      { path: 'success', component: PaymentSuccessComponent, canActivate: [authGuard]},
+      { path: 'cancel', component: PaymentDeniedComponent, canActivate: [authGuard]},
     ]
   },
     // admins
