@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <div class="resenas-card">
+    <div *ngIf="user.role === 'PROFESSIONAL' || user.role === 'ADMIN'" class="resenas-card">
       <div class="section-header">
         <i class="bi bi-star-half"></i>
         Reseñas recibidas
