@@ -5,6 +5,9 @@ import Swal from "sweetalert2";
   providedIn: 'root'
 })
 export class PopupService {
+  error(arg0: string, arg1: any) {
+    throw new Error('Method not implemented.');
+  }
 
   constructor() { }
 
