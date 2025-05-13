@@ -64,6 +64,7 @@ public class SecurityConfiguration {
                                 "/users/register",
                                 "/users/change-password",
                                 "/users/users-info",
+                                "/users/verify",
                                 "/users/*/username",
                                 "/users/*/update",
                                 "/users/**",

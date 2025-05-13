@@ -210,4 +210,5 @@ public class LoginResponse {
         public void setRole(RoleType role) {
             this.role = role;
         }
+
 }

@@ -5,6 +5,7 @@ import com.warmhelp.app.dtosResponses.PublicUserProfileResponse;
 import com.warmhelp.app.dtosResponses.UserInfoResponseDTO;
 import com.warmhelp.app.exceptions.UserAlreadyExistException;
 import com.warmhelp.app.exceptions.UserNotFoundException;
+import com.warmhelp.app.repositories.UserRepository;
 import com.warmhelp.app.services.IEmailService;
 import com.warmhelp.app.services.UserService;
 import com.warmhelp.app.models.User;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,15 +30,16 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
-
+    private final UserRepository userRepository;
     @Autowired
     private IEmailService emailService;
 
     @Autowired
     private UserServiceChat userServiceChat;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService,UserRepository userRepository) {
         this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping
@@ -56,6 +59,14 @@ public class UserController {
 //            ******************************
             /* Esto es lo que cambie para el email automatico */
 
+            User user = userRepository.findByUsername(credentials.getUsername())
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+            /* Esto es lo que cambie para el email automatico */
+
+            if (!user.isEnabled()) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body(Map.of("error", "Account not verified. Check your email."));
+            }
             String[] to = new String[]{loginResponse.getEmail()}; // Asegúrate que `getEmail()` exista
             String subject = "Inicio de sesión exitoso en WarmHelp";
             String message = "Hola " + loginResponse.getFirst_name() + ",\n\n"
