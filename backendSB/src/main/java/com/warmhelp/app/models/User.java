@@ -29,6 +29,9 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
+    /*agregue email (solo esto luego quito (bryan))*/
+    @Column(nullable = false)
+    private String email;
 
     @CreationTimestamp
     @Column(nullable = false)

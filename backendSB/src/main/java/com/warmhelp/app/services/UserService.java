@@ -145,6 +145,8 @@ public class UserService implements UserDetailsService {
         User user = new User();
         user.setUsername(userFromFront.getUsername());
         user.setPassword(passwordEncoder.encode(userFromFront.getPassword()));
+        /* Agregue este de setEmail para probar, luego quito */
+        user.setEmail(userFromFront.getEmail()); // ← ESTA LÍNEA ES CLAVE ( bryan )
         user.setRole(role);
         user.setEnabled(false); // 🚨 IMPORTANTE: usuario no está activo aún
         user = userRepository.save(user);
