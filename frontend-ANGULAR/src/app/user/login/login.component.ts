@@ -102,7 +102,7 @@ export class LoginComponent {
 
         this.popupService.showMessage(
           'Error de inicio de sesión',
-          message,
+          'Usuario no autenticado',
           'error'
         );
       },
