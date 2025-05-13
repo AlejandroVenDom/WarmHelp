@@ -24,8 +24,7 @@
       </div>
 
       <p class="publicado">
-        <i class="bi bi-person-fill"></i> <strong>Publicado por:</strong>
-        <span class="link-perfil" (click)="verPerfil()">{{ servicio.username }}</span>
+        <i class="bi bi-person-fill"></i> <strong>Publicado por:</strong>&nbsp;<span class="link-perfil" (click)="verPerfil()">{{ servicio.username }}</span>
       </p>
 
       <p class="fecha" *ngIf="servicio.createdAt">

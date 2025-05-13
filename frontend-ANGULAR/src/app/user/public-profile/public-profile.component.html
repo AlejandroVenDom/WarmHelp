@@ -4,7 +4,7 @@
   <div class="perfil-grid">
     <div class="perfil-card">
       <div class="avatar-section">
-        <img src="/ken.gif" alt="Avatar" class="avatar">
+        <img [src]="getAvatarUrl(user.avatar)" alt="Avatar del usuario" class="avatar">
       </div>
 
       <div class="info-section">
@@ -13,7 +13,7 @@
         <p><i class="bi bi-envelope-fill"></i> {{ user.email }}</p>
         <!-- <p><i class="bi bi-telephone-fill"></i> {{ user.number }}</p> -->
         <p><i class="bi bi-geo-alt-fill"></i> {{ user.address }}</p>
-        <p><i class="bi bi-award-fill"></i> {{ user.role }}</p>
+        <!-- <p><i class="bi bi-award-fill"></i> {{ user.role }}</p> -->
       </div>
 
       <div class="descripcion">
@@ -54,7 +54,7 @@
       </div>
       <div *ngIf="user.posts?.length === 0">No hay publicaciones.</div>
       <div *ngFor="let post of user.posts" class="post">
-        <img src="/ans.jpg" alt="Post">
+        <img [src]="getImageUrl(post.image)" alt="Imagen del post" (error)="onImageError($event)">
         <div class="contenido">
           <h5>{{ post.title }}</h5>
           <p class="fecha">{{ post.createdAt | date:'longDate' }}</p>
@@ -68,7 +68,7 @@
         <i class="bi bi-heart-pulse-fill"></i>
         Servicios ofrecidos
       </div>
-      <div *ngFor="let service of user.professionalServices" class="servicio">
+      <div *ngFor="let service of user.professionalServices" class="servicio" (click)="goToServicio(service.id)">
   <h5>{{ service.title }}</h5>
   <p>{{ service.description }}</p>
   <div class="servicio-footer">

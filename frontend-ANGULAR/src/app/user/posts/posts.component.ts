@@ -10,6 +10,7 @@ import { delay } from 'rxjs';
 import { Router } from '@angular/router';
 import { ReportService } from '../../services/report/report.service';
 import { LikeService } from '../../services/posts/like.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-posts',
@@ -126,9 +127,12 @@ tiposReporte: string[] = [
     if (trimmed.startsWith('http')) return trimmed;
     return `http://localhost:8080/api/uploads/images/${encodeURIComponent(trimmed)}`;
   }
-
-
-
+  getAvatarUrl(avatarPath: string | undefined): string {
+  if (!avatarPath) return '/ken.gif';
+  return avatarPath.startsWith('http')
+    ? avatarPath
+    : `${environment.apiUrl}${avatarPath}`;
+}
   onImageError(event: Event): void {
     const img = event.target as HTMLImageElement;
     if (!img.src.includes('image-not-found.jpg')) {

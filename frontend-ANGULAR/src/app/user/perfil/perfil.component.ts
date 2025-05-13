@@ -6,6 +6,7 @@ import { PopupService } from '../../services/popup.service';
 import { PostService } from '../../services/posts/post.service';
 import { CredentialsService } from '../../services/auth/credentials.service';
 import { Subscription } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-perfil',
@@ -78,7 +79,7 @@ export class PerfilComponent implements OnInit {
     const services = this.useStateService.getProfessionalServices() || [];
 this.professionalServices = services;
 this.reviews = services.flatMap((s: any) => s.reviews || []);
-    this.avatar = this.useStateService.getAvatar();
+    this.avatar = this.buildAvatarUrl(this.useStateService.getAvatar());
     window.addEventListener('scroll', this.verificarScroll.bind(this));
   }
   ngOnDestroy(): void {
@@ -143,8 +144,8 @@ this.reviews = services.flatMap((s: any) => s.reviews || []);
 
     this.credentialsService.uploadAvatar(userId, formData).subscribe({
       next: (res) => {
-        this.avatar = res.avatar;
-        this.useStateService.setAvatar(res.avatar);
+        this.avatar = this.buildAvatarUrl(res.avatar);
+this.useStateService.setAvatar(res.avatar);
         this.popupService.showMessage('Éxito', 'Avatar actualizado correctamente', 'success');
       },
       error: () => {
@@ -152,10 +153,12 @@ this.reviews = services.flatMap((s: any) => s.reviews || []);
       }
     });
   }
-
-
-
-
+  private buildAvatarUrl(avatarPath: string | null): string | null {
+  if (!avatarPath) return null;
+  return avatarPath.startsWith('http')
+    ? avatarPath
+    : `${environment.apiUrl}${avatarPath}`;
+}
   onChangePassword() {
     if (this.newPassword !== this.repeatNewPassword) {
       this.passwordError = true;

@@ -7,6 +7,7 @@ public class PostsResponseDTO {
     private long id;
     private String title;
     private String username;
+    private String avatar; // NUEVO CAMPO
     private String description;
     private String image;
     private List<CommentsResponseDTO> comments;
@@ -16,7 +17,7 @@ public class PostsResponseDTO {
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
 
-    public PostsResponseDTO(long id, String title, String username, String description, String image, List<CommentsResponseDTO> comments, List<ReportPostDTO> reports, List<Likes_Posts_ResponseDTO> likes_posts, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
+    public PostsResponseDTO(long id, String title, String username, String description, String image, List<CommentsResponseDTO> comments, List<ReportPostDTO> reports, List<Likes_Posts_ResponseDTO> likes_posts, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt, String avatar) {
         this.id = id;
         this.title = title;
         this.username = username;
@@ -28,6 +29,7 @@ public class PostsResponseDTO {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
+        this.avatar = avatar;
     }
 
     public List<Likes_Posts_ResponseDTO> getLikes_posts() {
@@ -57,6 +59,15 @@ public class PostsResponseDTO {
     public long getId() {
         return id;
     }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
 
     public void setId(long id) {
         this.id = id;

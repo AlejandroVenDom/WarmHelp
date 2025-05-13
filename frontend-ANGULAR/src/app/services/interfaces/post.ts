@@ -5,6 +5,7 @@ export interface Post {
   image?: string;
   createdAt: string;
   username:string;
+  avatar?: string;
   comments: Comment[];
   likes_posts: LikesPost[];
 }

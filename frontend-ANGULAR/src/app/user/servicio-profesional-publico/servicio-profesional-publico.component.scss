@@ -94,10 +94,11 @@ $color-text: #2B2B2B;
     font-size: 1rem;
 
     .link-perfil {
+      font-size:15px;
+      font-weight: bold;
       color: $color-primary;
+      text-decoration: none;
       cursor: pointer;
-      text-decoration: underline;
-
       &:hover {
         color: darken($color-primary, 10%);
       }

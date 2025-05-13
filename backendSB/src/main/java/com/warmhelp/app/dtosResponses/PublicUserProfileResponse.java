@@ -11,6 +11,7 @@ public class PublicUserProfileResponse {
     private String number;
     private String mySelf_description;
     private String role;
+    private String avatar;
 
     private List<PostsResponseDTO> posts;
     private List<ProfessionalServiceResponseDTO> professionalServices;
@@ -112,5 +113,13 @@ public class PublicUserProfileResponse {
 
     public void setReviews(List<ReviewResponseDTO> reviews) {
         this.reviews = reviews;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

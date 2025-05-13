@@ -47,7 +47,7 @@
     <div (click)="abrirModalDetallePost(post)">
     <!-- Contenido del post -->
     <div class="user-info" (click)="verPerfilPublico(post.username); $event.stopPropagation()">
-      <img src="/ans.jpg" class="avatar" />
+      <img [src]="getAvatarUrl(post.avatar)" class="avatar" (error)="onImageError($event)" />
       <span class="username">{{ post.username || 'Usuario' }}</span>
     </div>
     <div class="content" [ngClass]="{ 'with-image': post.image }" style="display: flex; flex-direction: column; height: 100%;">

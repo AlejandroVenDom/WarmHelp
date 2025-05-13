@@ -395,7 +395,8 @@ public class UserService implements UserDetailsService {
                 likesPostsResponseDTOS,
                 posts.getCreatedAt(),
                 posts.getUpdatedAt(),
-                posts.getDeletedAt()
+                posts.getDeletedAt(),
+                posts.getUserInfo().getAvatar()
         );
     }
 
@@ -424,7 +425,7 @@ public class UserService implements UserDetailsService {
         loginData.setNumber(userInfo.getNumber());
         loginData.setEmail(userInfo.getEmail());
         loginData.setMySelf_description(userInfo.getMySelf_description());
-        loginData.setAvatar(userInfo.getAvatar());
+        loginData.setAvatar("http://localhost:8080/api" + userInfo.getAvatar());
 
 
 
@@ -523,6 +524,7 @@ public class UserService implements UserDetailsService {
         dto.setNumber(userInfo.getNumber());
         dto.setMySelf_description(userInfo.getMySelf_description());
         dto.setRole(user.getRole().getRoleType().name());
+        dto.setAvatar(userInfo.getAvatar()); //
 
         dto.setPosts(userInfo.getPosts().stream().map(this::mapToPostsResponseDTO).toList());
         dto.setProfessionalServices(userInfo.getProfessionalServices().stream().map(this::mapToProfessionalServicesResponseDTO).toList());

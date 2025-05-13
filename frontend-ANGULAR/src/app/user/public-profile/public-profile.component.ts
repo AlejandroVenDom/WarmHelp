@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/users/user.service';
 import { CartService } from '../../services/auth/cart.service';
 import { UseStateService } from '../../services/auth/use-state.service';
@@ -18,7 +18,8 @@ export class PublicProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private cartService: CartService,
-    private popupService: PopupService
+    private popupService: PopupService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -47,6 +48,9 @@ export class PublicProfileComponent implements OnInit {
     default: return 0;
   }
 }
+goToServicio(serviceId: number) {
+  this.router.navigate(['/servicio', serviceId]);
+}
 getAverageRating(): number {
   if (!this.user?.reviews?.length) return 0;
 
@@ -56,7 +60,26 @@ getAverageRating(): number {
 
   return total / this.user.reviews.length;
 }
+getAvatarUrl(avatarPath: string): string {
+  if (!avatarPath || avatarPath.trim() === '') {
+    return '/ken.gif'; // Imagen por defecto
+  }
 
+  return avatarPath.startsWith('http')
+    ? avatarPath
+    : `http://localhost:8080/api${avatarPath}`;
+}
+getImageUrl(imagePath: string): string {
+  if (!imagePath || typeof imagePath !== 'string') return '/assets/image-not-found.jpg';
+  const trimmed = imagePath.trim();
+  if (trimmed.startsWith('http')) return trimmed;
+  return `http://localhost:8080/api/uploads/images/${encodeURIComponent(trimmed)}`;
+}
+
+onImageError(event: Event): void {
+  const img = event.target as HTMLImageElement;
+  img.src = '/assets/image-not-found.jpg';
+}
 
 
   addToCart(service: any): void {

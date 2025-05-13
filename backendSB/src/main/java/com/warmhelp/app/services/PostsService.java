@@ -95,7 +95,8 @@ public class PostsService {
                     likes_posts,
                     post.getCreatedAt(),
                     post.getUpdatedAt(),
-                    post.getDeletedAt()
+                    post.getDeletedAt(),
+                    post.getUserInfo().getAvatar()
             );
         }).collect(Collectors.toList());
     }
