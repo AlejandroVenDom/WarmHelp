@@ -73,7 +73,7 @@ export class UsersAdminComponent implements OnInit {
     doc.text(`Número de referencia: ${referenceNumber}`, 14, 40);
 
     // Agregar una imagen en la parte superior derecha
-    const imageUrl = 'logot-removebg.png'; // Ruta de la imagen
+    const imageUrl = 'logot.png'; // Ruta de la imagen
     doc.addImage(imageUrl, 'PNG', 200, 10, 60, 15); // Aumentar el tamaño de la imagen a 50x50
 
     // Separador entre encabezado y tabla
