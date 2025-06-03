@@ -52,81 +52,80 @@ export class UsersAdminComponent implements OnInit {
     this.loadUsers();
   }
 
-generatePDF() {
-  const doc = new jsPDF('landscape'); // Crear PDF en orientación horizontal
+  generatePDF() {
+    const doc = new jsPDF('landscape'); // Crear PDF en orientación horizontal
 
-  const referenceNumber = 'REF-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+    const referenceNumber =
+      'REF-' + Math.random().toString(36).substr(2, 9).toUpperCase();
 
-  // Obtener la fecha actual
-  const date = new Date();
-  const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    // Obtener la fecha actual
+    const date = new Date();
+    const formattedDate = `${date.getDate()}/${
+      date.getMonth() + 1
+    }/${date.getFullYear()}`;
 
-  // Configurar el encabezado con título y fecha
-  doc.setFontSize(16);  // Tamaño de fuente más pequeño
-  doc.setFont("helvetica", "bold");
-  doc.text('Lista de usuarios de WarmHelp', 14, 20);
-  doc.setFontSize(10);  // Tamaño de fuente más pequeño para el resto
-  doc.text(`Fecha: ${formattedDate}`, 14, 28);
-   doc.text(`Número de referencia: ${referenceNumber}`, 14, 40);
+    // Configurar el encabezado con título y fecha
+    doc.setFontSize(16); // Tamaño de fuente más pequeño
+    doc.setFont('helvetica', 'bold');
+    doc.text('Lista de usuarios de WarmHelp', 14, 20);
+    doc.setFontSize(10); // Tamaño de fuente más pequeño para el resto
+    doc.text(`Fecha: ${formattedDate}`, 14, 28);
+    doc.text(`Número de referencia: ${referenceNumber}`, 14, 40);
 
-  // Agregar una imagen en la parte superior derecha
-  const imageUrl = 'logot-removebg.png'; // Ruta de la imagen
-  doc.addImage(imageUrl, 'PNG', 200, 10, 60, 15); // Aumentar el tamaño de la imagen a 50x50
+    // Agregar una imagen en la parte superior derecha
+    const imageUrl = 'logot-removebg.png'; // Ruta de la imagen
+    doc.addImage(imageUrl, 'PNG', 200, 10, 60, 15); // Aumentar el tamaño de la imagen a 50x50
 
-  // Separador entre encabezado y tabla
-  doc.line(14, 42, 280, 42); // Línea horizontal (mayor ancho debido a la orientación horizontal)
+    // Separador entre encabezado y tabla
+    doc.line(14, 42, 280, 42); // Línea horizontal (mayor ancho debido a la orientación horizontal)
 
-  // Encabezado de la tabla
-  doc.setFont("helvetica", "bold");
-  doc.text('ID', 14, 50);
-  doc.text('Nombre y Apellido', 40, 50);
-  doc.text('Correo', 100, 50);
-  doc.text('Teléfono', 150, 50);
-  doc.text('Dirección', 210, 50); // Nueva columna para dirección
+    // Encabezado de la tabla
+    doc.setFont('helvetica', 'bold');
+    doc.text('ID', 14, 50);
+    doc.text('Nombre y Apellido', 40, 50);
+    doc.text('Correo', 100, 50);
+    doc.text('Teléfono', 150, 50);
+    doc.text('Dirección', 210, 50); // Nueva columna para dirección
 
-  // Línea para separar los encabezados de los datos
-  doc.line(14, 52, 280, 52); // Línea horizontal
-  
-  let y = 60;  // Inicializamos la posición para los datos
+    // Línea para separar los encabezados de los datos
+    doc.line(14, 52, 280, 52); // Línea horizontal
 
-  // Añadir datos de cada usuario
-  this.users.forEach(user => {
-    // Nombre completo
-    const fullName = `${user.first_name} ${user.last_name}`;
+    let y = 60; // Inicializamos la posición para los datos
 
-    // Escribir cada línea de datos en la tabla
-    doc.setFont("helvetica", "normal");
-    doc.text(user.idUser.toString(), 14, y);
-    doc.text(fullName, 40, y);
-    doc.text(user.email, 100, y);
-    doc.text(user.number, 150, y);
-    doc.text(user.address, 210, y); // Dirección del usuario
+    // Añadir datos de cada usuario
+    this.users.forEach((user) => {
+      // Nombre completo
+      const fullName = `${user.first_name} ${user.last_name}`;
 
-    // Incrementar la posición Y para la siguiente fila
-    y += 8;  // Menor separación entre filas
+      // Escribir cada línea de datos en la tabla
+      doc.setFont('helvetica', 'normal');
+      doc.text(user.idUser.toString(), 14, y);
+      doc.text(fullName, 40, y);
+      doc.text(user.email, 100, y);
+      doc.text(user.number, 150, y);
+      doc.text(user.address, 210, y); // Dirección del usuario
 
-    // Si se alcanza el final de la página, crear una nueva página
-    if (y > 190) {  // Ajuste para una página horizontal
-      doc.addPage();
-      y = 20;
-      doc.text('ID', 14, y);
-      doc.text('Nombre', 40, y);
-      doc.text('Correo', 100, y);
-      doc.text('Teléfono', 150, y);
-      doc.text('Dirección', 210, y);
-      doc.line(14, y + 2, 280, y + 2); // Línea horizontal
-      y += 10;
-    }
-  });
+      // Incrementar la posición Y para la siguiente fila
+      y += 8; // Menor separación entre filas
 
-  // Guardar el PDF generado
-  doc.save('Usuarios.pdf');
-}
+      // Si se alcanza el final de la página, crear una nueva página
+      if (y > 190) {
+        // Ajuste para una página horizontal
+        doc.addPage();
+        y = 20;
+        doc.text('ID', 14, y);
+        doc.text('Nombre', 40, y);
+        doc.text('Correo', 100, y);
+        doc.text('Teléfono', 150, y);
+        doc.text('Dirección', 210, y);
+        doc.line(14, y + 2, 280, y + 2); // Línea horizontal
+        y += 10;
+      }
+    });
 
-
-
-
-
+    // Guardar el PDF generado
+    doc.save('Usuarios.pdf');
+  }
 
   loadUsers(): void {
     this.userService.getAllUsers().subscribe((users) => {
