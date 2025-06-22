@@ -41,6 +41,7 @@ import { PaymentSuccessComponent } from './user/payment-success/payment-success.
 import { PaymentDeniedComponent } from './user/payment-denied/payment-denied.component';
 import { ServicioProfesionalPublicoComponent } from './user/servicio-profesional-publico/servicio-profesional-publico.component';
 import { ProgresoPersonalComponent } from './user/progreso-personal/progreso-personal.component';
+import { ChatComponent } from './user/chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { ProgresoPersonalComponent } from './user/progreso-personal/progreso-per
     PaymentSuccessComponent,
     PaymentDeniedComponent,
     ServicioProfesionalPublicoComponent,
-    ProgresoPersonalComponent
+    ProgresoPersonalComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,

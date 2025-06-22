@@ -62,6 +62,15 @@ export class UserService {
     `${environment.apiUrl}/users/login`,
     credentials,
     { headers: { 'Content-Type': 'application/json' } }
-  );
-}
+    );
+  }
+  getCurrentUser(): UserInterface | null {
+  // Supongamos que guardas el usuario en localStorage (como JSON)
+  const userJson = localStorage.getItem('currentUser');
+  if (userJson) {
+    return JSON.parse(userJson);
+  }
+  return null;
+  }
+
 }
