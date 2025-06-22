@@ -12,7 +12,7 @@
         <p>{{ servicio.description }}</p>
         <div class="precio-impuesto">
           <span><strong>Precio:</strong> {{ servicio.price }} {{ servicio.currencyType }}</span>
-          <p><strong>Impuesto:</strong> {{ servicio.tax }} {{ servicio.currencyType }}</p>
+          <!-- <p><strong>Impuesto:</strong> {{ servicio.tax }} {{ servicio.currencyType }}</p> -->
         </div>
       </div>
       <div class="acciones">
@@ -34,7 +34,7 @@
       <textarea placeholder="Descripción del Servicio" [(ngModel)]="servicioEditando!.description"></textarea>
       <input type="text" placeholder="URL Imagen" [(ngModel)]="servicioEditando!.image" />
       <input type="number" placeholder="Precio" [(ngModel)]="servicioEditando!.price" />
-      <input type="number" placeholder="Impuesto (%)" [(ngModel)]="servicioEditando!.tax" />
+      <!-- <input type="number" placeholder="Impuesto (%)" [(ngModel)]="servicioEditando!.tax" /> -->
       <select [(ngModel)]="servicioEditando!.currencyType">
         <option value="USD">USD ($)</option>
         <option value="EUR">EUR (€)</option>

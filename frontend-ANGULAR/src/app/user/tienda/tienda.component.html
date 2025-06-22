@@ -24,7 +24,7 @@
         <h3>{{ servicio.title }}</h3>
         <p class="product-description">{{ servicio.description.length > 15 ? (servicio.description | slice:0:15) + '...' : servicio.description }}</p>
         <p class="price">Precio: {{ servicio.price }} {{ servicio.currencyType }}</p>
-        <p class="price">Impuesto: {{ servicio.tax }} {{ servicio.currencyType }}</p>
+        <!-- <p class="price">Impuesto: {{ servicio.tax }} {{ servicio.currencyType }}</p> -->
         <p>
           Publicado por:
           <span class="link-perfil" (click)="verPerfilPublico(servicio.userName); $event.stopPropagation()">
