@@ -148,31 +148,22 @@ public class UserController {
         return ResponseEntity.ok(updateUser);
     }
     @GetMapping("/getall")
-    public ResponseEntity<List<User>> getall() throws IOException {
-        try{
-            return new ResponseEntity<List<User>>(userServiceChat.getall(), HttpStatus.OK);
-        }catch (UserNotFoundException e){
-            return new ResponseEntity("User not Found", HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<List<User>> getAllChatUsers() throws IOException {
+        return new ResponseEntity<>(userServiceChat.findAllUsers(), HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<User> addUser(@RequestBody User user) throws IOException {
-        try{
-            return new ResponseEntity<User>(userServiceChat.addUser(user), HttpStatus.OK);
-        }catch (UserAlreadyExistException e){
-            return new ResponseEntity("User already exists", HttpStatus.CONFLICT);
-        }
+    public ResponseEntity<User> addChatUser(@RequestBody User user) throws IOException {
+        return new ResponseEntity<>(userServiceChat.saveUser(user), HttpStatus.OK);
     }
 
     @GetMapping("/getbyusername/{username}")
-    public ResponseEntity<User> getUserByUserName(@PathVariable String username) throws IOException {
-        try{
-            return new ResponseEntity<User>(userServiceChat.getUserByUserName(username), HttpStatus.OK);
-        }catch (UserNotFoundException e){
-            return new ResponseEntity("User not Found", HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<User> getChatUserByUsername(@PathVariable String username) throws IOException {
+        return userServiceChat.findByUsername(username)
+                .map(user -> new ResponseEntity<>(user, HttpStatus.OK))
+                .orElse(new ResponseEntity("User not Found", HttpStatus.NOT_FOUND));
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String,String>> deleteUserById(@PathVariable Long id){

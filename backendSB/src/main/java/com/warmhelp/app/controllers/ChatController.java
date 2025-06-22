@@ -1,123 +1,106 @@
 package com.warmhelp.app.controllers;
 
+import com.warmhelp.app.dtos.auth.ChatRequest;
 import com.warmhelp.app.exceptions.ChatAlreadyExistException;
 import com.warmhelp.app.exceptions.ChatNotFoundException;
 import com.warmhelp.app.exceptions.NoChatExistsInTheRepository;
 import com.warmhelp.app.models.Chat;
 import com.warmhelp.app.models.Message;
+import com.warmhelp.app.models.User;
+import com.warmhelp.app.repositories.ChatRepository;
 import com.warmhelp.app.services.ChatService;
+import com.warmhelp.app.services.UserServiceChat;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("/chats")
 public class ChatController {
 
     @Autowired
     private ChatService chatService;
 
-    @PostMapping("/add")
-    public ResponseEntity<Chat> createChat(@RequestBody Chat chat) throws IOException {
+    @Autowired
+    private ChatRepository chatRepository;
 
-        try {
-            return new ResponseEntity<Chat>(chatService.addChat(chat), HttpStatus.CREATED);
-        } catch (ChatAlreadyExistException e) {
-            return new ResponseEntity("Chat Already Exist", HttpStatus.CONFLICT);
+    @Autowired
+    private UserServiceChat userService;
+
+    // ✅ Crear un nuevo chat con lista de IDs de usuarios
+    @PostMapping
+    public ResponseEntity<Chat> createChat(@RequestBody ChatRequest request) {
+        Chat chat = chatService.createChatWithUsers(request.getUserIds());
+        return ResponseEntity.ok(chat);
+    }
+
+    // ✅ Obtener chats por ID de usuario
+    @GetMapping("/user/id/{userId}")
+    public ResponseEntity<List<Chat>> getChatsByUserId(@PathVariable Long userId) {
+        return ResponseEntity.ok(chatService.getChatsByUser(userId));
+    }
+
+    // ✅ Obtener chats por username
+    @GetMapping("/user/username/{username}")
+    public ResponseEntity<List<Chat>> getChatsByUsername(@PathVariable String username) throws ChatNotFoundException {
+        User user = userService.findByUsername(username)
+                .orElseThrow(() -> new ChatNotFoundException("User not found"));
+        List<Chat> chats = chatService.getChatsByUser(user);
+        return ResponseEntity.ok(chats);
+    }
+
+    // ✅ Obtener un chat por ID
+    @GetMapping("/{chatId}")
+    public ResponseEntity<Chat> getChatById(@PathVariable Long chatId) throws ChatNotFoundException {
+        Chat chat = chatService.getById(chatId);
+        return ResponseEntity.ok(chat);
+    }
+
+    // ✅ Obtener chat entre dos usuarios
+    @PostMapping("/between")
+    public ResponseEntity<Chat> getOrCreateChat(@RequestBody Map<String, String> users) {
+        String username1 = users.get("user1");
+        String username2 = users.get("user2");
+
+        if (username1 == null || username2 == null) {
+            return ResponseEntity.badRequest().build();
         }
-    }
 
-    @PostMapping("/add/message1")
-    public ResponseEntity<Message> addMessage2(@RequestBody Message message) throws IOException {
-        return new ResponseEntity<Message>(chatService.addMessage2(message), HttpStatus.CREATED);
-    }
-
-    @GetMapping("/all")
-    public ResponseEntity<List<Chat>> getAllChats() {
-        try {
-            return new ResponseEntity<List<Chat>>(chatService.findallchats(), HttpStatus.OK);
-        } catch (NoChatExistsInTheRepository e) {
-            return new ResponseEntity("List not found", HttpStatus.CONFLICT);
-        }
-    }
-
-    @GetMapping("/all/messages/from/chat/{chatId}")
-    public ResponseEntity<?> getAllMessagesInChat(@PathVariable int chatId) {
-        try {
-            Chat chat = new Chat();
-            chat.setChatId(chatId);
-            List<Message> messageList = this.chatService.getAllMessagesInChat(chatId);
-            return ResponseEntity.ok(messageList);
-        } catch (NoChatExistsInTheRepository e) {
-            return new ResponseEntity("Message List not found", HttpStatus.CONFLICT);
-        }
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Chat> getChatById(@PathVariable int id) {
-        try {
-            return new ResponseEntity<Chat>(chatService.getById(id), HttpStatus.OK);
-        } catch (ChatNotFoundException e) {
-            return new ResponseEntity("Chat Not Found", HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping("/firstUserName/{username}")
-    public ResponseEntity<?> getChatByFirstUserName(@PathVariable String username) {
-        try {
-            HashSet<Chat> byChat = this.chatService.getChatByFirstUserName(username);
-            return new ResponseEntity<>(byChat, HttpStatus.OK);
-        } catch (ChatNotFoundException e) {
-            return new ResponseEntity("Chat Not Exits", HttpStatus.CONFLICT);
-        }
+        Chat chat = chatService.getOrCreateChat(username1, username2);
+        return ResponseEntity.ok(chat);
     }
 
 
+//    @GetMapping("/between")
+//    public ResponseEntity<Chat> getChatBetweenUsers(@RequestParam String user1, @RequestParam String user2) throws ChatNotFoundException {
+//        User firstUser = userService.findByUsername(user1)
+//                .orElseThrow(() -> new ChatNotFoundException("User1 not found"));
+//        User secondUser = userService.findByUsername(user2)
+//                .orElseThrow(() -> new ChatNotFoundException("User2 not found"));
+//
+//        Optional<Chat> chatOpt = chatService.getChatBetweenUsers(firstUser, secondUser);
+//        Chat chat = chatOpt.orElseThrow(() -> new ChatNotFoundException("Chat not found"));
+//
+//        return ResponseEntity.ok(chat);
+//    }
 
-    @GetMapping("/secondUserName/{username}")
-    public ResponseEntity<?> getChatBySecondUserName(@PathVariable String username) {
-
-        try {
-            HashSet<Chat> byChat = this.chatService.getChatBySecondUserName(username);
-            return new ResponseEntity<>(byChat, HttpStatus.OK);
-        } catch (ChatNotFoundException e) {
-            return new ResponseEntity("Chat Not Exits", HttpStatus.CONFLICT);
-        }
+    // ✅ Agregar un mensaje a un chat
+    @PostMapping("/{chatId}/messages")
+    public ResponseEntity<Chat> addMessageToChat(@PathVariable Long chatId, @RequestBody Message message) throws ChatNotFoundException {
+        Chat updatedChat = chatService.addMessageToChat(message, chatId);
+        return ResponseEntity.ok(updatedChat);
     }
 
-    @GetMapping("/getChatByFirstUserNameOrSecondUserName/{username}")
-    public ResponseEntity<?> getChatByFirstUserNameOrSecondUserName(@PathVariable String username) {
-
-        try {
-            HashSet<Chat> byChat = this.chatService.getChatByFirstUserNameOrSecondUserName(username);
-            return new ResponseEntity<>(byChat, HttpStatus.OK);
-        } catch (ChatNotFoundException e) {
-            return new ResponseEntity("Chat Not Exits", HttpStatus.CONFLICT);
-        }
+    // ✅ Obtener mensajes de un chat
+    @GetMapping("/{chatId}/messages")
+    public ResponseEntity<List<Message>> getMessagesFromChat(@PathVariable Long chatId) throws NoChatExistsInTheRepository {
+        List<Message> messages = chatService.getAllMessagesInChat(chatId);
+        return ResponseEntity.ok(messages);
     }
-
-
-    @GetMapping("/getChatByFirstUserNameAndSecondUserName")
-    public ResponseEntity<?> getChatByFirstUserNameAndSecondUserName(@RequestParam("firstUserName") String firstUserName, @RequestParam("secondUserName") String secondUserName){
-
-        try {
-            HashSet<Chat> chatByBothEmail = this.chatService.getChatByFirstUserNameAndSecondUserName(firstUserName, secondUserName);
-            return new ResponseEntity<>(chatByBothEmail, HttpStatus.OK);
-        } catch (ChatNotFoundException e) {
-            return new ResponseEntity("Chat Not Exits", HttpStatus.NOT_FOUND);
-        }
-    }
-
-
-    @PutMapping("/message/{chatId}")
-    public ResponseEntity<Chat> addMessage(@RequestBody Message add , @PathVariable int chatId) throws ChatNotFoundException {
-        return new ResponseEntity<Chat>(chatService.addMessage(add,chatId), HttpStatus.OK);
-    }
-
 }
