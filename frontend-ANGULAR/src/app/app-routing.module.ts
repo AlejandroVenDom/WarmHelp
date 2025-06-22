@@ -33,12 +33,16 @@ import { StripePayComponent } from './user/stripe-pay/stripe-pay.component';
 import { PaymentSuccessComponent } from './user/payment-success/payment-success.component';
 import { PaymentDeniedComponent } from './user/payment-denied/payment-denied.component';
 import { ServicioProfesionalPublicoComponent } from './user/servicio-profesional-publico/servicio-profesional-publico.component';
+import { ProgresoPersonalComponent } from './user/progreso-personal/progreso-personal.component';
+import { ChatComponent } from './user/chat/chat.component';
 
 const routes: Routes = [
   // users without authentication
   {
     path: '', component:LayoutComponent, children:[
       { path: '',component: HomeNoAuthComponent},
+      { path: 'chat', component: ChatComponent, canActivate: [authGuard]},
+      { path: 'progreso-personal', component: ProgresoPersonalComponent, canActivate: [authGuard] },
       { path: 'perfil', component: PerfilComponent, canActivate: [authGuard] },
       {path:  'perfil-publico/:username', component: PublicProfileComponent, canActivate: [authGuard]},
       { path: 'servicio/:id', component: ServicioProfesionalPublicoComponent, canActivate: [authGuard] },

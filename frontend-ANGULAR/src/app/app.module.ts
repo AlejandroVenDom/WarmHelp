@@ -40,6 +40,8 @@ import { FiltrosComponent } from './user/tienda/filtros/filtros.component';
 import { PaymentSuccessComponent } from './user/payment-success/payment-success.component';
 import { PaymentDeniedComponent } from './user/payment-denied/payment-denied.component';
 import { ServicioProfesionalPublicoComponent } from './user/servicio-profesional-publico/servicio-profesional-publico.component';
+import { ProgresoPersonalComponent } from './user/progreso-personal/progreso-personal.component';
+import { ChatComponent } from './user/chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +78,9 @@ import { ServicioProfesionalPublicoComponent } from './user/servicio-profesional
     FiltrosComponent,
     PaymentSuccessComponent,
     PaymentDeniedComponent,
-    ServicioProfesionalPublicoComponent
+    ServicioProfesionalPublicoComponent,
+    ProgresoPersonalComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
