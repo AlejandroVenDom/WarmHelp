@@ -7,6 +7,7 @@ import { UserInterface } from '../../services/interfaces/auth';
 import { UserService } from '../../services/users/user.service';
 import { User } from '../../services/interfaces/user';
 import { environment } from '../../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -21,12 +22,16 @@ export class ChatComponent implements OnInit, OnDestroy {
   currentChat: Chat | null = null;
   messages: Message[] = [];
   newMessage = '';
+  showChats = true;
+  showNewChat = true;
+
 
   private chatSubscription?: Subscription;
 
   constructor(
     private chatService: ChatService,
     private userService: UserService,
+    private router: Router,
     private cdr: ChangeDetectorRef // Inyectar ChangeDetectorRef
   ) {
     this.currentUser = this.userService.getCurrentUser();
@@ -34,6 +39,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
   this.chatService.connect();
+
   setTimeout(() => {
     this.loadChats();
   }, 500);
@@ -43,27 +49,18 @@ export class ChatComponent implements OnInit, OnDestroy {
     const userObj = JSON.parse(userJson);
     this.currentUser = {
       ...userObj,
-      idUser: userObj.id, // Mapeo explícito de id a idUser
+      idUser: userObj.id, // Mapeo explícito
     };
   } else {
     this.currentUser = null;
   }
 
-  this.loadChats();
+  // ⚠️ No llames más a getAllUsers aquí → se hace dentro de loadChats()
 
-  this.userService.getAllUsers().subscribe((data) => {
-    this.users = data.filter(
-      (u) => u.username !== this.currentUser?.username
-    );
-    console.log('Usuarios cargados:', this.users);
-  });
-
-  // ✅ Nueva suscripción global a eliminación de chats
+  // Suscripción global a eliminación de chats
   this.chatService.subscribeToGlobalChatDeletion().subscribe({
-   next: (deletedChatId) => {
-  console.log('🧨 Chat eliminado globalmente:', deletedChatId);
-  this.handleChatDeletion(deletedChatId);
-
+    next: (deletedChatId) => {
+      this.handleChatDeletion(deletedChatId);
 
       if (this.currentChat?.id === deletedChatId) {
         this.currentChat = null;
@@ -76,7 +73,21 @@ export class ChatComponent implements OnInit, OnDestroy {
       console.error('Error en la suscripción global de chat deleted:', err);
     }
   });
+  this.showChats = JSON.parse(localStorage.getItem('showChats') ?? 'true');
+  this.showNewChat = JSON.parse(localStorage.getItem('showNewChat') ?? 'true');
 }
+toggleChats() {
+  this.showChats = !this.showChats;
+  localStorage.setItem('showChats', JSON.stringify(this.showChats));
+}
+
+toggleNewChats() {
+  this.showNewChat = !this.showNewChat;
+  localStorage.setItem('showNewChat', JSON.stringify(this.showNewChat));
+}
+
+
+
   ngOnDestroy(): void {
     this.chatSubscription?.unsubscribe();
     this.chatService.disconnect();
@@ -88,16 +99,19 @@ export class ChatComponent implements OnInit, OnDestroy {
   this.chatService.getChatsByUser(this.currentUser.username).subscribe((chats) => {
     this.chatList = chats;
 
-    const chatUsernames = new Set(
-      chats.flatMap((chat) => [chat.firstUser.username, chat.secondUser.username])
+    const alreadyChattedUsernames = new Set<string>(
+      chats
+        .map(chat => this.getChatOpponent(chat)?.username)
+        .filter((u): u is string => !!u)
     );
 
     this.userService.getAllUsers().subscribe((allUsers) => {
-      this.users = allUsers.filter(
-        (u) =>
-          u.username !== this.currentUser?.username &&
-          !chatUsernames.has(u.username)
-      );
+      this.users = allUsers
+        .filter(user =>
+          user.username !== this.currentUser?.username &&
+          !alreadyChattedUsernames.has(user.username)
+        )
+        .sort((a, b) => a.username.localeCompare(b.username));
     });
 
     if (chats.length > 0) {
@@ -105,6 +119,8 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
   });
 }
+
+
 getChatOpponent(chat: Chat): User | null {
   if (!this.currentUser) return null;
   return chat.firstUser.username === this.currentUser.username
@@ -116,22 +132,20 @@ deleteChat(chat: Chat): void {
   if (!confirm('¿Estás seguro de que deseas eliminar este chat?')) return;
   if (!this.currentUser) return;
 
-  // ⚠️ Eliminamos inmediatamente para reflejo instantáneo
-  this.handleChatDeletion(chat.id);
+  this.handleChatDeletion(chat.id); // eliminamos visualmente
 
-  // Luego notificamos al backend
   this.chatService.deleteChat(chat.id, this.currentUser.username).subscribe({
     next: () => {
       console.log('✅ Chat eliminado en backend');
+      this.loadChats(); // <<--- Vuelve a cargar usuarios actualizados
     },
     error: (err) => {
       console.error('❌ Error eliminando chat:', err);
-
-      // 🔁 (Opcional) Revertir si falló
-      this.loadChats(); // recarga desde backend si hubo error
+      this.loadChats(); // recarga de todos modos por seguridad
     },
   });
 }
+
 
 handleChatDeletion(deletedChatId: number): void {
   const updatedList = this.chatList.filter((c) => c.id !== deletedChatId);
@@ -244,35 +258,39 @@ handleChatDeletion(deletedChatId: number): void {
   }
 
   startChatWith(user: UserInterface): void {
-    console.log('Intentando iniciar chat con:', user.username);
-    if (!this.currentUser) {
-      console.log('No hay usuario actual definido');
-      return;
-    }
-
-    this.chatService
-      .getOrCreateChatBetweenUsers(this.currentUser.username, user.username)
-      .subscribe({
-        next: (chat) => {
-          console.log('Chat obtenido/creado:', chat);
-
-          const existingChat = this.chatList.find((c) => c.id === chat.id);
-
-          if (!existingChat) {
-            console.log('Agregando chat a chatList');
-            this.chatList.push(chat);
-          } else {
-            console.log('El chat ya existe en chatList');
-          }
-
-          console.log('Seleccionando chat...');
-          this.selectChat(existingChat || chat);
-        },
-        error: (err) => {
-          console.error('Error al crear/obtener chat:', err);
-        },
-      });
+  console.log('Intentando iniciar chat con:', user.username);
+  if (!this.currentUser) {
+    console.log('No hay usuario actual definido');
+    return;
   }
+
+  this.chatService
+    .getOrCreateChatBetweenUsers(this.currentUser.username, user.username)
+    .subscribe({
+      next: (chat) => {
+        console.log('Chat obtenido/creado:', chat);
+
+        const existingChat = this.chatList.find((c) => c.id === chat.id);
+
+        if (!existingChat) {
+          console.log('Agregando chat a chatList');
+          this.chatList.push(chat);
+
+          // 🔥 ACTUALIZAR lista de usuarios al instante
+          this.users = this.users.filter(u => u.username !== user.username);
+        } else {
+          console.log('El chat ya existe en chatList');
+        }
+
+        console.log('Seleccionando chat...');
+        this.selectChat(existingChat || chat);
+      },
+      error: (err) => {
+        console.error('Error al crear/obtener chat:', err);
+      },
+    });
+}
+
 
   sendMessage(): void {
     if (!this.newMessage.trim() || !this.currentChat || !this.currentUser)
@@ -325,6 +343,13 @@ handleChatDeletion(deletedChatId: number): void {
 
 onImageError(event: Event): void {
   const img = event.target as HTMLImageElement;
-  img.src = '/assets/image-not-found.jpg';
+  if (!img.src.includes('image-not-found.jpg') && !img.src.includes('/ken.gif')) {
+    img.src = '/assets/image-not-found.jpg';
+  }
+}
+  verPerfilPublico(username?: string): void {
+  if (username) {
+    this.router.navigate(['/perfil-publico', username]);
+  }
 }
 }

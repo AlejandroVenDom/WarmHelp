@@ -155,8 +155,8 @@
 
       &.other-message {
         align-self: flex-start;
-        background-color: #ffffff;
-        color: #3A3A3A;
+        background-color: #DF6D14;
+        color: #ffffff;
         border: 1px solid #e0e0e0;
       }
 
@@ -235,3 +235,30 @@
     }
   }
 }
+.toggle-button {
+  background: transparent;
+  border: none;
+  margin-left: 10px;
+  font-size: 1.1rem;
+  color: #3A7D44;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.2);
+    color: #DF6D14;
+  }
+
+  i {
+    vertical-align: middle;
+  }
+}
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+}
+
