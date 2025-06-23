@@ -1,3 +1,18 @@
 <app-header-cliente></app-header-cliente>
 <router-outlet></router-outlet>
 <app-footer></app-footer>
+
+<!-- Ícono flotante para abrir chat -->
+<button class="chat-toggle-btn" (click)="toggleChat()" aria-label="Abrir chat">
+  <i class="bi bi-chat-dots-fill"></i>
+</button>
+
+<!-- Componente de chat flotante -->
+<div class="floating-chat" *ngIf="showChat">
+  <!-- Botón de cerrar dentro del chat -->
+  <button class="close-chat-btn" (click)="closeChat()" aria-label="Cerrar chat">
+    <i class="bi bi-x-circle-fill"></i>
+  </button>
+
+  <app-chat></app-chat>
+</div>

@@ -1,0 +1,77 @@
+.chat-toggle-btn {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  background-color: #3A7D44;
+  color: #F8F5E9;
+  border: none;
+  border-radius: 50%;
+  width: 54px;
+  height: 54px;
+  font-size: 1.6rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  z-index: 999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  i {
+    color: #F8F5E9;
+  }
+
+  &:hover {
+    background-color: darken(#3A7D44, 10%);
+    transform: scale(1.1);
+  }
+}
+
+.floating-chat {
+  position: fixed;
+  bottom: 90px;
+  left: 24px;
+  width: 35%;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #9DC08B;
+  animation: slideInLeft 0.3s ease-out;
+
+  @media (max-width: 420px) {
+    width: 92vw;
+    left: 4vw;
+  }
+
+  .close-chat-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.4rem;
+    color: #DF6D14;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+    cursor: pointer;
+
+    &:hover {
+      color: darken(#DF6D14, 10%);
+      transform: scale(1.1);
+    }
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-30%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}

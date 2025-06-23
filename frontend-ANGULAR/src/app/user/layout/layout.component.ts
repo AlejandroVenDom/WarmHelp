@@ -9,5 +9,13 @@ import { FooterComponent } from '../footer/footer.component';
   styleUrl: './layout.component.scss'
 })
 export class LayoutComponent {
+  showChat = false;
 
+  toggleChat(): void {
+    this.showChat = !this.showChat;
+  }
+
+  closeChat(): void {
+    this.showChat = false;
+  }
 }
