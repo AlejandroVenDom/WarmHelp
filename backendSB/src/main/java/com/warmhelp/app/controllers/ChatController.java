@@ -1,6 +1,7 @@
 package com.warmhelp.app.controllers;
 
 import com.warmhelp.app.dtos.auth.ChatRequest;
+import com.warmhelp.app.dtosResponses.ChatResponse;
 import com.warmhelp.app.exceptions.ChatAlreadyExistException;
 import com.warmhelp.app.exceptions.ChatNotFoundException;
 import com.warmhelp.app.exceptions.NoChatExistsInTheRepository;
@@ -103,4 +104,23 @@ public class ChatController {
         List<Message> messages = chatService.getAllMessagesInChat(chatId);
         return ResponseEntity.ok(messages);
     }
+    @DeleteMapping("/{chatId}")
+    public ResponseEntity<String> deleteChat(@PathVariable Long chatId) {
+        try {
+            chatService.deleteChatById(chatId);
+            return ResponseEntity.ok("Chat eliminado correctamente");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
+    @GetMapping("/response/user/username/{username}")
+    public ResponseEntity<List<ChatResponse>> getChatResponsesByUsername(@PathVariable String username) throws ChatNotFoundException {
+        User user = userService.findByUsername(username)
+                .orElseThrow(() -> new ChatNotFoundException("User not found"));
+        List<Chat> chats = chatService.getChatsByUser(user);
+        List<ChatResponse> responses = chats.stream().map(ChatResponse::new).toList();
+        return ResponseEntity.ok(responses);
+    }
+
+
 }

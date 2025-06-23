@@ -1,4 +1,5 @@
 package com.warmhelp.app.models;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -44,6 +45,20 @@ public class User {
 
     @Column(nullable = true)
     private LocalDateTime deletedAt;
+
+    // 🔗 Relación inversa con UserInfo
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private UserInfo userInfo;
+
+    // Getters y setters ya generados por Lombok, pero si prefieres manuales, añade esto:
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
 
     public Long getId() {
         return id;

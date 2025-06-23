@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
 import { Chat } from '../interfaces/chat';
 import { Message } from '../interfaces/message';
-
 import { Client, IMessage, Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 
@@ -41,6 +40,9 @@ export class ChatService {
   createChat(chat: Chat): Observable<Chat> {
     return this.http.post<Chat>(this.REST_URL, chat);
   }
+  deleteChat(chatId: number, username: string): Observable<void> {
+  return this.http.delete<void>(`${this.REST_URL}/${chatId}?username=${username}`);
+}
 
   sendMessageREST(chatId: number, message: Message): Observable<Chat> {
     return this.http.post<Chat>(`${this.REST_URL}/${chatId}/messages`, message);
@@ -105,4 +107,71 @@ export class ChatService {
       };
     });
   }
+  subscribeToChatDeletion(chatId: number): Observable<number> {
+  return new Observable<number>((subscriber) => {
+    if (!this.stompClient) {
+      subscriber.error('STOMP client no conectado');
+      return;
+    }
+
+    let stompSubscription: any;
+
+    const waitForConnection = () => {
+      if (this.stompClient && this.stompClient.connected) {
+        stompSubscription = this.stompClient.subscribe(
+          `/topic/chat.deleted.${chatId}`,
+          (msg) => {
+            const deletedChatId = Number(msg.body);
+            subscriber.next(deletedChatId);
+          }
+        );
+      } else {
+        setTimeout(waitForConnection, 100);
+      }
+    };
+
+    waitForConnection();
+
+    // Cleanup al desuscribirse
+    return () => {
+      if (stompSubscription) {
+        stompSubscription.unsubscribe();
+      }
+    };
+  });
+}
+subscribeToGlobalChatDeletion(): Observable<number> {
+  return new Observable<number>((subscriber) => {
+    if (!this.stompClient) {
+      subscriber.error('STOMP client no conectado');
+      return;
+    }
+
+    let stompSubscription: any;
+
+    const waitForConnection = () => {
+      if (this.stompClient && this.stompClient.connected) {
+        stompSubscription = this.stompClient.subscribe(
+          `/topic/chat.deleted`,
+          (msg) => {
+            const deletedChatId = Number(msg.body);
+            subscriber.next(deletedChatId);
+          }
+        );
+      } else {
+        setTimeout(waitForConnection, 100);
+      }
+    };
+
+    waitForConnection();
+
+    return () => {
+      if (stompSubscription) {
+        stompSubscription.unsubscribe();
+      }
+    };
+  });
+}
+
+
 }

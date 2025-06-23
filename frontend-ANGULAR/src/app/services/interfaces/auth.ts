@@ -8,6 +8,7 @@ export interface UserInterface{
     address: string,
     number: string,
     email: string,
+    avatar?: string;
     mySelf_description?: string
 }
 

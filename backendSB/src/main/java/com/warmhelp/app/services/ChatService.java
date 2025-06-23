@@ -8,7 +8,9 @@ import com.warmhelp.app.models.User;
 import com.warmhelp.app.repositories.ChatRepository;
 import com.warmhelp.app.repositories.MessageRepository;
 import com.warmhelp.app.repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -16,6 +18,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class ChatService {
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     @Autowired
     private ChatRepository chatRepository;
@@ -133,6 +138,28 @@ public class ChatService {
 
         chat.getMessageList().add(message);
         return chatRepository.save(chat);
+    }
+
+    @Transactional
+    public void deleteChatById(Long chatId) {
+        Chat chat = chatRepository.findById(chatId)
+                .orElseThrow(() -> new IllegalArgumentException("Chat no encontrado"));
+
+        // Elimina también los mensajes asociados
+        if (chat.getMessages() != null) {
+            chat.getMessages().clear();
+        }
+
+        chatRepository.delete(chat);
+
+        // 🔥 Emitimos un evento a ambos usuarios
+        List<Long> userIds = chat.getParticipants().stream()
+                .map(User::getId)
+                .toList();
+
+        for (Long userId : userIds) {
+            messagingTemplate.convertAndSend("/topic/user/" + userId + "/chat-deleted", chatId);
+        }
     }
 
 }
