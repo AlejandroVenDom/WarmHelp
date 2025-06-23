@@ -8,8 +8,8 @@
     <div class="chat-section">
       <h4><i class="bi bi-chat-dots"></i> Mis Chats</h4>
       <ul>
-        <li *ngFor="let chat of chatList" class="chat-item">
-          <div class="chat-info" (click)="selectChat(chat)">
+        <li *ngFor="let chat of chatList" class="chat-item"(click)="selectChat(chat)">
+          <div class="chat-info" >
             <img *ngIf="getChatOpponent(chat)?.avatar"
                  [src]="getAvatarUrl(getChatOpponent(chat)?.avatar)"
                  alt="avatar" class="avatar" />
