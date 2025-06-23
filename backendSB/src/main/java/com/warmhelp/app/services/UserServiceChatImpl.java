@@ -13,39 +13,48 @@ import java.util.Optional;
 
 @Service
 public class UserServiceChatImpl implements UserServiceChat{
+
     @Autowired
-    private UserChatRepository userChatRepository;
-
+    private UserRepository userRepository;
 
     @Override
-    public List<User> getall() throws UserNotFoundException {
-        List<User> users=userChatRepository.findAll();
-        if (users.isEmpty()){
-            throw new UserNotFoundException();
-        }else {
-            return users;
-        }
+    public User saveUser(User user) {
+        return userRepository.save(user);
     }
 
     @Override
-    public User addUser(User user) throws UserAlreadyExistException {
-        Optional<User> user1=userChatRepository.findById(user.getUsername());
-
-        if (user1.isPresent()){
-            throw new UserAlreadyExistException();
-        }else {
-            return userChatRepository.save(user);
-        }
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
     @Override
-    public User getUserByUserName(String username) throws UserNotFoundException {
-        Optional<User> user1=userChatRepository.findById(username);
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 
-        if (user1.isPresent()){
-            return user1.get();
-        }else {
-            throw new UserNotFoundException();
+    @Override
+    public User getById(Long id) throws UserNotFoundException {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
+    }
+
+    @Override
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public void deleteUserById(Long id) throws UserNotFoundException {
+        if (!userRepository.existsById(id)) {
+            throw new UserNotFoundException("User with id " + id + " not found");
         }
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateUsername(Long id, String newUsername) throws UserNotFoundException {
+        User user = getById(id);
+        user.setUsername(newUsername);
+        userRepository.save(user);
     }
 }

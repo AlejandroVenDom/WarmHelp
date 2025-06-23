@@ -1,0 +1,85 @@
+<div class="app-container">
+  <!-- Sidebar de chats -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h3>Conversaciones</h3>
+    </div>
+
+    <!-- Lista de chats -->
+    <div class="chat-list">
+      <h4>Chats</h4>
+      <ul>
+        <li
+          *ngFor="let chat of chatList"
+          class="chat-item"
+          (click)="selectChat(chat)"
+        >
+          {{ getChatPartnerNames(chat) }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- Lista de usuarios -->
+    <div class="chat-list">
+      <h4>Usuarios</h4>
+      <ul>
+        <li
+          *ngFor="let user of users"
+          class="chat-item"
+          (click)="startChatWith(user)"
+        >
+          {{ user.username
+          }}<button (click)="createTestChat()">Crear chat de prueba</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Panel de conversación -->
+  <div
+    class="chat-wrapper"
+    *ngIf="currentChat"
+    style="border: 1px solid #ccc; padding: 10px"
+  >
+    <div class="chat-header">
+      <h3>{{ getChatPartnerNames(currentChat) }}</h3>
+    </div>
+
+    <div
+      class="chat-messages"
+      style="
+        min-height: 150px;
+        border: 1px solid #ddd;
+        padding: 5px;
+        margin-bottom: 10px;
+      "
+    >
+      <div
+        *ngIf="messages.length === 0"
+        style="color: #888; font-style: italic"
+      >
+        No hay mensajes aún.
+      </div>
+      <div
+        *ngFor="let msg of messages"
+        class="chat-message"
+        [ngClass]="{ own: msg.sender?.username === currentUser?.username }"
+      >
+        <div class="message-content">
+          {{ msg.content }}
+          <span class="timestamp">{{ msg.timestamp || "..." }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-input" style="display: flex; gap: 10px">
+      <input
+        [(ngModel)]="newMessage"
+        placeholder="Escribe un mensaje..."
+        (keyup.enter)="sendMessage()"
+        style="flex: 1; padding: 6px"
+      />
+      <button (click)="sendMessage()">Enviar</button>
+    </div>
+  </div>
+</div>
