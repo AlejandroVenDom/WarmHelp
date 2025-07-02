@@ -37,7 +37,7 @@ KeyWords: Mental health, Personal development, Virtual assistance, Social networ
 ### Comentarios en los post: Permite a los usuarios escribir respuestas a una publicación de otro usuario o al suyo propio.
 ### Creación automática de perfil de usuario: Al completar el registro con los datos obligatorios, se genera automáticamente un perfil asociado que contendrán dichos datos, puede ser personalizado posteriormente.
 ### Cambio de contraseña: Funcionalidad que permite a los usuarios cambiar la contraseña que tienen actualmente a otra.
-###Editar datos propios del perfil: El usuario puede modificar información de su perfil a manera que le guste.
-###Inteligencia Artificial: Se integra un sistema de IA que ofrece asistencia personalizada automatizadas según el contexto de su uso.
-###Reportar incidencias: Función que permite a los usuarios informar errores, comportamientos inapropiados o problemas técnicos para que el equipo de desarrollo le pueda dar seguimiento y solución inmediatamente.
+### Editar datos propios del perfil: El usuario puede modificar información de su perfil a manera que le guste.
+### Inteligencia Artificial: Se integra un sistema de IA que ofrece asistencia personalizada automatizadas según el contexto de su uso.
+### Reportar incidencias: Función que permite a los usuarios informar errores, comportamientos inapropiados o problemas técnicos para que el equipo de desarrollo le pueda dar seguimiento y solución inmediatamente.
 
